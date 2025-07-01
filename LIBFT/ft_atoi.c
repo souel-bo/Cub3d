@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 21:27:42 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/06/30 10:34:39 by souel-bo         ###   ########.fr       */
+/*   Created: 2025/06/30 10:34:04 by souel-bo          #+#    #+#             */
+/*   Updated: 2025/06/30 10:34:30 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "../includes/libft.h"
 
-#include "cub.h"
+int	ft_atoi(const char *str)
+{
+	int		i;
+	int		s;
+	int		r;
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(char *s);
-char	**ft_split(char const *s, char c);
-int	ft_atoi(const char *str);
-#endif
+	i = 0;
+	s = 1;
+	r = 0;
+	while (((str[i] >= 9 && str[i] <= 13) || str[i] == 32))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			s *= -1;
+		i++;
+	}
+	while ((str[i] >= '0' && str[i] <= '9'))
+	{
+		r = r * 10 + str[i] - '0';
+		i++;
+	}
+	return (r * s);
+}
