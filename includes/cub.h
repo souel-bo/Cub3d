@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/03 13:57:30 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:50:29 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_map
 
 int is_map_line(char *str);
 int count_lines(char **argv);
-void start_parsing(t_map *units, char **argv);
+int start_parsing(t_map *units, char **argv);
 
 
 #endif
