@@ -7,11 +7,13 @@ EXECUTABLE = cub3d
 OBJ = $(SOURCE:.c=.o)
 GET_OBJ = $(GET_SOURCE:.c=.o)
 LIBFT_OBJ = $(LIBFT:.c=.o)
+MLX = -Lminilibx-linux -lmlx -lXext -lX11
+
 
 all:$(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJ) $(GET_OBJ) $(LIBFT_OBJ)
-	$(CC) $(FLAGS) $^ -o $@
+$(EXECUTABLE): $(OBJ) $(GET_OBJ) $(LIBFT_OBJ) 
+	$(CC) $(FLAGS)  $^ -o $@ $(MLX) 
 
 .c:.o
 	$(CC) $(FLAGS) $< -c $@

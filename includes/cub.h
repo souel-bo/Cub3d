@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/03 15:50:29 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/04 17:04:46 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "../minilibx-linux/mlx.h"
 
 typedef struct s_flor_collors
 {
@@ -54,6 +55,13 @@ typedef struct s_map
 	t_ceilling_collors	*ceilling_collors;
 	t_flor_collors		*floor_collors;
 }						t_map;
+
+typedef struct s_mlx
+{
+	void *connection;
+	void *window;
+	t_map *map;
+} t_mlx;
 
 
 int is_map_line(char *str);
