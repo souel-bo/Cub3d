@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/03 15:49:57 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/04 15:13:16 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 int	main(int argc, char **argv)
 {
+	(void)argc;
 	t_map units;
 	int i;
 	i = 0;
 	if (start_parsing(&units, argv))
 		return (printf("map not valid\n"), 0);
-	while (units.map[i])
-	{
-		printf("%s", units.map[i]);
-		i++;
-	}
+	//while (units.map[i])
+	//{
+	//	printf("%s", units.map[i]);
+	//	i++;
+	//}
 }

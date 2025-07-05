@@ -45,7 +45,7 @@ int	count_lines(char **argv)
 	return (count);
 }
 
-int	start_parsing(t_map *units, char **argv)
+int check_map(t_map *units, char **argv)
 {
 	char	*line;
 
@@ -71,4 +71,16 @@ int	start_parsing(t_map *units, char **argv)
 	}
 	units->map[i] = NULL;
 	return (close(fd), 0);
+}
+
+
+
+
+int	start_parsing(t_map *units, char **argv)
+{
+	if(check_map(units , argv) == -1)
+		return -1;
+	make_map_cube(units);
+	
+	return 0;
 }
