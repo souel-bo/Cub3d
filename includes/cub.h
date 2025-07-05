@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/04 17:04:46 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/05 10:04:17 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,29 @@ typedef struct s_map
 	t_flor_collors		*floor_collors;
 }						t_map;
 
+typedef struct s_addr
+{
+	char *addr;
+	int bpp;
+	int size_len;
+	int endien;
+} t_addr;
+
+typedef struct s_images
+{
+	void *wall;
+	void *player;
+	void *door;
+	t_addr *addr;
+} t_images;
+
+
 typedef struct s_mlx
 {
 	void *connection;
 	void *window;
 	t_map *map;
+	t_images *buffer;
 } t_mlx;
 
 
