@@ -1,6 +1,6 @@
 #include "../includes/cub.h"
 
-int	biggest_line(t_map *units)
+int	biggest_line(char **map)
 {
 	int	i;
 	int	len;
@@ -9,9 +9,9 @@ int	biggest_line(t_map *units)
 	i = 0;
 	len = 0;
 	tmp = 0;
-	while (units->map[i])
+	while (map[i])
 	{
-		if ((tmp = ft_strlen(units->map[i])) > len)
+		if ((tmp = ft_strlen(map[i])) > len)
 			len = tmp;
 		i++;
 	}
@@ -61,18 +61,48 @@ char	**duplacate_map(t_map *units, int size)
 	return (tmp_map);
 }
 
-void	make_map_cube(t_map *units)
+int	check_characters(char **tmp_map)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while (tmp_map[i])
+	{
+		j = 0;
+		while (tmp_map[i][j])
+		{
+			if (tmp_map[i][j] == 'W' || tmp_map[i][j] == 'S'
+				|| tmp_map[i][j] == 'E' || tmp_map[i][j] == 'N')
+				count++;
+			j++;
+		}
+		i++;
+	}
+	if (count != 1)
+		return (1);
+	return (0);
+}
+
+int	make_map_cube(t_map *units)
 {
 	int		i;
 	int		long_line;
 	char	**tmp_map;
 
 	i = 0;
-	long_line = biggest_line(units);
+	long_line = biggest_line(units->map);
 	tmp_map = duplacate_map(units, long_line);
-	while (tmp_map[i])
-	{
-		printf("%s", tmp_map[i]);
-		i++;
-	}
+	if (check_characters(tmp_map))
+		return (1);
+	setup_for_flood_fill(tmp_map);
+	//while (tmp_map[i])
+	//{
+	//	printf("%s", tmp_map[i]);
+	//	i++;
+	//}
+	return (0);
 }

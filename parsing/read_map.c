@@ -80,7 +80,7 @@ int	start_parsing(t_map *units, char **argv)
 {
 	if(check_map(units , argv) == -1)
 		return -1;
-	make_map_cube(units);
-	
+	if(make_map_cube(units))
+		return -1;
 	return 0;
 }
