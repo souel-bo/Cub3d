@@ -98,7 +98,8 @@ int	make_map_cube(t_map *units)
 	tmp_map = duplacate_map(units, long_line);
 	if (check_characters(tmp_map))
 		return (1);
-	setup_for_flood_fill(tmp_map);
+	if (setup_for_flood_fill(tmp_map))
+		return (1);
 	//while (tmp_map[i])
 	//{
 	//	printf("%s", tmp_map[i]);
