@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_check_map.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/06 04:30:09 by yael-yas          #+#    #+#             */
+/*   Updated: 2025/07/06 04:30:10 by yael-yas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub.h"
 
 int	biggest_line(char **map)
@@ -100,10 +112,5 @@ int	make_map_cube(t_map *units)
 		return (1);
 	if (setup_for_flood_fill(tmp_map))
 		return (1);
-	//while (tmp_map[i])
-	//{
-	//	printf("%s", tmp_map[i]);
-	//	i++;
-	//}
 	return (0);
 }

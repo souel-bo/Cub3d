@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checking_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/06 04:30:21 by yael-yas          #+#    #+#             */
+/*   Updated: 2025/07/06 04:31:17 by yael-yas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub.h"
 
 int	*find_character(char **tmp_map)
@@ -52,6 +64,7 @@ int	flood_fill(char **map, int x, int y)
 		return (-1);
 	return (0);
 }
+
 int	check_single_characters_two(char **map, int *pos)
 {
 	int	i;
@@ -71,7 +84,7 @@ int	check_single_characters(char **map)
 {
 	int	*pos;
 
-	int(i), (j);
+	int (i), (j);
 	i = 0;
 	pos = calloc(sizeof(int), 2);
 	while (map[i])
@@ -93,6 +106,7 @@ int	check_single_characters(char **map)
 	}
 	return (free(pos), 0);
 }
+
 int	check_walls(char **map)
 {
 	int	i;

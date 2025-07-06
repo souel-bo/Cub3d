@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
+/*   Updated: 2025/07/06 04:29:16 by yael-yas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub.h"
 
 int	is_map_line(char *str)
@@ -9,9 +21,10 @@ int	is_map_line(char *str)
 		return (2);
 	while (str[i])
 	{
-		if (str[i] != '1' && str[i] != '0' && str[i] != ' ' &&
-			str[i] != '\n' && str[i] != 'N' && str[i] != 'S' &&
-			str[i] != 'E' && str[i] != 'W' && str[i] != 'D')
+		if (str[i] != '1' && str[i] != '0' && str[i] != ' ' && str[i] != 'E'
+			&& str[i] != 'W' && str[i] != 'D')
+			return (0);
+		if (str[i] != '\n' && str[i] != 'N' && str[i] != 'S')
 			return (0);
 		i++;
 	}
@@ -45,11 +58,11 @@ int	count_lines(char **argv)
 	return (count);
 }
 
-int check_map(t_map *units, char **argv)
+int	check_map(t_map *units, char **argv)
 {
 	char	*line;
 
-	int(in_map), (count), (i), (fd);
+	int (in_map), (count), (i), (fd);
 	if ((count = count_lines(argv)) == -1)
 		return (-1);
 	if ((fd = open(argv[1], O_RDONLY)) < 0)
@@ -73,14 +86,11 @@ int check_map(t_map *units, char **argv)
 	return (close(fd), 0);
 }
 
-
-
-
 int	start_parsing(t_map *units, char **argv)
 {
-	if(check_map(units , argv) == -1)
-		return -1;
-	if(make_map_cube(units))
-		return -1;
-	return 0;
+	if (check_map(units, argv) == -1)
+		return (-1);
+	if (make_map_cube(units))
+		return (-1);
+	return (0);
 }
