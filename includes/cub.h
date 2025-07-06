@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/05 10:04:17 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/06 13:57:20 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "../minilibx-linux/mlx.h"
-
+# define DOOR_TILE 32
+# define WALL_TILE 32
+# define PLAYER_TILE 15
 typedef struct s_flor_collors
 {
 	int					red;

@@ -1,4 +1,4 @@
-CC = cc
+CC = cc #-fsanitize=address
 FLAGS = -Wall -Wextra -Werror
 SOURCE = main.c parsing/read_map.c
 GET_SOURCE = get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
