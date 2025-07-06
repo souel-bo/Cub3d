@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/06 04:29:16 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/06 05:45:12 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ int	is_map_line(char *str)
 	while (str[i])
 	{
 		if (str[i] != '1' && str[i] != '0' && str[i] != ' ' && str[i] != 'E'
-			&& str[i] != 'W' && str[i] != 'D')
-			return (0);
-		if (str[i] != '\n' && str[i] != 'N' && str[i] != 'S')
+			&& str[i] != 'W' && str[i] != 'D' && str[i] != '\n' && str[i] != 'N'
+			&& str[i] != 'S')
 			return (0);
 		i++;
 	}
