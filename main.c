@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/06 15:59:55 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:50:54 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,55 @@ void fill_image(t_mlx *all, int collor, int size)
 	}
 }
 
+void draw_player_image(char *addr, int size_len, int bpp, char dir)
+{
+	int bpp_bytes = bpp / 8;
+	int rect_size = 15;
+
+	int start_x, start_y;
+
+	if (dir == 'N')      { start_x = 8;  start_y = 17; }
+	else if (dir == 'S') { start_x = 8;  start_y = 0; }
+	else if (dir == 'E') { start_x = 0;  start_y = 8; }
+	else if (dir == 'W') { start_x = 17; start_y = 8; }
+
+	int end_x = start_x + rect_size;
+	int end_y = start_y + rect_size;
+
+	// 1. Draw red rectangle
+	for (int y = start_y; y < end_y; y++)
+	{
+		for (int x = start_x; x < end_x; x++)
+		{
+			int offset = y * size_len + x * bpp_bytes;
+			*(unsigned int *)(addr + offset) = 0xFF0000; // Red
+		}
+	}
+
+	// 2. Get center of rectangle
+	int cx = start_x + rect_size / 2;
+	int cy = start_y + rect_size / 2;
+
+	// 3. Draw yellow line from center outward
+	for (int i = 1; i < 32; i++)
+	{
+		int px = cx;
+		int py = cy;
+
+		if (dir == 'N') py = cy - i;
+		else if (dir == 'S') py = cy + i;
+		else if (dir == 'E') px = cx + i;
+		else if (dir == 'W') px = cx - i;
+
+		if (px < 0 || px >= 32 || py < 0 || py >= 32)
+			break;
+
+		int offset = py * size_len + px * bpp_bytes;
+		*(unsigned int *)(addr + offset) = 0xFFFF00; // Yellow
+	}
+}
+
+
 void	set_walls(t_mlx *all)
 {
 	all->buffer->wall = mlx_new_image(all->connection, 32, 32);
@@ -53,11 +102,12 @@ void	set_walls(t_mlx *all)
 
 void	set_player(t_mlx *all)
 {
-	all->buffer->player = mlx_new_image(all->connection, 15, 15);
+	all->buffer->player = mlx_new_image(all->connection, 32, 32);
 	all->buffer->addr->addr = mlx_get_data_addr(all->buffer->player,
 			&all->buffer->addr->bpp, &all->buffer->addr->size_len,
 			&all->buffer->addr->endien);
-	fill_image(all, 0xFF0000, PLAYER_TILE);
+	// fill_image(all, 0xFF0000, PLAYER_TILE);
+	draw_player_image(all->buffer->addr->addr, all->buffer->addr->size_len, all->buffer->addr->bpp, 'E');
 }
 
 void	set_door(t_mlx *all)
