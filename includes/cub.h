@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/05 18:08:33 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/08 06:45:03 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+#include <string.h>
 
 typedef struct s_flor_collors
 {
@@ -28,6 +29,15 @@ typedef struct s_flor_collors
 	int					green;
 	int					blue;
 }						t_flor_collors;
+
+typedef struct s_parse_file
+{
+	char **step_one;
+	char **step_two;
+	char **step_three;
+	char **step_four;
+} t_parse_file;
+
 
 typedef struct s_ceilling_collors
 {
@@ -62,6 +72,8 @@ int start_parsing(t_map *units, char **argv);
 int	make_map_cube(t_map *units);
 int	setup_for_flood_fill(char **tmp_map);
 int	biggest_line(char **map);
-
+int	check_textures(char **textures, t_map *units);
+int	check_colors(char *str, t_map *units);
+int	ft_colors(char **colors, t_map *units);
 
 #endif

@@ -1,13 +1,12 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./maps/texture1 
+SO ./maps/texture2 
+WE ./maps/texture3 
+EA ./maps/texture4 
 
 
 
 F 220,100,0
-C 225,30,0
-
+C 222,30,0
 
 
 11111111
@@ -15,4 +14,3 @@ C 225,30,0
 1000001
 1000001
 1111111
-
