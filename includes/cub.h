@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/08 06:45:03 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:57:33 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,5 @@ int	biggest_line(char **map);
 int	check_textures(char **textures, t_map *units);
 int	check_colors(char *str, t_map *units);
 int	ft_colors(char **colors, t_map *units);
-
+int ft_check_filename(char *str);
 #endif

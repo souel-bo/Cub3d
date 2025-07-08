@@ -13,14 +13,14 @@ int	check_colors(char *str, t_map *units)
 	colors = ft_split(arr[1], ',');
 	if (ft_count_argc(colors) != 3)
 		return (1);
-	if (!strcmp(arr[0], "F") && !units->floor_collors)
+	if (!strcmp(arr[0], "F"))
 	{
 		f_color.red = ft_atoi_mstr(colors[0]);
 		f_color.green = ft_atoi_mstr(colors[1]);
 		f_color.blue = ft_atoi_mstr(colors[2]);
 		units->floor_collors = &f_color;
 	}
-	else if (!strcmp(arr[0], "C") && !units->ceilling_collors)
+	else if (!strcmp(arr[0], "C"))
 	{
 		c_color.red = ft_atoi_mstr(colors[0]);
 		c_color.green = ft_atoi_mstr(colors[1]);
@@ -36,16 +36,18 @@ int	check_col_valid(t_map *units)
 		return (1);
 	if (units->ceilling_collors->blue == -1 || units->ceilling_collors->red ==
 		-1 || units->ceilling_collors->green == -1)
-		return 1;
-	if (units->floor_collors->blue == -1 || units->floor_collors->red ==
-		-1 || units->floor_collors->green == -1)
-		return 1;
-	return 0;
+		return (1);
+	if (units->floor_collors->blue == -1 || units->floor_collors->red == -1
+		|| units->floor_collors->green == -1)
+		return (1);
+	return (0);
 }
 
 int	ft_colors(char **colors, t_map *units)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (colors[i])
 	{
 		if (check_colors(colors[i], units))
@@ -53,6 +55,6 @@ int	ft_colors(char **colors, t_map *units)
 		i++;
 	}
 	if (check_col_valid(units))
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }

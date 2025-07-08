@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:21 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/06 04:31:17 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:26:48 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,10 @@ int	setup_for_flood_fill(char **tmp_map)
 	if (check_single_characters(tmp_map))
 		return (printf("haaa map mt9oba\n"), 1);
 	i = 0;
-	while (tmp_map[i])
-	{
-		printf("%s", tmp_map[i]);
-		i++;
-	}
+	//while (tmp_map[i])
+	//{
+	//	printf("%s", tmp_map[i]);
+	//	i++;
+	//}
 	return (0);
 }

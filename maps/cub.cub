@@ -1,16 +1,16 @@
-NO ./maps/texture1 
-SO ./maps/texture2 
-WE ./maps/texture3 
-EA ./maps/texture4 
+NO ./maps/texture1
+SO ./maps/texture2
+WE ./maps/texture3
+EA ./maps/texture4
 
+F 20,20,20
+C 200,200,200
 
-
-F 220,100,0
-C 222,30,0
-
-
-11111111
-10010N1
-1000001
-1000001
-1111111
+111111111111
+1    101    11
+1     1    1
+111111111111
+10S000000001
+111111111111
+11         1
+111111111111
