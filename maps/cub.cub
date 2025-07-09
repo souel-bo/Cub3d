@@ -1,11 +1,14 @@
 
+
+F 20,20,204
+C 20,20,20
+
+
 NO ./maps/texture1
 SO ./maps/texture2
 WE ./maps/texture3
 EA ./maps/texture4
 
-F 20,20,204
-C 20,20,20
 
 111111111111
 1    101   11

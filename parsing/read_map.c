@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/09 12:14:31 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:14:53 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	start_parsing(t_map *units, char **argv)
 	int				fd;
 	int				i;
 	t_parse_file	*collec;
+	char **swp;
 
 	(void)units;
 	fd = open(argv[1], O_RDONLY);
@@ -69,6 +70,12 @@ int	start_parsing(t_map *units, char **argv)
 	collec->step_three = read_file(fd);
 	collec->step_four = read_file(fd);
 	close(fd);
+	if (collec->step_one[0][0] == 'F' || collec->step_one[0][0] == 'C')
+	{
+		swp = collec->step_one;
+		collec->step_one = collec->step_two;
+		collec->step_two = swp;
+	}
 	if (*collec->step_four || ft_is_space(collec->step_four)
 		|| ft_is_space(collec->step_two))
 		return (printf("param 4\n"), 1);
