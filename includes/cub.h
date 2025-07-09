@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/08 18:57:33 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/09 09:43:30 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_flor_collors
 	int					red;
 	int					green;
 	int					blue;
+	
 }						t_flor_collors;
 
 typedef struct s_parse_file
@@ -44,6 +45,7 @@ typedef struct s_ceilling_collors
 	int					red;
 	int					green;
 	int					blue;
+	
 }						t_ceilling_collors;
 
 typedef struct s_textures
@@ -63,6 +65,8 @@ typedef struct s_map
 	t_textures			*textures;
 	t_ceilling_collors	*ceilling_collors;
 	t_flor_collors		*floor_collors;
+	int count_ceil;
+	int					count_floor;
 }						t_map;
 
 
