@@ -1,5 +1,13 @@
 #include "../includes/cub.h"
 
+int	ft_isdigit(char *str)
+{
+	if (!(str[0] >= '0' && str[0] <= '9'))
+	{
+		return (1);
+	}
+	return (0);
+}
 int	check_colors(char *str, t_map *units)
 {
 	t_flor_collors		*f_color;
@@ -8,7 +16,7 @@ int	check_colors(char *str, t_map *units)
 	char				**colors;
 
 	arr = ft_split(str, ' ');
-	if (ft_count_argc(arr) != 2)
+	if (ft_count_argc(arr) != 2 || ft_isdigit(arr[1]))
 		return (1);
 	colors = ft_split(arr[1], ',');
 	if (ft_count_argc(colors) != 3)

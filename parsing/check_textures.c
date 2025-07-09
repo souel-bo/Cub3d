@@ -18,6 +18,7 @@ char	*remove_newline(char *str)
 	free(str);
 	return (new_line);
 }
+
 int	is_valid_texture(char *str, t_textures *textures, t_map *units)
 {
 	int		i;

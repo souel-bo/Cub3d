@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/08 18:25:23 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:14:31 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ char	**read_file(int fd)
 	return (array);
 }
 
+int	ft_is_space(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		if (arr[i][0] == ' ' || arr[i][0] == '\t')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	start_parsing(t_map *units, char **argv)
 {
 	int				fd;
@@ -55,14 +69,15 @@ int	start_parsing(t_map *units, char **argv)
 	collec->step_three = read_file(fd);
 	collec->step_four = read_file(fd);
 	close(fd);
-	if (*collec->step_four)
-		return (printf("param 4\n") ,1);
+	if (*collec->step_four || ft_is_space(collec->step_four)
+		|| ft_is_space(collec->step_two))
+		return (printf("param 4\n"), 1);
 	if (check_textures(collec->step_one, units))
-		return (printf("textures\n") ,1);
+		return (printf("textures\n"), 1);
 	if (ft_colors(collec->step_two, units))
-		return (printf("colors\n") ,1);
+		return (printf("colors\n"), 1);
 	units->map = collec->step_three;
 	if (make_map_cube(units))
-			return (printf("map\n") ,-1);
+		return (printf("map\n"), -1);
 	return (0);
 }
