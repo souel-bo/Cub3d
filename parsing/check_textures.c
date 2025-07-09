@@ -18,7 +18,7 @@ char	*remove_newline(char *str)
 	free(str);
 	return (new_line);
 }
-int	is_valid_texture(char *str, t_textures *textures)
+int	is_valid_texture(char *str, t_textures *textures, t_map *units)
 {
 	int		i;
 	char	**arr;
@@ -36,36 +36,36 @@ int	is_valid_texture(char *str, t_textures *textures)
 	//i need to remove newline from strings
 	if (fd < 0)
 		return (printf("nn\n"), close(fd), 1);
-	if (!strcmp(arr[0], "NO") && !textures->north_path)
+	if (!strcmp(arr[0], "NO"))
 	{
 		textures->north_path = arr[1];
-		textures->n_count++;
+		units->n_count++;
 	}
-	else if (!strcmp(arr[0], "SO") && !textures->south_path)
+	else if (!strcmp(arr[0], "SO"))
 	{
 		textures->south_path = arr[1];
-		textures->s_count++;
+		units->s_count++;
 	}
-	else if (!strcmp(arr[0], "EA") && !textures->east_path)
+	else if (!strcmp(arr[0], "EA"))
 	{
 		textures->east_path = arr[1];
-		textures->e_count++;
+		units->e_count++;
 	}
-	else if (!strcmp(arr[0], "WE") && !textures->west_path)
+	else if (!strcmp(arr[0], "WE"))
 	{
 		textures->west_path = arr[1];
-		textures->w_count++;
+		units->w_count++;
 	}
 	return (close(fd), 0);
 }
 
-int	check_req_textures(t_textures *textures)
+int	check_req_textures(t_textures *textures, t_map *units)
 {
 	if (!textures->north_path || !textures->south_path || !textures->east_path
 		|| !textures->west_path)
 		return (1);
-	if (textures->e_count != 1 || textures->s_count != 1
-		|| textures->w_count != 1 || textures->n_count != 1)
+	if (units->e_count != 1 || units->s_count != 1
+		|| units->w_count != 1 || units->n_count != 1)
 		return (1);
 	return (0);
 }
@@ -74,15 +74,19 @@ int	check_textures(char **textures, t_map *units)
 {
 	int			i;
 	t_textures	v_textures;
+	units->e_count = 0;
+	units->s_count = 0;
+	units->w_count = 0;
+	units->n_count = 0;
 
 	i = 0;
 	while (textures[i])
 	{
-		if (is_valid_texture(textures[i], &v_textures))
+		if (is_valid_texture(textures[i], &v_textures, units))
 			return (1);
 		i++;
 	}
-	if (check_req_textures(&v_textures))
+	if (check_req_textures(&v_textures, units))
 		return (1);
 	units->textures = &v_textures;
 	return (0);
