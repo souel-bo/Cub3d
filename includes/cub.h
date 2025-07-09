@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/09 09:43:30 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:29:17 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ typedef struct s_textures
 	char				*west_path;
 	char				*east_path;
 	char				*south_path;
+	int n_count;
+	int w_count;
+	int e_count;
+	int s_count;
 }						t_textures;
 
 typedef struct s_map

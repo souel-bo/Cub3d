@@ -37,13 +37,25 @@ int	is_valid_texture(char *str, t_textures *textures)
 	if (fd < 0)
 		return (printf("nn\n"), close(fd), 1);
 	if (!strcmp(arr[0], "NO") && !textures->north_path)
+	{
 		textures->north_path = arr[1];
+		textures->n_count++;
+	}
 	else if (!strcmp(arr[0], "SO") && !textures->south_path)
+	{
 		textures->south_path = arr[1];
+		textures->s_count++;
+	}
 	else if (!strcmp(arr[0], "EA") && !textures->east_path)
+	{
 		textures->east_path = arr[1];
+		textures->e_count++;
+	}
 	else if (!strcmp(arr[0], "WE") && !textures->west_path)
+	{
 		textures->west_path = arr[1];
+		textures->w_count++;
+	}
 	return (close(fd), 0);
 }
 
@@ -51,9 +63,10 @@ int	check_req_textures(t_textures *textures)
 {
 	if (!textures->north_path || !textures->south_path || !textures->east_path
 		|| !textures->west_path)
-	{
 		return (1);
-	}
+	if (textures->e_count != 1 || textures->s_count != 1
+		|| textures->w_count != 1 || textures->n_count != 1)
+		return (1);
 	return (0);
 }
 
