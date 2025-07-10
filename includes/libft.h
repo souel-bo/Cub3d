@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:27:42 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/08 06:28:33 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:34:22 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,7 @@ char	**ft_split(char const *s, char c);
 int	ft_atoi(const char *str);
 int	ft_count_argc(char **argv);
 int	ft_atoi_mstr(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+
+
 #endif
