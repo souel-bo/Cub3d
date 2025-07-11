@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:21 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/11 15:00:17 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/11 23:09:08 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_single_characters(char **map)
 				pos[0] = i;
 				pos[1] = j;
 				if (check_single_characters_two(map, pos))
-					return (1);
+					return (free (pos),1);
 			}
 			j++;
 		}

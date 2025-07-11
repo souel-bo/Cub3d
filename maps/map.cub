@@ -5,11 +5,11 @@ C 20,20,20
 
 NO ./maps/texture1
 SO ./maps/texture2
-WE ./maps/texture3l
+WE ./maps/texture3
 EA ./maps/texture4
 
-
-111111111111
+    
+111111011111
 1    101   11
 1     1    1
 111111111111

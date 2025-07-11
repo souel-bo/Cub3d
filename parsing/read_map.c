@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/11 16:47:21 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/11 23:16:34 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ char	**read_file(int fd)
 	{
 		if (*line != '\n')
 			break ;
+		free(line);
 	}
 	while (line != NULL)
 	{
 		if (!*line || *line == '\n')
+		{
+			free(line);
 			break ;
+		}
 		else
 		{
 			array[i] = line;
@@ -85,6 +89,8 @@ int	start_parsing(t_map *units, char **argv)
 	collec->step_two = read_file(fd);
 	collec->step_three = read_file(fd);
 	collec->step_four = read_file(fd);
+	if (!*collec->step_one || !*collec->step_two|| !*collec->step_three)
+		return(printf("map not complited\n") , free_collec(collec) , close(fd) ,1);
 	close(fd);
 	if (collec->step_one[0][0] == 'F' || collec->step_one[0][0] == 'C')
 	{
@@ -102,6 +108,6 @@ int	start_parsing(t_map *units, char **argv)
 	units->map = collec->step_three;
 	collec->step_three = NULL;
 	if (make_map_cube(units))
-		return (free_collec(collec) ,printf("map\n"), -1);
+		return (free_collec(collec) ,free_all_items(units),printf("map\n"), -1);
 	return (free_collec(collec) ,0);
 }
