@@ -39,8 +39,8 @@ int	ft_check_filename(char *str)
 				break ;
 			i++;
 		}
-		if (!(name[i + 1] == 'c' && name[i + 1] == 'u' && name[i + 1] == 'b'
-				&& name[i + 1] == '\0'))
+		if (!(name[i + 1] == 'c' && name[i + 2] == 'u' && name[i + 3] == 'b'
+				&& name[i + 4] == '\0'))
 			return (free(name), 1);
 	}
 	return (free(name), 0);

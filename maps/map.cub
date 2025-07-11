@@ -1,12 +1,11 @@
 
-
-F 20,20,20
+F 200,20,20
 C 20,20,20
 
 
 NO ./maps/texture1
 SO ./maps/texture2
-WE ./maps/texture3
+WE ./maps/texture3l
 EA ./maps/texture4
 
 

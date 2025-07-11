@@ -28,15 +28,15 @@ int	is_valid_texture(char *str, t_textures *textures, t_map *units)
 	i = 0;
 	arr = ft_split(str, ' ');
 	if (ft_count_argc(arr) != 2)
-		return (printf("ff\n"), 1);
+		return (free_arr(arr) , printf("ff\n"), 1);
 	if (strcmp(arr[0], "NO") && strcmp(arr[0], "SO") && strcmp(arr[0], "WE")
 		&& strcmp(arr[0], "EA"))
-		return (printf("bb\n"), 1);
+		return (free_arr(arr) ,printf("bb\n"), 1);
 	arr[1] = remove_newline(arr[1]);
 	fd = open(arr[1], O_RDONLY);
 	//i need to remove newline from strings
 	if (fd < 0)
-		return (printf("nn\n"), close(fd), 1);
+		return (free_arr(arr) ,printf("nn\n") , 1);
 	if (!strcmp(arr[0], "NO"))
 	{
 		textures->north_path = arr[1];
@@ -57,7 +57,7 @@ int	is_valid_texture(char *str, t_textures *textures, t_map *units)
 		textures->west_path = arr[1];
 		units->w_count++;
 	}
-	return (close(fd), 0);
+	return (free_arr(arr) ,close(fd), 0);
 }
 
 int	check_req_textures(t_textures *textures, t_map *units)

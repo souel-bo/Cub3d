@@ -17,10 +17,10 @@ int	check_colors(char *str, t_map *units)
 
 	arr = ft_split(str, ' ');
 	if (ft_count_argc(arr) != 2 || ft_isdigit(arr[1]))
-		return (1);
+		return (free_arr(arr) ,1);
 	colors = ft_split(arr[1], ',');
 	if (ft_count_argc(colors) != 3)
-		return (1);
+		return (free_arr(arr) ,free_arr(colors),1);
 	if (!strcmp(arr[0], "F"))
 	{
 		f_color = malloc(sizeof(t_flor_collors));
@@ -39,7 +39,7 @@ int	check_colors(char *str, t_map *units)
 		units->count_ceil++;
 		units->ceilling_collors = c_color;
 	}
-	return (0);
+	return (free_arr(arr) ,free_arr(colors),0);
 }
 
 int	check_col_valid(t_map *units)

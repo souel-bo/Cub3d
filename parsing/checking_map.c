@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:21 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/08 18:26:48 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/11 15:00:17 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,16 +138,16 @@ int	setup_for_flood_fill(char **tmp_map)
 
 	pos = find_character(tmp_map);
 	if (flood_fill(tmp_map, pos[1], pos[0]))
-		return (printf("erorrrrr\n"), 1);
+		return (free(pos) ,printf("erorrrrr\n"), 1);
 	if (check_walls(tmp_map))
-		return (printf("problem in walls\n"), 1);
+		return (free(pos) ,printf("problem in walls\n"), 1);
 	if (check_single_characters(tmp_map))
-		return (printf("haaa map mt9oba\n"), 1);
+		return (free(pos) ,printf("haaa map mt9oba\n"), 1);
 	i = 0;
 	//while (tmp_map[i])
 	//{
 	//	printf("%s", tmp_map[i]);
 	//	i++;
 	//}
-	return (0);
+	return (free(pos) ,0);
 }

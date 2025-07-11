@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/09 14:14:53 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:47:21 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,18 @@ int	ft_is_space(char **arr)
 	}
 	return (0);
 }
+void free_collec(t_parse_file *collec)
+{
+	if (collec->step_one)
+		free_arr(collec->step_one);
+	if (collec->step_two)	
+		free_arr(collec->step_two);
+	if (collec->step_three)
+		free_arr(collec->step_three);
+	if (collec->step_four)
+		free_arr(collec->step_four);
+	free(collec);
+}
 
 int	start_parsing(t_map *units, char **argv)
 {
@@ -65,6 +77,10 @@ int	start_parsing(t_map *units, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
 	collec = malloc(sizeof(t_parse_file));
+	collec->step_one = NULL;
+	collec->step_two = NULL;
+	collec->step_three = NULL;
+	collec->step_four = NULL;
 	collec->step_one = read_file(fd);
 	collec->step_two = read_file(fd);
 	collec->step_three = read_file(fd);
@@ -78,13 +94,14 @@ int	start_parsing(t_map *units, char **argv)
 	}
 	if (*collec->step_four || ft_is_space(collec->step_four)
 		|| ft_is_space(collec->step_two))
-		return (printf("param 4\n"), 1);
+		return (free_collec(collec) , printf("param 4\n"), 1);
 	if (check_textures(collec->step_one, units))
-		return (printf("textures\n"), 1);
+		return (free_collec(collec) ,printf("textures\n"), 1);
 	if (ft_colors(collec->step_two, units))
-		return (printf("colors\n"), 1);
+		return (free_collec(collec) ,printf("colors\n"), 1);
 	units->map = collec->step_three;
+	collec->step_three = NULL;
 	if (make_map_cube(units))
-		return (printf("map\n"), -1);
-	return (0);
+		return (free_collec(collec) ,printf("map\n"), -1);
+	return (free_collec(collec) ,0);
 }
