@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:09 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/11 15:09:53 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/12 11:55:49 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*add_underline(char *line, int size)
 	char	*new_line;
 
 	i = 0;
-	new_line = malloc(sizeof(char) * (size + 1));
+	new_line = malloc(sizeof(char) * (size + 2));
 	while (line[i] && line[i] != '\n')
 	{
 		new_line[i] = line[i];
