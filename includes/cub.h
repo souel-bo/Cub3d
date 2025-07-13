@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/07 14:29:09 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:29:05 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB_H
 
 # include "../get_next_line/get_next_line.h"
+# include "../minilibx-linux/mlx.h"
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
@@ -21,10 +22,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../minilibx-linux/mlx.h"
 # define DOOR_TILE 32
 # define WALL_TILE 32
 # define PLAYER_TILE 15
+# define FOV_TILE 16
+# define GREY 0x808080
 typedef struct s_flor_collors
 {
 	int					red;
@@ -60,33 +62,36 @@ typedef struct s_map
 
 typedef struct s_addr
 {
-	char *addr;
-	int bpp;
-	int size_len;
-	int endien;
-} t_addr;
+	char				*addr;
+	int					bpp;
+	int					size_len;
+	int					endian;
+}						t_addr;
+
+typedef struct s_img
+{
+	void				*img;
+	t_addr				addr;
+}			t_img;
 
 typedef struct s_images
 {
-	void *wall;
-	void *player;
-	void *door;
-	t_addr *addr;
-} t_images;
-
+	t_img				wall;
+	t_img				player;
+	t_img				door;
+	t_img				fov;
+}						t_images;
 
 typedef struct s_mlx
 {
-	void *connection;
-	void *window;
-	t_map *map;
-	t_images *buffer;
-} t_mlx;
+	void				*connection;
+	void				*window;
+	t_map				*map;
+	t_images			buffer;
+}						t_mlx;
 
-
-int is_map_line(char *str);
-int count_lines(char **argv);
-int start_parsing(t_map *units, char **argv);
-
+int						is_map_line(char *str);
+int						count_lines(char **argv);
+int						start_parsing(t_map *units, char **argv);
 
 #endif
