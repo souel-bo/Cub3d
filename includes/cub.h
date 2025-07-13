@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/13 16:29:05 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:42:13 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define PLAYER_TILE 15
 # define FOV_TILE 16
 # define GREY 0x808080
+#define GREEN 0x006400
+
 typedef struct s_flor_collors
 {
 	int					red;
@@ -90,6 +92,7 @@ typedef struct s_mlx
 	t_images			buffer;
 }						t_mlx;
 
+#include "rendering.h"
 int						is_map_line(char *str);
 int						count_lines(char **argv);
 int						start_parsing(t_map *units, char **argv);

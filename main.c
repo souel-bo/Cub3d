@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/13 16:32:09 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:43:24 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	get_adresses(t_mlx *all)
 			&all->buffer.fov.addr.endian);
 }
 
-void draw_wall(t_mlx *all, int height_pos, int width_pos)
+void fill_wall_door(t_mlx *all)
 {
 	int byte_pp;
 	unsigned int offset;
@@ -222,7 +222,21 @@ void draw_wall(t_mlx *all, int height_pos, int width_pos)
 		}
 		i++;
 	}
-	mlx_put_image_to_window(all->connection, all->window, all->buffer.wall.img, width_pos * 32, height_pos *32);
+	i = 0;
+	while (i < DOOR_TILE)
+	{
+		j = 0;
+		while (j < DOOR_TILE)
+		{
+			if (i == 0 || i == DOOR_TILE - 1 || j == 0 || j == DOOR_TILE - 1)
+			{
+				offset = i * all->buffer.door.addr.size_len + j * byte_pp;
+				*(unsigned int *)(all->buffer.door.addr.addr + offset) = GREEN;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 void draw_map(t_mlx *all)
@@ -236,7 +250,9 @@ void draw_map(t_mlx *all)
 		while (all->map->map[i][j])
 		{
 			if (all->map->map[i][j] == '1')
-				draw_wall(all, i, j);
+				mlx_put_image_to_window(all->connection, all->window, all->buffer.wall.img, j * 32, i *32);
+			else if (all->map->map[i][j] == 'D')
+				mlx_put_image_to_window(all->connection, all->window, all->buffer.door.img, j * 32, i *32);
 			j++;
 		}
 		i++;
@@ -262,6 +278,7 @@ int	main(int argc, char **argv)
 	// draw_map(&all);
 	init_images(&all);
 	get_adresses(&all);
+	fill_wall_door(&all);
 	draw_map(&all);
 	mlx_loop(all.connection);
 	// printf("%f", M_PI);
