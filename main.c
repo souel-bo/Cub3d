@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/13 16:43:24 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/13 22:09:43 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ void	init_images(t_mlx *all)
 {
 	all->buffer.door.img = mlx_new_image(all->connection, 32, 32);
 	all->buffer.wall.img = mlx_new_image(all->connection, 32, 32);
-	all->buffer.player.img = mlx_new_image(all->connection, 15, 15);
+	all->buffer.player.img = mlx_new_image(all->connection, 32, 32);
 	all->buffer.fov.img = mlx_new_image(all->connection, 16, 16);
 }
 
@@ -237,8 +237,28 @@ void fill_wall_door(t_mlx *all)
 		}
 		i++;
 	}
+	i = 0;
+	while (i < 32)
+	{
+		j = 0;
+		while (j < 32)
+		{
+			if (i == 0 || i == 32 - 1 || j == 0 || j == 32 - 1)
+			{
+				offset = i * all->buffer.player.addr.size_len + j * byte_pp;
+				*(unsigned int *)(all->buffer.player.addr.addr + offset) = RED;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
+void draw_player(t_mlx *all)
+{
+	mlx_put_image_to_window(all->connection, all->window,
+		all->buffer.player.img, (int)all->map->player_x * 32, (int)all->map->player_y * 32);
+}
 void draw_map(t_mlx *all)
 {
 	int i;
@@ -257,6 +277,33 @@ void draw_map(t_mlx *all)
 		}
 		i++;
 	}
+	draw_player(all);
+}
+
+
+int key_hook(int key, t_mlx *all)
+{
+	printf("%d\n", key);
+	return 0;
+}
+
+void get_player_position(t_map *units)
+{
+	int i = 0, j;
+	while (units->map[i])
+	{
+		j = 0;
+		while (units->map[i][j])
+		{
+			if (units->map[i][j] == 'N' || units->map[i][j] == 'E' || units->map[i][j] == 'W' || units->map[i][j] == 'S')
+			{
+				units->player_x = (float)j + 0.5;
+				units->player_y = (float)i + 0.5;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)
@@ -265,8 +312,11 @@ int	main(int argc, char **argv)
 	t_mlx all;
 	int i;
 	i = 0;
+	units.player_x = 0;
+	units.player_y = 0;
 	if (start_parsing(&units, argv))
 		return (printf("map not valid\n"), 1);
+	get_player_position(&units);
 	while (units.map[i])
 	{
 		printf("%s", units.map[i]);
@@ -280,6 +330,7 @@ int	main(int argc, char **argv)
 	get_adresses(&all);
 	fill_wall_door(&all);
 	draw_map(&all);
+	mlx_hook(all.window, 2, 1L<<0, key_hook, &all);
 	mlx_loop(all.connection);
 	// printf("%f", M_PI);
 }

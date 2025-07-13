@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/13 16:42:13 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/13 22:05:55 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@
 # include <unistd.h>
 # define DOOR_TILE 32
 # define WALL_TILE 32
-# define PLAYER_TILE 15
+# define PLAYER_TILE 32
 # define FOV_TILE 16
 # define GREY 0x808080
 #define GREEN 0x006400
+#define RED  0xFF0000
+
+# define RIGHT 100
+# define DOWN 115
+# define UP 119
+# define LEFT 97
 
 typedef struct s_flor_collors
 {
@@ -56,6 +62,8 @@ typedef struct s_map
 	char				**map;
 	int					direction;
 	int					flor_collor;
+	double player_x;
+	double player_y;
 	int					ceilling_collor;
 	t_textures			*textures;
 	t_ceilling_collors	*ceilling_collors;
