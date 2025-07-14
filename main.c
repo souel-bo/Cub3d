@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/13 22:09:43 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:56:46 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ void fill_wall_door(t_mlx *all)
 void draw_player(t_mlx *all)
 {
 	mlx_put_image_to_window(all->connection, all->window,
-		all->buffer.player.img, (int)all->map->player_x * 32, (int)all->map->player_y * 32);
+		all->buffer.player.img, (int)(all->map->player_x * 32), (int)(all->map->player_y * 32));
 }
 void draw_map(t_mlx *all)
 {
@@ -283,7 +283,16 @@ void draw_map(t_mlx *all)
 
 int key_hook(int key, t_mlx *all)
 {
-	printf("%d\n", key);
+	if (key == RIGHT)
+		all->map->player_x += 0.12;
+	else if (key == LEFT)
+		all->map->player_x -= 0.12;
+	else if (key == UP)
+		all->map->player_y -= 0.12;
+	else if (key == DOWN)
+		all->map->player_y += 0.12;
+	mlx_clear_window(all->connection, all->window);
+	draw_map(all);
 	return 0;
 }
 
