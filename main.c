@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/14 10:56:46 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:48:40 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ void fill_wall_door(t_mlx *all)
 void draw_player(t_mlx *all)
 {
 	mlx_put_image_to_window(all->connection, all->window,
-		all->buffer.player.img, (int)(all->map->player_x * 32), (int)(all->map->player_y * 32));
+		all->buffer.player.img, (int)(all->map->player_x * 32 -16), (int)(all->map->player_y *32 -16));
 }
 void draw_map(t_mlx *all)
 {
@@ -283,18 +283,55 @@ void draw_map(t_mlx *all)
 
 int key_hook(int key, t_mlx *all)
 {
+	float next_x = all->map->player_x;
+	float next_y = all->map->player_y;
+	float speed = 0.10;
+
+	float px = all->map->player_x;
+	float py = all->map->player_y;
 	if (key == RIGHT)
-		all->map->player_x += 0.12;
+	{
+		next_x += speed;
+		if (
+			all->map->map[(int)(py - 0.49)][(int)(next_x + 0.49)] != '1' &&
+			all->map->map[(int)(py + 0.49)][(int)(next_x + 0.49)] != '1'
+		)
+			all->map->player_x = next_x;
+	}
 	else if (key == LEFT)
-		all->map->player_x -= 0.12;
+	{
+		next_x -= speed;
+		if (
+			all->map->map[(int)(py - 0.49)][(int)(next_x - 0.49)] != '1' &&
+			all->map->map[(int)(py + 0.49)][(int)(next_x - 0.49)] != '1'
+		)
+			all->map->player_x = next_x;
+	}
 	else if (key == UP)
-		all->map->player_y -= 0.12;
+	{
+		next_y -= speed;
+		if (
+			all->map->map[(int)(next_y - 0.49)][(int)(px - 0.49)] != '1' &&
+			all->map->map[(int)(next_y - 0.49)][(int)(px + 0.49)] != '1'
+		)
+			all->map->player_y = next_y;
+	}
 	else if (key == DOWN)
-		all->map->player_y += 0.12;
+	{
+		next_y += speed;
+		if (
+			all->map->map[(int)(next_y + 0.49)][(int)(px - 0.49)] != '1' &&
+			all->map->map[(int)(next_y + 0.49)][(int)(px + 0.49)] != '1'
+		)
+			all->map->player_y = next_y;
+	}
+	else if (key == ESCAPE)
+		exit(0);
 	mlx_clear_window(all->connection, all->window);
 	draw_map(all);
 	return 0;
 }
+
 
 void get_player_position(t_map *units)
 {
@@ -308,6 +345,7 @@ void get_player_position(t_map *units)
 			{
 				units->player_x = (float)j + 0.5;
 				units->player_y = (float)i + 0.5;
+				units->map[i][j] = '0';
 			}
 			j++;
 		}

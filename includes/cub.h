@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/13 22:05:55 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:48:52 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define DOWN 115
 # define UP 119
 # define LEFT 97
-
+#define ESCAPE 65307
 typedef struct s_flor_collors
 {
 	int					red;
