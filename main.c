@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/14 14:48:40 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/16 11:37:55 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,7 @@ void draw_player(t_mlx *all)
 	mlx_put_image_to_window(all->connection, all->window,
 		all->buffer.player.img, (int)(all->map->player_x * 32 -16), (int)(all->map->player_y *32 -16));
 }
+
 void draw_map(t_mlx *all)
 {
 	int i;
@@ -293,8 +294,8 @@ int key_hook(int key, t_mlx *all)
 	{
 		next_x += speed;
 		if (
-			all->map->map[(int)(py - 0.49)][(int)(next_x + 0.49)] != '1' &&
-			all->map->map[(int)(py + 0.49)][(int)(next_x + 0.49)] != '1'
+			all->map->map[(int)(py - 0.47)][(int)(next_x + 0.47)] != '1' &&
+			all->map->map[(int)(py + 0.47)][(int)(next_x + 0.47)] != '1'
 		)
 			all->map->player_x = next_x;
 	}
@@ -302,8 +303,8 @@ int key_hook(int key, t_mlx *all)
 	{
 		next_x -= speed;
 		if (
-			all->map->map[(int)(py - 0.49)][(int)(next_x - 0.49)] != '1' &&
-			all->map->map[(int)(py + 0.49)][(int)(next_x - 0.49)] != '1'
+			all->map->map[(int)(py - 0.47)][(int)(next_x - 0.47)] != '1' &&
+			all->map->map[(int)(py + 0.47)][(int)(next_x - 0.47)] != '1'
 		)
 			all->map->player_x = next_x;
 	}
@@ -311,8 +312,8 @@ int key_hook(int key, t_mlx *all)
 	{
 		next_y -= speed;
 		if (
-			all->map->map[(int)(next_y - 0.49)][(int)(px - 0.49)] != '1' &&
-			all->map->map[(int)(next_y - 0.49)][(int)(px + 0.49)] != '1'
+			all->map->map[(int)(next_y - 0.47)][(int)(px - 0.47)] != '1' &&
+			all->map->map[(int)(next_y - 0.47)][(int)(px + 0.47)] != '1'
 		)
 			all->map->player_y = next_y;
 	}
@@ -320,8 +321,8 @@ int key_hook(int key, t_mlx *all)
 	{
 		next_y += speed;
 		if (
-			all->map->map[(int)(next_y + 0.49)][(int)(px - 0.49)] != '1' &&
-			all->map->map[(int)(next_y + 0.49)][(int)(px + 0.49)] != '1'
+			all->map->map[(int)(next_y + 0.45)][(int)(px - 0.45)] != '1' &&
+			all->map->map[(int)(next_y + 0.45)][(int)(px + 0.45)] != '1'
 		)
 			all->map->player_y = next_y;
 	}
@@ -330,6 +331,18 @@ int key_hook(int key, t_mlx *all)
 	mlx_clear_window(all->connection, all->window);
 	draw_map(all);
 	return 0;
+}
+
+void get_angle(t_map *units, char direction)
+{
+	if (direction == 'N')
+		units->angle = M_PI /2 ;
+	else if (direction == 'E')
+		units->angle = 0;
+	else if (direction == 'W')
+		units->angle = M_PI;
+	else if (direction == 'S')
+		units->angle = 3 * M_PI/2;
 }
 
 
@@ -345,6 +358,7 @@ void get_player_position(t_map *units)
 			{
 				units->player_x = (float)j + 0.5;
 				units->player_y = (float)i + 0.5;
+				get_angle(units, units->map[i][j]);
 				units->map[i][j] = '0';
 			}
 			j++;
@@ -364,6 +378,7 @@ int	main(int argc, char **argv)
 	if (start_parsing(&units, argv))
 		return (printf("map not valid\n"), 1);
 	get_player_position(&units);
+	printf("%f\n", units.angle);
 	while (units.map[i])
 	{
 		printf("%s", units.map[i]);

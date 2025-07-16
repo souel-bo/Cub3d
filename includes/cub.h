@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/14 14:48:52 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/16 11:30:48 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_map
 	int					flor_collor;
 	double player_x;
 	double player_y;
+	double angle;
 	int					ceilling_collor;
 	t_textures			*textures;
 	t_ceilling_collors	*ceilling_collors;
