@@ -7,7 +7,7 @@ EXECUTABLE = cub3d
 OBJ = $(SOURCE:.c=.o)
 GET_OBJ = $(GET_SOURCE:.c=.o)
 LIBFT_OBJ = $(LIBFT:.c=.o)
-MLX = -Lminilibx-linux -lmlx -lXext -lX11
+MLX = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 
 all:$(EXECUTABLE)

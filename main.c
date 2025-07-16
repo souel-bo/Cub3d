@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/16 11:37:55 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:49:47 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,15 +199,15 @@ void	get_adresses(t_mlx *all)
 			&all->buffer.fov.addr.endian);
 }
 
-void fill_wall_door(t_mlx *all)
+void	fill_wall_door(t_mlx *all)
 {
-	int byte_pp;
-	unsigned int offset;
+	int				byte_pp;
+	unsigned int	offset;
+	int				i;
+	int				j;
+
 	byte_pp = all->buffer.wall.addr.bpp / 8;
-
-	int i = 0;
-	int j;
-
+	i = 0;
 	while (i < WALL_TILE)
 	{
 		j = 0;
@@ -254,16 +254,18 @@ void fill_wall_door(t_mlx *all)
 	}
 }
 
-void draw_player(t_mlx *all)
+void	draw_player(t_mlx *all)
 {
 	mlx_put_image_to_window(all->connection, all->window,
-		all->buffer.player.img, (int)(all->map->player_x * 32 -16), (int)(all->map->player_y *32 -16));
+		all->buffer.player.img, (int)(all->map->player_x * 32 - 16),
+		(int)(all->map->player_y * 32 - 16));
 }
 
-void draw_map(t_mlx *all)
+void	draw_map(t_mlx *all)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
+
 	i = 0;
 	while (all->map->map[i])
 	{
@@ -271,9 +273,11 @@ void draw_map(t_mlx *all)
 		while (all->map->map[i][j])
 		{
 			if (all->map->map[i][j] == '1')
-				mlx_put_image_to_window(all->connection, all->window, all->buffer.wall.img, j * 32, i *32);
+				mlx_put_image_to_window(all->connection, all->window,
+					all->buffer.wall.img, j * 32, i * 32);
 			else if (all->map->map[i][j] == 'D')
-				mlx_put_image_to_window(all->connection, all->window, all->buffer.door.img, j * 32, i *32);
+				mlx_put_image_to_window(all->connection, all->window,
+					all->buffer.door.img, j * 32, i * 32);
 			j++;
 		}
 		i++;
@@ -281,80 +285,79 @@ void draw_map(t_mlx *all)
 	draw_player(all);
 }
 
-
-int key_hook(int key, t_mlx *all)
+int	key_hook(int key, t_mlx *all)
 {
-	float next_x = all->map->player_x;
-	float next_y = all->map->player_y;
-	float speed = 0.10;
+	float	next_x;
+	float	next_y;
+	float	speed;
+	float	px;
+	float	py;
 
-	float px = all->map->player_x;
-	float py = all->map->player_y;
+	next_x = all->map->player_x;
+	next_y = all->map->player_y;
+	speed = 0.10;
+	px = all->map->player_x;
+	py = all->map->player_y;
 	if (key == RIGHT)
 	{
-		next_x += speed;
-		if (
-			all->map->map[(int)(py - 0.47)][(int)(next_x + 0.47)] != '1' &&
-			all->map->map[(int)(py + 0.47)][(int)(next_x + 0.47)] != '1'
-		)
-			all->map->player_x = next_x;
+		next_x = px + cos(all->map->angle - M_PI / 2) * speed;
+		next_y = py - sin(all->map->angle - M_PI / 2) * speed;
 	}
 	else if (key == LEFT)
 	{
-		next_x -= speed;
-		if (
-			all->map->map[(int)(py - 0.47)][(int)(next_x - 0.47)] != '1' &&
-			all->map->map[(int)(py + 0.47)][(int)(next_x - 0.47)] != '1'
-		)
-			all->map->player_x = next_x;
+		next_x = px + cos(all->map->angle + M_PI / 2) * speed;
+		next_y = py - sin(all->map->angle + M_PI / 2) * speed;
 	}
 	else if (key == UP)
 	{
-		next_y -= speed;
-		if (
-			all->map->map[(int)(next_y - 0.47)][(int)(px - 0.47)] != '1' &&
-			all->map->map[(int)(next_y - 0.47)][(int)(px + 0.47)] != '1'
-		)
-			all->map->player_y = next_y;
+		next_x = px + cos(all->map->angle) * speed;
+		next_y = py - sin(all->map->angle) * speed;
 	}
 	else if (key == DOWN)
 	{
-		next_y += speed;
-		if (
-			all->map->map[(int)(next_y + 0.45)][(int)(px - 0.45)] != '1' &&
-			all->map->map[(int)(next_y + 0.45)][(int)(px + 0.45)] != '1'
-		)
-			all->map->player_y = next_y;
+		next_x = px + cos(all->map->angle) * speed;
+		next_y = py + sin(all->map->angle) * speed;
 	}
 	else if (key == ESCAPE)
 		exit(0);
+	if (all->map->map[(int)(next_y - 0.47)][(int)(next_x + 0.47)] != '1'
+		&& all->map->map[(int)(next_y + 0.47)][(int)(next_x + 0.47)] != '1'
+		&& all->map->map[(int)(next_y - 0.47)][(int)(next_x - 0.47)] != '1'
+		&& all->map->map[(int)(next_y + 0.47)][(int)(next_x - 0.47)] != '1')
+	{
+		all->map->player_x = next_x;
+		all->map->player_y = next_y;
+	}
 	mlx_clear_window(all->connection, all->window);
 	draw_map(all);
-	return 0;
+	return (0);
 }
 
-void get_angle(t_map *units, char direction)
+void	get_angle(t_map *units, char direction)
 {
 	if (direction == 'N')
-		units->angle = M_PI /2 ;
+		units->angle = M_PI / 2;
 	else if (direction == 'E')
 		units->angle = 0;
 	else if (direction == 'W')
 		units->angle = M_PI;
 	else if (direction == 'S')
-		units->angle = 3 * M_PI/2;
+		units->angle = 3 * M_PI / 2;
 }
 
-
-void get_player_position(t_map *units)
+void	get_player_position(t_map *units)
 {
-	int i = 0, j;
+	int	i;
+	int	j;
+
+	i = 0;
 	while (units->map[i])
 	{
 		j = 0;
 		while (units->map[i][j])
 		{
-			if (units->map[i][j] == 'N' || units->map[i][j] == 'E' || units->map[i][j] == 'W' || units->map[i][j] == 'S')
+			if (units->map[i][j] == 'N' || units->map[i][j] == 'E'
+				|| units->map[i][j] == 'W' || units->map[i][j] == 'S')
 			{
 				units->player_x = (float)j + 0.5;
 				units->player_y = (float)i + 0.5;
@@ -392,7 +395,7 @@ int	main(int argc, char **argv)
 	get_adresses(&all);
 	fill_wall_door(&all);
 	draw_map(&all);
-	mlx_hook(all.window, 2, 1L<<0, key_hook, &all);
+	mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
 	mlx_loop(all.connection);
 	// printf("%f", M_PI);
 }
