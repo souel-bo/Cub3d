@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering_2D.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/17 16:09:36 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/21 08:53:11 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int	key_hook(int key, t_mlx *all)
 	}
 	else if (key == ESCAPE)
 		exit(0);
-	if (all->map->map[(int)(next_y - 0.47)][(int)(next_x + 0.47)] != '1'
-		&& all->map->map[(int)(next_y + 0.47)][(int)(next_x + 0.47)] != '1'
+	if (all->map->map[(int)(next_y - 0.47)][(int)(next_x - 0.05)] != '1'
+		&& all->map->map[(int)(next_y - 0.05)][(int)(next_x - 0.05)] != '1'
 		&& all->map->map[(int)(next_y - 0.47)][(int)(next_x - 0.47)] != '1'
-		&& all->map->map[(int)(next_y + 0.47)][(int)(next_x - 0.47)] != '1')
+		&& all->map->map[(int)(next_y - 0.05)][(int)(next_x - 0.47)] != '1')
 	{
 		all->map->player_x = next_x;
 		all->map->player_y = next_y;

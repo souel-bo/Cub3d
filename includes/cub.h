@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/16 11:30:48 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/21 08:40:56 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <unistd.h>
 # define DOOR_TILE 32
 # define WALL_TILE 32
-# define PLAYER_TILE 32
+# define PLAYER_TILE 16
 # define FOV_TILE 16
 # define GREY 0x808080
 #define GREEN 0x006400

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/17 16:09:08 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/21 08:22:15 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	get_player_position(&units);
 	all.connection = mlx_init();
 	all.map = &units;
-	all.window = mlx_new_window(all.connection, 1100, 600, "Cub3D");
+	all.window = mlx_new_window(all.connection, 1070, 460, "Cub3D");
 	init_images(&all);
 	get_adresses(&all);
 	fill_wall_door(&all);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:01:34 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/17 16:07:49 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/21 08:44:01 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_images(t_mlx *all)
 {
 	all->buffer.door.img = mlx_new_image(all->connection, 32, 32);
 	all->buffer.wall.img = mlx_new_image(all->connection, 32, 32);
-	all->buffer.player.img = mlx_new_image(all->connection, 32, 32);
+	all->buffer.player.img = mlx_new_image(all->connection, 16, 16);
 	all->buffer.fov.img = mlx_new_image(all->connection, 16, 16);
 }
 
@@ -75,12 +75,12 @@ void	fill_wall_door(t_mlx *all)
 		i++;
 	}
 	i = 0;
-	while (i < 32)
+	while (i < PLAYER_TILE)
 	{
 		j = 0;
-		while (j < 32)
+		while (j < PLAYER_TILE)
 		{
-			if (i == 0 || i == 32 - 1 || j == 0 || j == 32 - 1)
+			if (i == 0 || i == PLAYER_TILE - 1 || j == 0 || j == PLAYER_TILE - 1)
 			{
 				offset = i * all->buffer.player.addr.size_len + j * byte_pp;
 				*(unsigned int *)(all->buffer.player.addr.addr + offset) = RED;
