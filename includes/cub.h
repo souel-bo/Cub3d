@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/11 23:16:17 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:37:37 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB_H
 
 # include "../get_next_line/get_next_line.h"
+# include "../minilibx-linux/mlx.h"
 # include "libft.h"
 # include <fcntl.h>
 # include <math.h>
@@ -21,8 +22,19 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include <string.h>
+# define DOOR_TILE 32
+# define WALL_TILE 32
+# define PLAYER_TILE 16
+# define FOV_TILE 16
+# define GREY 0x808080
+#define GREEN 0x006400
+#define RED  0xFF0000
 
+# define RIGHT 100
+# define DOWN 115
+# define UP 119
+# define LEFT 97
+#define ESCAPE 65307
 typedef struct s_flor_collors
 {
 	int					red;
@@ -62,6 +74,9 @@ typedef struct s_map
 	char				**map;
 	int					direction;
 	int					flor_collor;
+	double player_x;
+	double player_y;
+	double angle;
 	int					ceilling_collor;
 	t_textures			*textures;
 	t_ceilling_collors	*ceilling_collors;
@@ -75,21 +90,39 @@ typedef struct s_map
 	
 }						t_map;
 
+typedef struct s_addr
+{
+	char				*addr;
+	int					bpp;
+	int					size_len;
+	int					endian;
+}						t_addr;
 
-int is_map_line(char *str);
-int count_lines(char **argv);
-int start_parsing(t_map *units, char **argv);
-int	make_map_cube(t_map *units);
-int	setup_for_flood_fill(char **tmp_map);
-int	biggest_line(char **map);
-int	check_textures(char **textures, t_map *units);
-int	check_colors(char *str, t_map *units);
-int	ft_colors(char **colors, t_map *units);
-int	ft_check_filename(char *str);
-void free_all_items(t_map *units);
+typedef struct s_img
+{
+	void				*img;
+	t_addr				addr;
+}			t_img;
 
+typedef struct s_images
+{
+	t_img				wall;
+	t_img				player;
+	t_img				door;
+	t_img				fov;
+}						t_images;
 
-void free_arr(char **arr);
+typedef struct s_mlx
+{
+	void				*connection;
+	void				*window;
+	t_map				*map;
+	t_images			buffer;
+}						t_mlx;
 
+#include "rendering.h"
+int						is_map_line(char *str);
+int						count_lines(char **argv);
+int						start_parsing(t_map *units, char **argv);
 
 #endif
