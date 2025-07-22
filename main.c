@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/22 03:21:58 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/22 04:54:00 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	main(int argc, char **argv)
 		i = 0;
 		units.player_x = 0;
 		units.player_y = 0;
-		if (start_parsing(&units, argv))
-			return (printf("map not valid\n"), 1);
 		get_player_position(&units);
 		all.connection = mlx_init();
 		all.map = &units;

@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/21 08:59:01 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/22 05:34:17 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,25 @@ void	draw_player(t_mlx *all)
 		all->buffer.player.img, (int)(all->map->player_x * 32 - 16),
 		(int)(all->map->player_y * 32 - 16));
 }
+
+void draw_single_ray(t_mlx *all)
+{
+    float ray_x = all->map->player_x;
+    float ray_y = all->map->player_y;
+    float angle = all->map->angle;
+    float step = 0.25;
+
+    while (1)
+    {
+        ray_x += cos(angle) * step;
+        ray_y -= sin(angle) * step;
+
+        if (all->map->map[(int)ray_y][(int)ray_x] == '1')
+            break;
+        mlx_pixel_put(all->connection, all->window, ray_x * 32 - 10, ray_y * 32 - 10, RED);
+    }
+}
+
 
 void	draw_map(t_mlx *all)
 {
@@ -42,6 +61,7 @@ void	draw_map(t_mlx *all)
 		i++;
 	}
 	draw_player(all);
+	draw_single_ray(all);
 }
 
 int	key_hook(int key, t_mlx *all)
