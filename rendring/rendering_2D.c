@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/22 05:34:17 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:01:15 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void draw_single_ray(t_mlx *all)
 
         if (all->map->map[(int)ray_y][(int)ray_x] == '1')
             break;
-        mlx_pixel_put(all->connection, all->window, ray_x * 32 - 10, ray_y * 32 - 10, RED);
+        mlx_pixel_put(all->connection, all->window, ray_x * 32 , ray_y * 32, RED);
     }
 }
 
@@ -99,10 +99,10 @@ int	key_hook(int key, t_mlx *all)
 	}
 	else if (key == ESCAPE)
 		exit(0);
-	if (all->map->map[(int)(next_y - 0.47)][(int)(next_x - 0.05)] != '1'
-		&& all->map->map[(int)(next_y - 0.05)][(int)(next_x - 0.05)] != '1'
+	if (all->map->map[(int)(next_y - 0.47)][(int)(next_x + 0.47)] != '1'
+		&& all->map->map[(int)(next_y + 0.47)][(int)(next_x + 0.47)] != '1'
 		&& all->map->map[(int)(next_y - 0.47)][(int)(next_x - 0.47)] != '1'
-		&& all->map->map[(int)(next_y - 0.05)][(int)(next_x - 0.47)] != '1')
+		&& all->map->map[(int)(next_y + 0.47)][(int)(next_x - 0.47)] != '1')
 	{
 		all->map->player_x = next_x;
 		all->map->player_y = next_y;
