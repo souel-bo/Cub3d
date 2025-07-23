@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/22 14:01:15 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:50:24 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ void draw_single_ray(t_mlx *all)
     float ray_x = all->map->player_x;
     float ray_y = all->map->player_y;
     float angle = all->map->angle;
-    float step = 0.25;
+    float step = 0.01;
 
     while (1)
     {
+		printf("ray_x : %f\n", cos(angle));
+		printf("ray_y : %f\n", sin(angle));
         ray_x += cos(angle) * step;
         ray_y -= sin(angle) * step;
 
