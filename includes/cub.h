@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/22 13:42:05 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:42:47 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
-#include <string.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 # define DOOR_TILE 32
 # define WALL_TILE 32
@@ -30,13 +30,16 @@
 # define GREY 0x808080
 # define GREEN 0x006400
 # define RED 0xFF0000
+#define YELLOW 0xFFFF00
 
 # define RIGHT 100
 # define DOWN 115
 # define UP 119
 # define LEFT 97
 # define ESCAPE 65307
-
+# define ROTATION_SPEED 0.05
+# define LEFT_KEY 65363
+# define RIGHT_KEY 65361
 typedef struct s_flor_collors
 {
 	int					red;
@@ -120,8 +123,6 @@ typedef struct s_mlx
 	t_map				*map;
 	t_images			buffer;
 }						t_mlx;
-
-
 
 # include "rendering.h"
 
