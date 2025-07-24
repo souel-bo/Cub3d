@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering_2D.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/23 11:37:57 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/24 09:21:23 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	draw_single_ray(t_mlx *all)
 		printf("ray_y : %f\n", sin(angle));
 		ray_x += cos(angle) * step;
 		ray_y -= sin(angle) * step;
-		if (all->map->map[(int)ray_y][(int)ray_x] == '1')
+		if (all->map->map[(int)ray_y][(int)ray_x] != '0')
 			break ;
 		// usleep(100);
 		mlx_pixel_put(all->connection, all->window, ray_x * 32, ray_y * 32,
