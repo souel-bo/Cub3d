@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/24 09:43:16 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:11:28 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <unistd.h>
 # define DOOR_TILE 32
 # define WALL_TILE 32
+#define TILE_SIZE 32
 # define PLAYER_TILE 32
 # define FOV_TILE 16
 # define GREY 0x808080

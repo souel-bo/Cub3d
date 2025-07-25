@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:27:42 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/24 09:43:23 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:10:18 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@ int	ft_atoi(const char *str);
 int	ft_count_argc(char **argv);
 int	ft_atoi_mstr(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-void	draw_single_ray(t_mlx *all);
 
 #endif
