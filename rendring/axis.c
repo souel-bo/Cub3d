@@ -32,11 +32,9 @@ int	get_map_height(char **map)
 
 void	dda_algorithm(t_mlx *all, float angle)
 {
-	int(map_height), (hit), (map_width), (map_x), (map_y);
+	int(hit), (map_x), (map_y);
 	float(abs_x), (abs_y), (delta_x), (delta_y), (ray_x), (ray_y), (step_x),
 		(step_y);
-	map_height = get_map_height(all->map->map);
-	map_width = get_map_width(all->map->map);
 	hit = 0;
 	ray_x = all->map->player_x * 32;
 	ray_y = all->map->player_y * 32;
