@@ -1,74 +1,113 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
+/*   Updated: 2025/07/22 03:17:38 by yael-yas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub.h"
 
-int	is_map_line(char *str)
+char	**read_file(int fd)
+{
+	char	*line;
+	int		i;
+	char	**array;
+
+	i = 0;
+	array = malloc(sizeof(char *) * 100);
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		if (*line != '\n')
+			break ;
+		free(line);
+	}
+	while (line != NULL)
+	{
+		if (!*line || *line == '\n')
+		{
+			free(line);
+			break ;
+		}
+		else
+		{
+			array[i] = line;
+			i++;
+		}
+		line = get_next_line(fd);
+	}
+	array[i] = NULL;
+	return (array);
+}
+
+int	ft_is_space(char **arr)
 {
 	int	i;
 
 	i = 0;
-	if (!str || str[0] == '\n')
-		return (2);
-	while (str[i])
+	while (arr[i])
 	{
-		if (str[i] != '1' && str[i] != '0' && str[i] != ' ' &&
-			str[i] != '\n' && str[i] != 'N' && str[i] != 'S' &&
-			str[i] != 'E' && str[i] != 'W' && str[i] != 'D')
-			return (0);
+		if (arr[i][0] == ' ' || arr[i][0] == '\t')
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
-
-int	count_lines(char **argv)
+void free_collec(t_parse_file *collec)
 {
-	int		count;
-	int		fd;
-	char	*line;
-	int		in_map;
-
-	count = 0;
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	in_map = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		if (is_map_line(line) == 1)
-		{
-			in_map = 1;
-			count++;
-		}
-		else if (in_map && !is_map_line(line))
-			return (free(line), close(fd), -1);
-		free(line);
-	}
-	close(fd);
-	return (count);
+	if (collec->step_one)
+		free_arr(collec->step_one);
+	if (collec->step_two)	
+		free_arr(collec->step_two);
+	if (collec->step_three)
+		free_arr(collec->step_three);
+	if (collec->step_four)
+		free_arr(collec->step_four);
+	free(collec);
 }
 
 int	start_parsing(t_map *units, char **argv)
 {
-	char	*line;
+	int				fd;
+	int				i;
+	t_parse_file	*collec;
+	char **swp;
 
-	int(in_map), (count), (i), (fd);
-	if ((count = count_lines(argv)) == -1)
-		return (-1);
-	if ((fd = open(argv[1], O_RDONLY)) < 0)
-		return (0);
+	(void)units;
+	fd = open(argv[1], O_RDONLY);
 	i = 0;
-	in_map = 0;
-	units->map = malloc(sizeof(char *) * (count + 1));
-	while ((line = get_next_line(fd)) != NULL)
+	collec = malloc(sizeof(t_parse_file));
+	collec->step_one = NULL;
+	collec->step_two = NULL;
+	collec->step_three = NULL;
+	collec->step_four = NULL;
+	collec->step_one = read_file(fd);
+	collec->step_two = read_file(fd);
+	collec->step_three = read_file(fd);
+	collec->step_four = read_file(fd);
+	if (!*collec->step_one || !*collec->step_two|| !*collec->step_three)
+		return(printf("map not complited\n") , free_collec(collec) , close(fd) ,1);
+	close(fd);
+	if (collec->step_one[0][0] == 'F' || collec->step_one[0][0] == 'C')
 	{
-		if (is_map_line(line) == 1)
-		{
-			units->map[i] = ft_strdup(line);
-			i++;
-			in_map = 1;
-		}
-		else if (in_map && !is_map_line(line))
-			break ;
-		free(line);
+		swp = collec->step_one;
+		collec->step_one = collec->step_two;
+		collec->step_two = swp;
 	}
-	units->map[i] = NULL;
-	return (close(fd), 0);
+	if (*collec->step_four || ft_is_space(collec->step_four)
+		|| ft_is_space(collec->step_two))
+		return (free_collec(collec) , printf("param 4\n"), 1);
+	if (check_textures(collec->step_one, units))
+		return (free_collec(collec) ,printf("textures\n"), 1);
+	if (ft_colors(collec->step_two, units))
+		return (free_collec(collec) ,printf("colors\n"), 1);
+	units->map = collec->step_three;
+	collec->step_three = NULL;
+	if (make_map_cube(units))
+		return (free_collec(collec) ,free_all_items(units),printf("map\n"), -1);
+	return (free_collec(collec) ,0);
 }

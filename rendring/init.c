@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:01:34 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/21 09:01:29 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:43:00 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_images(t_mlx *all)
 {
 	all->buffer.door.img = mlx_new_image(all->connection, 32, 32);
 	all->buffer.wall.img = mlx_new_image(all->connection, 32, 32);
-	all->buffer.player.img = mlx_new_image(all->connection, 16, 16);
+	all->buffer.player.img = mlx_new_image(all->connection, 32, 32);
 	all->buffer.fov.img = mlx_new_image(all->connection, 16, 16);
 }
 

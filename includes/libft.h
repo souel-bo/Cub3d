@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:27:42 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/06/30 10:34:39 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/07/26 12:43:18 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,9 @@ size_t	ft_strlen(const char *s);
 char	*ft_strdup(char *s);
 char	**ft_split(char const *s, char c);
 int	ft_atoi(const char *str);
+int	ft_count_argc(char **argv);
+int	ft_atoi_mstr(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	*ft_memset(void *s, int c, size_t n);
+
 #endif
