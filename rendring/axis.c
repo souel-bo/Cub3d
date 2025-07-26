@@ -77,10 +77,7 @@ void	dda_algorithm(t_mlx *all, float angle)
 		map_x = (int)(ray_x / 32);
 		map_y = (int)(ray_y / 32);
 		if (all->map->map[map_y][map_x] == '1')
-		{
-			draw_walls(all, ray_x, ray_y);
 			hit = 1;
-		}
 	}
 }
 
