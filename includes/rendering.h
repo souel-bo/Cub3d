@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:36:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/24 14:54:07 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/26 08:59:47 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ int		key_hook(int key, t_mlx *all);
 void	draw_map(t_mlx *all);
 void	draw_player(t_mlx *all);
 void	draw_multiple_rays(t_mlx *all);
-void	draw_single_ray(t_mlx *all);
+void	draw_single_ray(t_mlx *all, float angle);
+void ray_casting(t_mlx *all);
+
 #endif

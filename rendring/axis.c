@@ -1,33 +1,43 @@
 #include "../includes/rendering.h"
 
-int	get_map_width(char **map)
+//int	get_map_width(char **map)
+//{
+//	int	max_width;
+//	int	current_width;
+//	int	i;
+
+//	max_width = 0;
+//	i = 0;
+//	while (map[i])
+//	{
+//		current_width = 0;
+//		while (map[i][current_width])
+//			current_width++;
+//		if (current_width > max_width)
+//			max_width = current_width;
+//		i++;
+//	}
+//	return (max_width);
+//}
+
+//int	get_map_height(char **map)
+//{
+//	int	height;
+
+//	height = 0;
+//	while (map[height])
+//		height++;
+//	return (height);
+//}
+
+void draw_walls(t_mlx *all , float wall_x , float wall_y)
 {
-	int	max_width;
-	int	current_width;
-	int	i;
+	float dest_x = (all->map->player_x * 32) - wall_x;
+	float dest_y = (all->map->player_y * 32) - wall_y;
 
-	max_width = 0;
-	i = 0;
-	while (map[i])
-	{
-		current_width = 0;
-		while (map[i][current_width])
-			current_width++;
-		if (current_width > max_width)
-			max_width = current_width;
-		i++;
-	}
-	return (max_width);
-}
+	float distance = sqrt(pow(dest_x , 2) + pow(dest_y, 2));
 
-int	get_map_height(char **map)
-{
-	int	height;
-
-	height = 0;
-	while (map[height])
-		height++;
-	return (height);
+	printf("distance : %f\n", distance);
 }
 
 void	dda_algorithm(t_mlx *all, float angle)
@@ -67,11 +77,28 @@ void	dda_algorithm(t_mlx *all, float angle)
 		map_x = (int)(ray_x / 32);
 		map_y = (int)(ray_y / 32);
 		if (all->map->map[map_y][map_x] == '1')
+		{
+			draw_walls(all, ray_x, ray_y);
 			hit = 1;
+		}
 	}
 }
 
-void	draw_single_ray(t_mlx *all)
+void	draw_single_ray(t_mlx *all, float angle)
 {
-	dda_algorithm(all, all->map->angle);
+	dda_algorithm(all, angle);
+}
+
+void	ray_casting(t_mlx *all)
+{
+	float i = 0;
+	int num_rays = 0;
+	float angle = all->map->angle - 0.5236;
+
+	while (i < 1.0472)
+	{
+		draw_single_ray(all, angle);
+		angle = angle + 0.000978692;
+		i += 0.000978692;
+	}
 }

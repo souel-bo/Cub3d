@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/24 14:54:16 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/26 08:58:46 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	draw_map(t_mlx *all)
 		i++;
 	}
 	draw_player(all);
-	draw_single_ray(all);
+	ray_casting(all);
 }
 
 int	key_hook(int key, t_mlx *all)
