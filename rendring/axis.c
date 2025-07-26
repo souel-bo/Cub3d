@@ -1,4 +1,5 @@
 #include "../includes/rendering.h"
+#include "float.h"
 
 //int	get_map_width(char **map)
 //{
@@ -30,55 +31,47 @@
 //	return (height);
 //}
 
-void draw_walls(t_mlx *all , float wall_x , float wall_y)
+void	horizontal(t_mlx *all)
 {
-	float dest_x = (all->map->player_x * 32) - wall_x;
-	float dest_y = (all->map->player_y * 32) - wall_y;
+	float(first_horz_y), (first_horz_x), (Ya), (Xa);
+	if (sin(all->map->angle) > 0)
+		first_horz_y = floor(all->map->player_y) * TILE_SIZE - 1;
+	else
+		first_horz_y = floor(all->map->player_y) * TILE_SIZE + TILE_SIZE;
+	if (fabs(sin(all->map->angle)) < 0.0001f)
+		first_horz_x = all->map->player_x;
+	else
+		first_horz_x = (all->map->player_x * 32) + (first_horz_y
+				- (all->map->player_y * 32)) / tan(all->map->angle);
+	if (sin(all->map->angle) > 0)
+		Ya = -TILE_SIZE;
+	else
+		Ya = TILE_SIZE;
+	Xa = Ya / tan(all->map->angle);
+}
 
-	float distance = sqrt(pow(dest_x , 2) + pow(dest_y, 2));
-
-	printf("distance : %f\n", distance);
+void	vertical(t_mlx *all)
+{
+	float(first_vert_y), (first_vert_x), (Ya), (Xa);
+	if (cos(all->map->angle) > 0)
+		first_vert_x = floor((all->map->player_x * 32) / TILE_SIZE) * TILE_SIZE
+			+ TILE_SIZE;
+	else
+		first_vert_x = floor((all->map->player_x * 32) / TILE_SIZE) * TILE_SIZE
+			- 1;
+	first_vert_y = (all->map->player_y * 32) + ((all->map->player_x)
+			- first_vert_x) * tan(all->map->angle);
+	if (cos(all->map->angle) > 0)
+		Xa = TILE_SIZE;
+	else
+		Xa = -TILE_SIZE;
+	Ya = Xa * tan(all->map->angle);
 }
 
 void	dda_algorithm(t_mlx *all, float angle)
 {
-	int(hit), (map_x), (map_y);
-	float(abs_x), (abs_y), (delta_x), (delta_y), (ray_x), (ray_y), (step_x),
-		(step_y);
-	hit = 0;
-	ray_x = all->map->player_x * 32;
-	ray_y = all->map->player_y * 32;
-	delta_x = cos(angle);
-	delta_y = -sin(angle);
-	abs_x = fabs(delta_x);
-	abs_y = fabs(delta_y);
-	if (abs_x > abs_y)
-	{
-		if (delta_x > 0)
-			step_x = 1;
-		else
-			step_x = -1;
-		step_y = delta_y / abs_x;
-	}
-	else
-	{
-		if (delta_y > 0)
-			step_y = 1;
-		else
-			step_y = -1;
-		step_x = delta_x / abs_y;
-	}
-	while (!hit)
-	{
-		mlx_pixel_put(all->connection, all->window, (int)ray_x, (int)ray_y,
-				GREEN);
-		ray_x += step_x;
-		ray_y += step_y;
-		map_x = (int)(ray_x / 32);
-		map_y = (int)(ray_y / 32);
-		if (all->map->map[map_y][map_x] == '1')
-			hit = 1;
-	}
+	horizontal(all);
+	vertical(all);
 }
 
 void	draw_single_ray(t_mlx *all, float angle)
@@ -88,14 +81,5 @@ void	draw_single_ray(t_mlx *all, float angle)
 
 void	ray_casting(t_mlx *all)
 {
-	float i = 0;
-	int num_rays = 0;
-	float angle = all->map->angle - 0.5236;
-
-	while (i < 1.0472)
-	{
-		draw_single_ray(all, angle);
-		angle = angle + 0.000978692;
-		i += 0.000978692;
-	}
+	draw_single_ray(all, all->map->angle);
 }
