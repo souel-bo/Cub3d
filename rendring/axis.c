@@ -38,10 +38,11 @@ void	horizontal(t_mlx *all)
 	int	map_y;
 	float py = all->map->player_y * 32;
 	float px = all->map->player_x * 32;
+	float angle = all->map->angle;
 
 	hit = 0;
 	float(first_horz_y), (first_horz_x), (Ya), (Xa);
-	if (sin(all->map->angle) > 0)
+	if (sin(angle) > 0)
 	{
 		first_horz_y = floor(all->map->player_y) * TILE_SIZE - 1;
 		Ya = -TILE_SIZE;
@@ -51,16 +52,16 @@ void	horizontal(t_mlx *all)
 		first_horz_y = floor(py / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
 		Ya = TILE_SIZE;
 	}
-	if (fabs(sin(all->map->angle)) < 0)
+	if (fabs(sin(angle)) < 0)
 	{
 		first_horz_x = px;
-		Xa = (cos(all->map->angle) > 0) ? TILE_SIZE : -TILE_SIZE;
+		Xa = (cos(angle) > 0) ? TILE_SIZE : -TILE_SIZE;
 	}
 	else
 	{
 		first_horz_x = px + (first_horz_y
-				- py) / tan(all->map->angle);
-		Xa = Ya / tan(all->map->angle);
+				- py) / tan(angle);
+		Xa = Ya / tan(angle);
 	}
 	while (!hit)
 	{
@@ -87,13 +88,13 @@ void	vertical(t_mlx *all)
 	int	hit;
 	int	map_x;
 	int	map_y;
-
+	float angle = all->map->angle;
 	hit = 0;
 	float py = all->map->player_y * 32;
 	float px = all->map->player_x * 32;
 
 	float(first_vert_y), (first_vert_x), (Ya), (Xa);
-	if (cos(all->map->angle) > 0)
+	if (cos(angle) > 0)
 	{
 		first_vert_x = floor(px / TILE_SIZE) * TILE_SIZE
 					+ TILE_SIZE;
@@ -101,22 +102,20 @@ void	vertical(t_mlx *all)
 	}
 	else
 	{
-		first_vert_x = floor(px / TILE_SIZE) * TILE_SIZE
-					- 1;
+		first_vert_x = floor(px / TILE_SIZE) * TILE_SIZE - 0.0001f;
 		Xa = -TILE_SIZE;
 	}
-	if (fabs(cos(all->map->angle)) < 0.0001f)
+	if (fabs(cos(angle)) < 0.0001f)
 	{
 		first_vert_y = py;
-		Ya = (sin(all->map->angle) > 0) ? TILE_SIZE : -TILE_SIZE;
+		Ya = 0;
 	}
 	else
 	{
-		first_vert_y = py + (px - first_vert_x) * tan(all->map->angle);
-		Ya = Xa * tan(all->map->angle);
+		first_vert_y = py + (first_vert_x - px) * tan(angle);
+		Ya = Xa * tan(angle);
 	}
-		
-	
+	printf("fx : %f , fy : %f\n", first_vert_x, first_vert_y);
 	while (!hit)
 	{
 		map_x = (int)(first_vert_x / TILE_SIZE);
@@ -125,7 +124,7 @@ void	vertical(t_mlx *all)
 		if (map_x < 0 || map_y < 0 || map_y >= ft_count_argc(all->map->map) || 
             map_x >= (int)strlen(all->map->map[map_y]))
         {
-            hit = 1;  // Treat out-of-bounds as a wall hit
+            hit = 1;
             break;
         }
 
@@ -134,6 +133,9 @@ void	vertical(t_mlx *all)
 
 		mlx_pixel_put(all->connection, all->window, first_vert_x, first_vert_y,
 				YELLOW);
+		printf("px : %f , py : %f\n", all->map->player_x * 32, all->map->player_y * 32);
+		
+		printf("Xa : %f , Ya: %f\n", Xa, Ya);
 		first_vert_x += Xa;
 		first_vert_y += Ya;
 	}
