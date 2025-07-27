@@ -43,7 +43,7 @@ void	horizontal(t_mlx *all)
 	float(first_horz_y), (first_horz_x), (Ya), (Xa);
 	if (sin(all->map->angle) > 0)
 	{
-		first_horz_y = floor(py * TILE_SIZE) / TILE_SIZE - 1;
+		first_horz_y = floor(all->map->player_y) * TILE_SIZE - 1;
 		Ya = -TILE_SIZE;
 	}
 	else
