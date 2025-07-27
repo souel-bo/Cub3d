@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "cmath": "c"
+        "cmath": "c",
+        "map": "cpp",
+        "format": "cpp",
+        "float.h": "c"
     }
 }

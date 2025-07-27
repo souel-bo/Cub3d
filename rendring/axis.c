@@ -33,39 +33,99 @@
 
 void	horizontal(t_mlx *all)
 {
+	int	hit;
+	int	map_x;
+	int	map_y;
+
+	hit = 0;
 	float(first_horz_y), (first_horz_x), (Ya), (Xa);
-	if (sin(all->map->angle) > 0)
+	if (-sin(all->map->angle) > 0)
+	{
 		first_horz_y = floor(all->map->player_y) * TILE_SIZE - 1;
+		Ya = -TILE_SIZE;
+	}
 	else
+	{
 		first_horz_y = floor(all->map->player_y) * TILE_SIZE + TILE_SIZE;
+		Ya = TILE_SIZE;
+	}
 	if (fabs(sin(all->map->angle)) < 0.0001f)
-		first_horz_x = all->map->player_x;
+	{
+		first_horz_x = all->map->player_x * TILE_SIZE;
+		Xa = (cos(all->map->angle) > 0) ? TILE_SIZE : -TILE_SIZE;
+	}
 	else
+	{
 		first_horz_x = (all->map->player_x * 32) + (first_horz_y
 				- (all->map->player_y * 32)) / tan(all->map->angle);
-	if (sin(all->map->angle) > 0)
-		Ya = -TILE_SIZE;
-	else
-		Ya = TILE_SIZE;
-	Xa = Ya / tan(all->map->angle);
+		Xa = Ya / tan(all->map->angle);
+	}
+	while (!hit)
+	{
+		map_x = (int)(first_horz_x / TILE_SIZE);
+		map_y = (int)(first_horz_y / TILE_SIZE);
+		if (map_x < 0 || map_y < 0 || map_y >= ft_count_argc(all->map->map) ||
+			map_x >= (int)strlen(all->map->map[map_y]))
+		{
+			hit = 1;
+			break ;
+		}
+		if (all->map->map[map_y][map_x] == '1')
+			hit = 1;
+		mlx_pixel_put(all->connection, all->window, first_horz_x, first_horz_y,
+				GREEN);
+		printf("fhx : %f , fhy : %f\n", first_horz_x, first_horz_y);
+		first_horz_x += Xa;
+		first_horz_y += Ya;
+	}
 }
 
 void	vertical(t_mlx *all)
 {
+	int	hit;
+	int	map_x;
+	int	map_y;
+
+	hit = 0;
 	float(first_vert_y), (first_vert_x), (Ya), (Xa);
 	if (cos(all->map->angle) > 0)
+	{
 		first_vert_x = floor((all->map->player_x * 32) / TILE_SIZE) * TILE_SIZE
-			+ TILE_SIZE;
-	else
-		first_vert_x = floor((all->map->player_x * 32) / TILE_SIZE) * TILE_SIZE
-			- 1;
-	first_vert_y = (all->map->player_y * 32) + ((all->map->player_x)
-			- first_vert_x) * tan(all->map->angle);
-	if (cos(all->map->angle) > 0)
+					+ TILE_SIZE;
 		Xa = TILE_SIZE;
+	}
 	else
+	{
+		first_vert_x = floor((all->map->player_x * 32) / TILE_SIZE) * TILE_SIZE
+					- 1;
 		Xa = -TILE_SIZE;
+	}
+	if (fabs(cos(all->map->angle)) < 0.0001f)
+		first_vert_y = all->map->player_y;
+	else
+		first_vert_y = (all->map->player_y * 32) + ((all->map->player_x * 32)
+			- first_vert_x) * tan(all->map->angle);
 	Ya = Xa * tan(all->map->angle);
+	while (!hit)
+	{
+		map_x = (int)(first_vert_x / TILE_SIZE);
+		map_y = (int)(first_vert_y / TILE_SIZE);
+		
+		if (map_x < 0 || map_y < 0 || map_y >= ft_count_argc(all->map->map) || 
+            map_x >= (int)strlen(all->map->map[map_y]))
+        {
+            hit = 1;  // Treat out-of-bounds as a wall hit
+            break;
+        }
+
+		if (all->map->map[map_y][map_x] == '1')
+			hit = 1;
+
+		mlx_pixel_put(all->connection, all->window, first_vert_x, first_vert_y,
+				YELLOW);
+		first_vert_x += Xa;
+		first_vert_y += Ya;
+	}
 }
 
 void	dda_algorithm(t_mlx *all, float angle)
