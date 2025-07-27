@@ -106,11 +106,17 @@ void	vertical(t_mlx *all)
 		Xa = -TILE_SIZE;
 	}
 	if (fabs(cos(all->map->angle)) < 0.0001f)
+	{
 		first_vert_y = py;
+		Ya = (sin(all->map->angle) > 0) ? TILE_SIZE : -TILE_SIZE;
+	}
 	else
-		first_vert_y = py + (px
-		 - first_vert_x) * tan(all->map->angle);
-	Ya = Xa * tan(all->map->angle);
+	{
+		first_vert_y = py + (px - first_vert_x) * tan(all->map->angle);
+		Ya = Xa * tan(all->map->angle);
+	}
+		
+	
 	while (!hit)
 	{
 		map_x = (int)(first_vert_x / TILE_SIZE);
