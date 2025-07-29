@@ -133,7 +133,7 @@ void ray_line(t_mlx *all, float angle, int j)
         draw_y = (int)(y - sin(angle) * i);  // Use -sin for Y-down coordinate system
         mlx_pixel_put(all->connection, all->window, draw_x, draw_y, GREEN);
     }
-    
+    printf("draw_x : %d , draw_y : %d\n" ,draw_x, draw_y);
     // You can add your 3D rendering function here
     // draw_view_ray(draw_x, draw_y, j, all);
 }
