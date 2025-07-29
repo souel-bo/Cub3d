@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/24 12:11:28 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:04:21 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define PLAYER_TILE 32
 # define FOV_TILE 16
 # define GREY 0x808080
-# define GREEN 0x006400
+# define GREEN 0x58EB34
 # define RED 0xFF0000
 #define YELLOW 0xFFFF00
 

@@ -31,129 +31,135 @@
 //	return (height);
 //}
 
-void	horizontal(t_mlx *all)
+
+
+void ray_line(t_mlx *all, float angle, int j)
 {
-	int	hit;
-	int	map_x;
-	int	map_y;
-	float py = all->map->player_y * 32;
-	float px = all->map->player_x * 32;
-	float angle = all->map->angle;
-
-	hit = 0;
-	float(first_horz_y), (first_horz_x), (Ya), (Xa);
-	if (sin(angle) > 0)
-	{
-		first_horz_y = floor(all->map->player_y) * TILE_SIZE - 1;
-		Ya = -TILE_SIZE;
-	}
-	else
-	{
-		first_horz_y = floor(py / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
-		Ya = TILE_SIZE;
-	}
-	if (fabs(sin(angle)) < 0)
-	{
-		first_horz_x = px;
-		Xa = (cos(angle) > 0) ? TILE_SIZE : -TILE_SIZE;
-	}
-	else
-	{
-		first_horz_x = px + (first_horz_y
-				- py) / tan(angle);
-		Xa = Ya / tan(angle);
-	}
-	while (!hit)
-	{
-		map_x = (int)(first_horz_x / TILE_SIZE);
-		map_y = (int)(first_horz_y / TILE_SIZE);
-		if (map_x < 0 || map_y < 0 || map_y >= ft_count_argc(all->map->map) ||
-			map_x >= (int)strlen(all->map->map[map_y]))
-		{
-			hit = 1;
-			break ;
-		}
-		if (all->map->map[map_y][map_x] == '1')
-			hit = 1;
-		mlx_pixel_put(all->connection, all->window, first_horz_x, first_horz_y,
-				GREEN);
-		//printf("fhx : %f , fhy : %f\n", first_horz_x, first_horz_y);
-		first_horz_x += Xa;
-		first_horz_y += Ya;
-	}
-}
-
-void	vertical(t_mlx *all)
-{
-	int	hit;
-	int	map_x;
-	int	map_y;
-	float angle = all->map->angle;
-	hit = 0;
-	float py = all->map->player_y * 32;
-	float px = all->map->player_x * 32;
-
-	float(first_vert_y), (first_vert_x), (Ya), (Xa);
-	if (cos(angle) > 0)
-	{
-		first_vert_x = floor(px / TILE_SIZE) * TILE_SIZE
-					+ TILE_SIZE;
-		Xa = TILE_SIZE;
-	}
-	else
-	{
-		first_vert_x = floor(px / TILE_SIZE) * TILE_SIZE - 0.0001f;
-		Xa = -TILE_SIZE;
-	}
-	if (fabs(cos(angle)) < 0.0001f)
-	{
-		first_vert_y = py;
-		Ya = 0;
-	}
-	else
-	{
-		first_vert_y = py + (first_vert_x - px) * tan(angle);
-		Ya = Xa * tan(angle);
-	}
-	printf("fx : %f , fy : %f\n", first_vert_x, first_vert_y);
-	while (!hit)
-	{
-		map_x = (int)(first_vert_x / TILE_SIZE);
-		map_y = (int)(first_vert_y / TILE_SIZE);
-		
-		if (map_x < 0 || map_y < 0 || map_y >= ft_count_argc(all->map->map) || 
-            map_x >= (int)strlen(all->map->map[map_y]))
+    int i = 0;
+    // Convert player pixel position to grid coordinates
+    double px = all->map->player_x;  // Already in grid coordinates
+    double py = all->map->player_y;  // Already in grid coordinates
+    
+    // Use the angle parameter for ray direction - CORRECTED for Y-down coordinate system
+    double rayDirX = cos(angle);
+    double rayDirY = -sin(angle);  // Negate sin for Y-down coordinate system
+    
+    // Current map position
+    int mapX = (int)px;
+    int mapY = (int)py;
+    
+    // Calculate delta distances (avoid division by zero)
+    double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
+    double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
+    
+    // Calculate step direction and initial sideDist
+    int stepX, stepY;
+    double sideDistX, sideDistY;
+    
+    if (rayDirX < 0)
+    {
+        stepX = -1;
+        sideDistX = (px - mapX) * deltaDistX;
+    }
+    else
+    {
+        stepX = 1;
+        sideDistX = (mapX + 1.0 - px) * deltaDistX;
+    }
+    
+    if (rayDirY < 0)
+    {
+        stepY = -1;
+        sideDistY = (py - mapY) * deltaDistY;
+    }
+    else
+    {
+        stepY = 1;
+        sideDistY = (mapY + 1.0 - py) * deltaDistY;
+    }
+    
+    // Perform DDA with bounds checking
+    int hit = 0;
+    int side = 0;
+    
+    while (!hit)
+    {
+        // Jump to next grid line
+        if (sideDistX < sideDistY)
         {
-            hit = 1;
+            sideDistX += deltaDistX;
+            mapX += stepX;
+            side = 0;
+        }
+        else
+        {
+            sideDistY += deltaDistY;
+            mapY += stepY;
+            side = 1;
+        }
+        
+        // Bounds checking before accessing map
+        if (mapX < 0 || mapY < 0 || mapY >= ft_count_argc(all->map->map) || 
+            mapX >= (int)strlen(all->map->map[mapY]))
+        {
+            hit = 1; // Treat out of bounds as wall
             break;
         }
-
-		if (all->map->map[map_y][map_x] == '1')
-			hit = 1;
-
-		mlx_pixel_put(all->connection, all->window, first_vert_x, first_vert_y,
-				YELLOW);
-		printf("px : %f , py : %f\n", all->map->player_x * 32, all->map->player_y * 32);
-		
-		printf("Xa : %f , Ya: %f\n", Xa, Ya);
-		first_vert_x += Xa;
-		first_vert_y += Ya;
-	}
+        
+        // Check if ray has hit a wall
+        if (all->map->map[mapY][mapX] == '1') 
+            hit = 1;
+    }
+    
+    // Calculate perpendicular wall distance
+    double perpWall;
+    if (side == 0) 
+        perpWall = (sideDistX - deltaDistX);
+    else          
+        perpWall = (sideDistY - deltaDistY);
+    
+    // Convert back to pixel coordinates for drawing
+    perpWall *= TILE_SIZE;
+    
+    // Draw the ray - CORRECTED for consistent coordinate system
+    double x = all->map->player_x * 32;  // Convert to pixel coordinates
+    double y = all->map->player_y * 32;  // Convert to pixel coordinates
+    int draw_x = 0;
+    int draw_y = 0;
+    
+    for (i = 0; i < (int)perpWall; i++)
+    {
+        draw_x = (int)(x + cos(angle) * i);
+        draw_y = (int)(y - sin(angle) * i);  // Use -sin for Y-down coordinate system
+        mlx_pixel_put(all->connection, all->window, draw_x, draw_y, GREEN);
+    }
+    
+    // You can add your 3D rendering function here
+    // draw_view_ray(draw_x, draw_y, j, all);
 }
 
-void	dda_algorithm(t_mlx *all, float angle)
+void casting_rays(t_mlx *all) 
 {
-	printf("angle = %f\n", all->map->angle);
-	horizontal(all);
-	vertical(all);
+    float rayAngle = all->map->angle - (FOV / 2);
+    for (int raycount = 0; raycount < RAY_NMB; raycount++) 
+    {
+        ray_line(all, rayAngle, raycount);
+        rayAngle += FOV / RAY_NMB;
+    }
 }
 
-void	draw_single_ray(t_mlx *all, float angle)
+void dda_algorithm(t_mlx *all)
 {
-	dda_algorithm(all, angle);
+	printf("angle : %f\n", all->map->angle);
+    casting_rays(all);
+}
+
+void	draw_single_ray(t_mlx *all)
+{
+	dda_algorithm(all);
 }
 
 void	ray_casting(t_mlx *all)
 {
-	draw_single_ray(all, all->map->angle);
+	draw_single_ray(all);
 }

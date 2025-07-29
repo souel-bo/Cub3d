@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/26 08:58:46 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:11:46 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	key_hook(int key, t_mlx *all)
 	// printf("Keycode: %d\n", key);
 	next_x = all->map->player_x;
 	next_y = all->map->player_y;
-	speed = 0.10;
+	speed = 0.20;
 	px = all->map->player_x;
 	py = all->map->player_y;
 	if (all->map->angle < 0)
