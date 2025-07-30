@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/30 15:13:52 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:26:10 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define LEFT_KEY 65363
 # define RIGHT_KEY 65361
 #define WIN_WIDTH 1070
-#define WIN_HEIGHT 460
+#define WIN_HEIGHT 900
 #define MOUSE_CENTER_X (WIN_WIDTH / 2)
 
 typedef struct s_flor_collors

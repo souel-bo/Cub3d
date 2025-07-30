@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering_2D.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/29 16:11:46 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:47:41 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,30 @@ void	draw_player(t_mlx *all)
 		(int)(all->map->player_y * 32 - 16));
 }
 
+// void	draw_single_ray(t_mlx *all)
+// {
+// 	float	ray_x;
+// 	float	ray_y;
+// 	float	angle;
+// 	float	step;
+
+// 	ray_x = all->map->player_x;
+// 	ray_y = all->map->player_y;
+// 	angle = all->map->angle;
+// 	step = 0.01;
+// 	while (1)
+// 	{
+// 		printf("ray_x : %f\n", cos(angle));
+// 		printf("ray_y : %f\n", sin(angle));
+// 		ray_x += cos(angle) * step;
+// 		ray_y -= sin(angle) * step;
+// 		if (all->map->map[(int)ray_y][(int)ray_x] == '1')
+// 			break ;
+// 		// usleep(100);
+// 		mlx_pixel_put(all->connection, all->window, ray_x * 32, ray_y * 32,
+// 			YELLOW);
+// 	}
+// }
 
 void	draw_map(t_mlx *all)
 {
@@ -42,7 +66,7 @@ void	draw_map(t_mlx *all)
 		i++;
 	}
 	draw_player(all);
-	ray_casting(all);
+	draw_single_ray(all);
 }
 
 int	key_hook(int key, t_mlx *all)
@@ -55,7 +79,7 @@ int	key_hook(int key, t_mlx *all)
 	// printf("Keycode: %d\n", key);
 	next_x = all->map->player_x;
 	next_y = all->map->player_y;
-	speed = 0.20;
+	speed = 0.10;
 	px = all->map->player_x;
 	py = all->map->player_y;
 	if (all->map->angle < 0)
@@ -88,14 +112,10 @@ int	key_hook(int key, t_mlx *all)
 		all->map->angle += ROTATION_SPEED;
 	else if (key == ESCAPE)
 		exit(0);
-	if (all->map->map[(int)(next_y )][(int)(next_x)] != '1'
-		&& all->map->map[(int)(next_y)][(int)(next_x)] != '1'
-		&& all->map->map[(int)(next_y )][(int)(next_x )] != '1'
-		&& all->map->map[(int)(next_y)][(int)(next_x )] != '1')
-	{
-		all->map->player_x = next_x;
-		all->map->player_y = next_y;
-	}
+	if (all->map->map[(int)next_y][(int)px] != '1')
+	all->map->player_y = next_y;
+if (all->map->map[(int)py][(int)next_x] != '1')
+	all->map->player_x = next_x;
 	mlx_clear_window(all->connection, all->window);
 	draw_map(all);
 	return (0);
