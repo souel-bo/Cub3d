@@ -33,6 +33,24 @@
 
 
 
+void    draw_viewd_ray(t_mlx *all, double perpWall)
+{
+    int i = 0;
+    double wallsize = 460 / (perpWall / 32);
+    double start = (460 - wallsize) / 2;
+
+    double draw_x;
+    double draw_y = start;
+ 
+    while ((start + wallsize) >= draw_y)
+    {
+        mlx_pixel_put(all->connection, all->window, draw_x, draw_y, GREEN);
+        draw_y++;
+    }
+    draw_x++;
+}
+
+
 void ray_line(t_mlx *all, float angle, int j)
 {
     int i = 0;
@@ -126,16 +144,8 @@ void ray_line(t_mlx *all, float angle, int j)
     double y = all->map->player_y * 32;  // Convert to pixel coordinates
     int draw_x = 0;
     int draw_y = 0;
-    
-    for (i = 0; i < (int)perpWall; i++)
-    {
-        draw_x = (int)(x + cos(angle) * i);
-        draw_y = (int)(y - sin(angle) * i);  // Use -sin for Y-down coordinate system
-        mlx_pixel_put(all->connection, all->window, draw_x, draw_y, GREEN);
-    }
-    printf("draw_x : %d , draw_y : %d\n" ,draw_x, draw_y);
-    // You can add your 3D rendering function here
-    // draw_view_ray(draw_x, draw_y, j, all);
+        
+    draw_viewd_ray(all, perpWall);
 }
 
 void casting_rays(t_mlx *all) 
@@ -150,7 +160,6 @@ void casting_rays(t_mlx *all)
 
 void dda_algorithm(t_mlx *all)
 {
-	printf("angle : %f\n", all->map->angle);
     casting_rays(all);
 }
 
