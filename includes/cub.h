@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/31 16:55:45 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:40:21 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_map
 	char				**map;
 	int					direction;
 	int					flor_collor;
+	int		*pixels;
 	double				player_x;
 	double				player_y;
 	double				angle;
@@ -111,10 +112,7 @@ typedef struct s_img
 
 typedef struct s_images
 {
-	t_img				wall;
-	t_img				player;
-	t_img				door;
-	t_img				fov;
+	t_img	*screen;
 }						t_images;
 
 typedef struct s_mlx

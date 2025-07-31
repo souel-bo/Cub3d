@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/31 15:40:37 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:42:11 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,32 @@
 int	main(int argc, char **argv)
 {
 	t_map units;
+	t_mlx all;
 	int i;
 	i = 0;
 	if (argc != 2 || ft_check_filename(argv[1]) || start_parsing(&units, argv))
 		return (printf("map not valid\n"), 0);
 	else
 	{
-		t_mlx all;
-		int i;
-		i = 0;
-		units.player_x = 0;
-		units.player_y = 0;
-		get_player_position(&units);
-		all.connection = mlx_init();
-		all.map = &units;
-		all.window = mlx_new_window(all.connection, 1070, 460, "Cub3D");
-		init_images(&all);
-		get_adresses(&all);
-		fill_wall_door(&all);
-		draw_map(&all);
-		mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
-		mlx_loop(all.connection);
-	}
+        i = 0;
+        units.player_x = 0;
+        units.player_y = 0;
+        get_player_position(&units);
+        all.connection = mlx_init();
+        all.map = &units;
+        all.window = mlx_new_window(all.connection, 1070, 460, "Cub3D");
+        
+        // Allocate memory for the screen image struct
+        all.buffer.screen = malloc(sizeof(t_img));
+        all.buffer.screen->img = mlx_new_image(all.connection, 1070, 460);
+        all.buffer.screen->addr.addr = mlx_get_data_addr(all.buffer.screen->img,
+                &all.buffer.screen->addr.bpp, &all.buffer.screen->addr.size_len,
+                &all.buffer.screen->addr.endian);
+        all.map->pixels = (int *)all.buffer.screen->addr.addr;
+        ray_casting(&all);
+        
+        mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
+        mlx_loop(all.connection);
+    }
 	//free_all_items(&units);
 }

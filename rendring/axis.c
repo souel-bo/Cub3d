@@ -33,44 +33,58 @@
 
 
 
-void    draw_viewd_ray(t_mlx *all, double perpWall)
+void draw_viewd_ray(t_mlx *all, double perpWall, int j)
 {
-    int i = 0;
-    double wallsize = 460 / (perpWall / 32);
-    double start = (460 - wallsize) / 2;
+    int screen_height = 460;
+    int screen_width = 1070;
 
-    double draw_x;
-    double draw_y = start;
- 
-    while ((start + wallsize) >= draw_y)
+    double wallsize = screen_height / (perpWall / 32);
+    double start = (screen_height - wallsize) / 2;
+    double end = start + wallsize;
+    
+
+    for (int y = 0; y < (int)start && y < screen_height; y++)
     {
-        mlx_pixel_put(all->connection, all->window, draw_x, draw_y, GREEN);
-        draw_y++;
+        int pixel_index = y * screen_width + j;
+        all->map->pixels[pixel_index] = 0x87CEEB;
     }
-    draw_x++;
+    
+    for (int y = (int)start; y < (int)end && y < screen_height; y++)
+    {
+        if (y >= 0)
+        {
+            int pixel_index = y * screen_width + j;
+            all->map->pixels[pixel_index] = GREEN;
+        }
+    }
+    
+    for (int y = (int)end; y < screen_height; y++)
+    {
+        if (y >= 0)
+        {
+            int pixel_index = y * screen_width + j;
+            all->map->pixels[pixel_index] = 0x8B4513;
+        }
+    }
 }
+
 
 
 void ray_line(t_mlx *all, float angle, int j)
 {
     int i = 0;
-    // Convert player pixel position to grid coordinates
-    double px = all->map->player_x;  // Already in grid coordinates
-    double py = all->map->player_y;  // Already in grid coordinates
+    double px = all->map->player_x;
+    double py = all->map->player_y;
     
-    // Use the angle parameter for ray direction - CORRECTED for Y-down coordinate system
     double rayDirX = cos(angle);
-    double rayDirY = -sin(angle);  // Negate sin for Y-down coordinate system
+    double rayDirY = -sin(angle);
     
-    // Current map position
     int mapX = (int)px;
     int mapY = (int)py;
     
-    // Calculate delta distances (avoid division by zero)
     double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
     double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
     
-    // Calculate step direction and initial sideDist
     int stepX, stepY;
     double sideDistX, sideDistY;
     
@@ -96,13 +110,11 @@ void ray_line(t_mlx *all, float angle, int j)
         sideDistY = (mapY + 1.0 - py) * deltaDistY;
     }
     
-    // Perform DDA with bounds checking
     int hit = 0;
     int side = 0;
     
     while (!hit)
     {
-        // Jump to next grid line
         if (sideDistX < sideDistY)
         {
             sideDistX += deltaDistX;
@@ -116,36 +128,30 @@ void ray_line(t_mlx *all, float angle, int j)
             side = 1;
         }
         
-        // Bounds checking before accessing map
         if (mapX < 0 || mapY < 0 || mapY >= ft_count_argc(all->map->map) || 
             mapX >= (int)strlen(all->map->map[mapY]))
         {
-            hit = 1; // Treat out of bounds as wall
+            hit = 1;
             break;
         }
-        
-        // Check if ray has hit a wall
         if (all->map->map[mapY][mapX] == '1') 
             hit = 1;
     }
     
-    // Calculate perpendicular wall distance
     double perpWall;
     if (side == 0) 
         perpWall = (sideDistX - deltaDistX);
     else          
         perpWall = (sideDistY - deltaDistY);
     
-    // Convert back to pixel coordinates for drawing
     perpWall *= TILE_SIZE;
     
-    // Draw the ray - CORRECTED for consistent coordinate system
-    double x = all->map->player_x * 32;  // Convert to pixel coordinates
-    double y = all->map->player_y * 32;  // Convert to pixel coordinates
+    double x = all->map->player_x * 32;
+    double y = all->map->player_y * 32;
     int draw_x = 0;
     int draw_y = 0;
         
-    draw_viewd_ray(all, perpWall);
+    draw_viewd_ray(all, perpWall, j);
 }
 
 void casting_rays(t_mlx *all) 
@@ -171,5 +177,7 @@ void	draw_single_ray(t_mlx *all)
 
 void	ray_casting(t_mlx *all)
 {
+
 	draw_single_ray(all);
+    mlx_put_image_to_window(all->connection, all->window, all->buffer.screen->img, 0, 0);
 }
