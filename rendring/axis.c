@@ -150,6 +150,7 @@ void ray_line(t_mlx *all, float angle, int j)
 
 void casting_rays(t_mlx *all) 
 {
+    
     float rayAngle = all->map->angle - (FOV / 2);
     for (int raycount = 0; raycount < RAY_NMB; raycount++) 
     {
