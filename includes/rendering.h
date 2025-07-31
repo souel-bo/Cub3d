@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:36:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/31 13:38:17 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/07/31 15:58:24 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "cub.h"
 #define FOV (M_PI / 3)  // 60 degrees field of view
 #define RAY_NMB 1070 
+
 void	fill_wall_door(t_mlx *all);
 void	get_player_position(t_map *units);
 void	get_angle(t_map *units, char direction);
