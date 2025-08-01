@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/31 18:40:21 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/01 09:47:08 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,6 @@ int						ft_colors(char **colors, t_map *units);
 int						ft_check_filename(char *str);
 void					free_all_items(t_map *units);
 void					free_arr(char **arr);
+void 					mix_colors(t_mlx *all);
 
 #endif

@@ -50,7 +50,7 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j)
 	while (y < (int)start && y < screen_height)
 	{
 		pixel_index = y * screen_width + j;
-		all->map->pixels[pixel_index] = 0x87CEEB;
+		all->map->pixels[pixel_index] = all->map->ceilling_collor;
 		y++;
 	}
 	y = (int)start;
@@ -59,7 +59,7 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j)
 		if (y >= 0)
 		{
 			pixel_index = y * screen_width + j;
-			all->map->pixels[pixel_index] = GREEN;
+			all->map->pixels[pixel_index] = 0x80702E;
 		}
 		y++;
 	}
@@ -69,7 +69,7 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j)
 		if (y >= 0)
 		{
 			pixel_index = y * screen_width + j;
-			all->map->pixels[pixel_index] = 0x8B4513;
+			all->map->pixels[pixel_index] =  all->map->flor_collor;
 		}
 		y++;
 	}

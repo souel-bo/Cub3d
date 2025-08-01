@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/31 20:42:11 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/01 09:48:43 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ int	main(int argc, char **argv)
         get_player_position(&units);
         all.connection = mlx_init();
         all.map = &units;
+        mix_colors(&all);
         all.window = mlx_new_window(all.connection, 1070, 460, "Cub3D");
-        
-        // Allocate memory for the screen image struct
         all.buffer.screen = malloc(sizeof(t_img));
         all.buffer.screen->img = mlx_new_image(all.connection, 1070, 460);
         all.buffer.screen->addr.addr = mlx_get_data_addr(all.buffer.screen->img,
@@ -38,7 +37,6 @@ int	main(int argc, char **argv)
                 &all.buffer.screen->addr.endian);
         all.map->pixels = (int *)all.buffer.screen->addr.addr;
         ray_casting(&all);
-        
         mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
         mlx_loop(all.connection);
     }
