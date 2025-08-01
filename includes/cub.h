@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/01 09:47:08 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/01 10:45:38 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 # include <unistd.h>
 # define DOOR_TILE 32
 # define WALL_TILE 32
-#define TILE_SIZE 32
 # define PLAYER_TILE 32
+#define TILE_SIZE 32
 # define FOV_TILE 16
 # define GREY 0x808080
-# define GREEN 0x58EB34
+# define GREEN 0x006400
 # define RED 0xFF0000
 #define YELLOW 0xFFFF00
 
@@ -41,6 +41,10 @@
 # define ROTATION_SPEED 0.05
 # define LEFT_KEY 65363
 # define RIGHT_KEY 65361
+#define WIN_WIDTH 1070
+#define WIN_HEIGHT 460
+#define MOUSE_CENTER_X (WIN_WIDTH / 2)
+
 typedef struct s_flor_collors
 {
 	int					red;
@@ -115,12 +119,18 @@ typedef struct s_images
 	t_img	*screen;
 }						t_images;
 
+typedef struct s_movements
+{
+	int *movements;
+} t_movements;
+
 typedef struct s_mlx
 {
 	void				*connection;
 	void				*window;
 	t_map				*map;
 	t_images			buffer;
+	t_movements movements;
 }						t_mlx;
 
 # include "rendering.h"
