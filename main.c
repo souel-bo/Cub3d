@@ -6,13 +6,32 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/01 10:55:09 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/01 14:17:25 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub.h"
 
 #include "includes/libft.h"
+
+int handle_mouse_movements(int x, int y, void *param)
+{
+	t_mlx *all = (t_mlx *)param;
+
+	int delta = x - MOUSE_CENTER_X;
+	if (delta == 0)
+		return (0);
+	all->map->angle += delta * 0.001;
+	if (all->map->angle > 2 * M_PI)
+		all->map->angle -= 2 * M_PI;
+	else if (all->map->angle < 0)
+		all->map->angle += 2 * M_PI;
+	mlx_mouse_move(all->connection, all->window, MOUSE_CENTER_X, WIN_HEIGHT / 2);
+	mlx_clear_window(all->connection, all->window);
+	ray_casting(all);
+	return (0);
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -40,6 +59,8 @@ int	main(int argc, char **argv)
         all.map->pixels = (int *)all.buffer.screen->addr.addr;
         ray_casting(&all);
         mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
+        mlx_mouse_hide(all.connection, all.window);
+	mlx_hook(all.window, 6,  1L << 6, handle_mouse_movements, &all);
         mlx_loop(all.connection);
     }
 	//free_all_items(&units);
