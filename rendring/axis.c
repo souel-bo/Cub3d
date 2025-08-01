@@ -154,6 +154,8 @@ void	ray_line(t_mlx *all, float angle, int j)
 		perpWall = (sideDistX - deltaDistX);
 	else
 		perpWall = (sideDistY - deltaDistY);
+    // fix eye problem fixed by this line . but who it works i dont know hhhhh
+    perpWall *= cos(angle - all->map->angle);
 	perpWall *= TILE_SIZE;
 	x = all->map->player_x * 32;
 	y = all->map->player_y * 32;
