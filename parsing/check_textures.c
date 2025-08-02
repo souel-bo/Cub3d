@@ -39,22 +39,22 @@ int	is_valid_texture(char *str, t_textures *textures, t_map *units)
 		return (free_arr(arr) ,printf("nn\n") , 1);
 	if (!strcmp(arr[0], "NO"))
 	{
-		textures->north_path = arr[1];
+		textures->north_path = ft_strdup(arr[1]);
 		units->n_count++;
 	}
 	else if (!strcmp(arr[0], "SO"))
 	{
-		textures->south_path = arr[1];
+		textures->south_path = ft_strdup(arr[1]);
 		units->s_count++;
 	}
 	else if (!strcmp(arr[0], "EA"))
 	{
-		textures->east_path = arr[1];
+		textures->east_path = ft_strdup(arr[1]);
 		units->e_count++;
 	}
 	else if (!strcmp(arr[0], "WE"))
 	{
-		textures->west_path = arr[1];
+		textures->west_path = ft_strdup(arr[1]);
 		units->w_count++;
 	}
 	return (free_arr(arr) ,close(fd), 0);
@@ -74,7 +74,7 @@ int	check_req_textures(t_textures *textures, t_map *units)
 int	check_textures(char **textures, t_map *units)
 {
 	int			i;
-	t_textures	v_textures;
+	t_textures	*v_textures = malloc(sizeof(t_textures));
 	units->e_count = 0;
 	units->s_count = 0;
 	units->w_count = 0;
@@ -83,12 +83,12 @@ int	check_textures(char **textures, t_map *units)
 	i = 0;
 	while (textures[i])
 	{
-		if (is_valid_texture(textures[i], &v_textures, units))
+		if (is_valid_texture(textures[i], v_textures, units))
 			return (1);
 		i++;
 	}
-	if (check_req_textures(&v_textures, units))
+	if (check_req_textures(v_textures, units))
 		return (1);
-	units->textures = &v_textures;
+	units->textures = v_textures;
 	return (0);
 }
