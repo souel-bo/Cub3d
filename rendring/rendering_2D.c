@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/01 14:09:58 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/01 20:38:02 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	key_hook(int key, t_mlx *all)
 	else if (key == ESCAPE)
 		exit(0);
 	if (all->map->map[(int)next_y][(int)px] != '1')
-	all->map->player_y = next_y;
-if (all->map->map[(int)py][(int)next_x] != '1')
-	all->map->player_x = next_x;
+		all->map->player_y = next_y;
+	if (all->map->map[(int)py][(int)next_x] != '1')
+		all->map->player_x = next_x;
 	mlx_clear_window(all->connection, all->window);
 	ray_casting(all);
 	return (0);

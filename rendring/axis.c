@@ -31,7 +31,8 @@
 //	return (height);
 //}
 
-void	draw_viewd_ray(t_mlx *all, double perpWall, int j)
+
+void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit)
 {
 	int		screen_height;
 	int		screen_width;
@@ -54,14 +55,29 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j)
 		y++;
 	}
 	y = (int)start;
-	while (y < (int)end && y < screen_height)
+	if (hit == 1)
 	{
-		if (y >= 0)
+		while (y < (int)end && y < screen_height)
 		{
-			pixel_index = y * screen_width + j;
-			all->map->pixels[pixel_index] = 0x80702E;
+			if (y >= 0)
+			{
+				pixel_index = y * screen_width + j;
+				all->map->pixels[pixel_index] = 0x80702E;
+			}
+			y++;
 		}
-		y++;
+	}
+	else
+	{
+		while (y < (int)end && y < screen_height)
+		{
+			if (y >= 0)
+			{
+				pixel_index = y * screen_width + j;
+				all->map->pixels[pixel_index] = 0x99999;
+			}
+			y++;
+		}
 	}
 	y = (int)end ;
     while (y < screen_height)
@@ -149,6 +165,8 @@ void	ray_line(t_mlx *all, float angle, int j)
 		}
 		if (all->map->map[mapY][mapX] == '1')
 			hit = 1;
+		if (all->map->map[mapY][mapX] == 'D')
+			hit = 2;
 	}
 	if (side == 0)
 		perpWall = (sideDistX - deltaDistX);
@@ -161,7 +179,7 @@ void	ray_line(t_mlx *all, float angle, int j)
 	y = all->map->player_y * 32;
 	draw_x = 0;
 	draw_y = 0;
-	draw_viewd_ray(all, perpWall, j);
+	draw_viewd_ray(all, perpWall, j, hit);
 }
 
 void	casting_rays(t_mlx *all)
