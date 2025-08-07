@@ -41,33 +41,23 @@ void draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
     int texture_height = 64;
     int screen_y = y_start;
     char *tex_pixel;
-
-    // 1. Choose texture
     if (side == 0)
         texture = (rayDirX > 0) ? &all->buffer.west : &all->buffer.east;
     else
         texture = (rayDirY > 0) ? &all->buffer.north : &all->buffer.south;
-
-    // Safety check
     if (!texture || !texture->addr.addr)
         return;
-
-    // 2. Compute wall_x
     double wall_x;
     if (side == 0)
         wall_x = all->map->player_y + ((mapX - all->map->player_x + (1 - (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
     else
         wall_x = all->map->player_x + ((mapY - all->map->player_y + (1 - (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
     wall_x -= floor(wall_x);
-
-    // 3. Compute tex_x
     tex_x = (int)(wall_x * texture_width);
     if (tex_x < 0) tex_x = 0;
     if (tex_x >= texture_width) tex_x = texture_width - 1;
     if ((side == 0 && rayDirX < 0) || (side == 1 && rayDirY > 0))
         tex_x = texture_width - tex_x - 1;
-
-    // 4. Loop over vertical pixels
     while (screen_y < y_end && screen_y < 460)
     {
         double tex_pos = (screen_y - y_start) * (double)texture_height / wall_height;
@@ -79,7 +69,7 @@ void draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
         if (pixel_offset < 0 || pixel_offset >= texture->addr.size_len * texture_height)
         {
             screen_y++;
-            continue; // Avoid invalid access
+            continue;
         }
 
         tex_pixel = texture->addr.addr + pixel_offset;
@@ -92,13 +82,9 @@ void draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
         screen_y++;
     }
 }
-
-
-
 void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 						int side, double rayDirX, double rayDirY,
 						int mapX, int mapY)
-
 {
 	int		screen_height;
 	int		screen_width;
@@ -122,9 +108,21 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 		y++;
 	}
 	y = (int)start;
+	// if (hit == 1)
+	// draw_textured_wall(all, j, (int)start, (int)end, wallsize, side,
+	// 	rayDirX, rayDirY, mapX, mapY);
 	if (hit == 1)
-	draw_textured_wall(all, j, (int)start, (int)end, wallsize, side,
-		rayDirX, rayDirY, mapX, mapY);
+{
+	while (y < (int)end && y < screen_height)
+	{
+		if (y >= 0)
+		{
+			pixel_index = y * screen_width + j;
+			all->map->pixels[pixel_index] = 0x80702E; // ← remove this
+		}
+		y++;
+	}
+}
 	else
 	{
 		//doors drawing 
