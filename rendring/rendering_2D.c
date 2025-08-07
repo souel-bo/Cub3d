@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering_2D.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/01 20:38:02 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:43:00 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	draw_walls(t_mlx *all)
 {
 	mlx_put_image_to_window(all->connection, all->window, all->buffer.screen->img ,0, 0);
 }
-
-
 
 int	key_hook(int key, t_mlx *all)
 {
@@ -61,7 +59,7 @@ int	key_hook(int key, t_mlx *all)
 	else if (key == LEFT_KEY) 
 		all->map->angle += ROTATION_SPEED;
 	else if (key == ESCAPE)
-		exit(0);
+		exit(0); //free at exit with escape
 	if (all->map->map[(int)next_y][(int)px] != '1')
 		all->map->player_y = next_y;
 	if (all->map->map[(int)py][(int)next_x] != '1')

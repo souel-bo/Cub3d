@@ -50,6 +50,7 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit)
 	y = 0;
 	while (y < (int)start && y < screen_height)
 	{
+		//sky drawing
 		pixel_index = y * screen_width + j;
 		all->map->pixels[pixel_index] = all->map->ceilling_collor;
 		y++;
@@ -57,6 +58,7 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit)
 	y = (int)start;
 	if (hit == 1)
 	{
+		//walls drawing
 		while (y < (int)end && y < screen_height)
 		{
 			if (y >= 0)
@@ -69,6 +71,7 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit)
 	}
 	else
 	{
+		//doors drawing 
 		while (y < (int)end && y < screen_height)
 		{
 			if (y >= 0)
@@ -82,6 +85,7 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit)
 	y = (int)end ;
     while (y < screen_height)
 	{
+		//ground drawing
 		if (y >= 0)
 		{
 			pixel_index = y * screen_width + j;

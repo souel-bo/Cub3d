@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/02 14:49:47 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/05 14:03:10 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,56 @@ int handle_mouse_movements(int x, int y, void *param)
 	return (0);
 }
 
+void	load_textures(t_mlx *all)
+{
+	int		width;
+	int		height;
+
+	all->buffer.north.img = mlx_xpm_file_to_image(all->connection, all->map->textures->north_path, &width, &height);
+	if (!all->buffer.north.img)
+	{
+		perror("Failed to load north texture");
+		exit(1);
+	}
+	all->buffer.north.addr.addr = mlx_get_data_addr(all->buffer.north.img,
+			&all->buffer.north.addr.bpp,
+			&all->buffer.north.addr.size_len,
+			&all->buffer.north.addr.endian);
+
+	all->buffer.south.img = mlx_xpm_file_to_image(all->connection, all->map->textures->south_path, &width, &height);
+	if (!all->buffer.south.img)
+	{
+		perror("Failed to load south texture");
+		exit(1);
+	}
+	all->buffer.south.addr.addr = mlx_get_data_addr(all->buffer.south.img,
+			&all->buffer.south.addr.bpp,
+			&all->buffer.south.addr.size_len,
+			&all->buffer.south.addr.endian);
+
+	all->buffer.east.img = mlx_xpm_file_to_image(all->connection, all->map->textures->east_path, &width, &height);
+	if (!all->buffer.east.img)
+	{
+		perror("Failed to load east texture");
+		exit(1);
+	}
+	all->buffer.east.addr.addr = mlx_get_data_addr(all->buffer.east.img,
+			&all->buffer.east.addr.bpp,
+			&all->buffer.east.addr.size_len,
+			&all->buffer.east.addr.endian);
+
+	all->buffer.west.img = mlx_xpm_file_to_image(all->connection, all->map->textures->west_path, &width, &height);
+	if (!all->buffer.west.img)
+	{
+		perror("Failed to load west texture");
+		exit(1);
+	}
+	all->buffer.west.addr.addr = mlx_get_data_addr(all->buffer.west.img,
+			&all->buffer.west.addr.bpp,
+			&all->buffer.west.addr.size_len,
+			&all->buffer.west.addr.endian);
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -54,13 +104,15 @@ int	main(int argc, char **argv)
         all.buffer.screen = malloc(sizeof(t_img));
         all.buffer.screen->img = mlx_new_image(all.connection, 1070, 460);
         all.buffer.screen->addr.addr = mlx_get_data_addr(all.buffer.screen->img,
-                &all.buffer.screen->addr.bpp, &all.buffer.screen->addr.size_len,
-                &all.buffer.screen->addr.endian);
-        all.map->pixels = (int *)all.buffer.screen->addr.addr;
-        ray_casting(&all);
-        mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
+			&all.buffer.screen->addr.bpp, &all.buffer.screen->addr.size_len,
+			&all.buffer.screen->addr.endian);
+			all.map->pixels = (int *)all.buffer.screen->addr.addr;
+			// printf("%s\n", all.map->textures->south_path);
+			load_textures(&all);
+			ray_casting(&all);
+			mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
         mlx_mouse_hide(all.connection, all.window);
-	mlx_hook(all.window, 6,  1L << 6, handle_mouse_movements, &all);
+		mlx_hook(all.window, 6,  1L << 6, handle_mouse_movements, &all);
         mlx_loop(all.connection);
     }
 	//free_all_items(&units);
