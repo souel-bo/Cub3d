@@ -108,20 +108,19 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 		y++;
 	}
 	y = (int)start;
-	// if (hit == 1)
-	// draw_textured_wall(all, j, (int)start, (int)end, wallsize, side,
-	// 	rayDirX, rayDirY, mapX, mapY);
+	if (hit == 1)
+		draw_textured_wall(all, j, (int)start, (int)end, wallsize, side, rayDirX, rayDirY, mapX, mapY);
 	if (hit == 1)
 {
-	while (y < (int)end && y < screen_height)
-	{
-		if (y >= 0)
-		{
-			pixel_index = y * screen_width + j;
-			all->map->pixels[pixel_index] = 0x80702E; // ← remove this
-		}
-		y++;
-	}
+	//while (y < (int)end && y < screen_height)
+	//{
+	//	if (y >= 0)
+	//	{
+	//		pixel_index = y * screen_width + j;
+	//		all->map->pixels[pixel_index] = 0x80702E; // ← remove this
+	//	}
+	//	y++;
+	//}
 }
 	else
 	{

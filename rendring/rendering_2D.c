@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering_2D.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/05 13:43:00 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/08 08:55:19 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	key_hook(int key, t_mlx *all)
 	// printf("Keycode: %d\n", key);
 	next_x = all->map->player_x;
 	next_y = all->map->player_y;
-	speed = 0.10;
+	speed = 0.15;
 	px = all->map->player_x;
 	py = all->map->player_y;
 	if (all->map->angle < 0)
@@ -60,10 +60,13 @@ int	key_hook(int key, t_mlx *all)
 		all->map->angle += ROTATION_SPEED;
 	else if (key == ESCAPE)
 		exit(0); //free at exit with escape
-	if (all->map->map[(int)next_y][(int)px] != '1')
-		all->map->player_y = next_y;
-	if (all->map->map[(int)py][(int)next_x] != '1')
-		all->map->player_x = next_x;
+    if (all->map->map[(int)(next_y + 0.07)][(int)px] != '1' && 
+        all->map->map[(int)(next_y - 0.07)][(int)px] != '1')
+        all->map->player_y = next_y;
+    
+    if (all->map->map[(int)py][(int)(next_x + 0.07)] != '1' && 
+        all->map->map[(int)py][(int)(next_x - 0.07)] != '1')
+        all->map->player_x = next_x;
 	mlx_clear_window(all->connection, all->window);
 	ray_casting(all);
 	return (0);
