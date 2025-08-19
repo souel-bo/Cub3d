@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/18 16:31:48 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:11:36 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 #define WIN_WIDTH 1070
 #define WIN_HEIGHT 460
 #define MOUSE_CENTER_X (WIN_WIDTH / 2)
+#define TEX_W    64
+#define TEX_H    64
 
 typedef struct s_flor_collors
 {

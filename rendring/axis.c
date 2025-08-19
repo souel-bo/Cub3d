@@ -1,49 +1,12 @@
 #include "../includes/rendering.h"
 #include "float.h"
 
-//int	get_map_width(char **map)
-//{
-//	int	max_width;
-//	int	current_width;
-//	int	i;
-
-//	max_width = 0;
-//	i = 0;
-//	while (map[i])
-//	{
-//		current_width = 0;
-//		while (map[i][current_width])
-//			current_width++;
-//		if (current_width > max_width)
-//			max_width = current_width;
-//		i++;
-//	}
-//	return (max_width);
-//}
-
-//int	get_map_height(char **map)
-//{
-//	int	height;
-
-//	height = 0;
-//	while (map[height])
-//		height++;
-//	return (height);
-//}
 void	draw_textured_door(t_mlx *all, int j, int y_start, int y_end,
 							double wall_height, int side,
 							double rayDirX, double rayDirY, int mapX, int mapY)
 {
-	t_img	*texture;
-	int		tex_x, tex_y;
-	int		color;
-	int		screen_width = 1070;
-	int		texture_width = 64;
-	int		texture_height = 64;
-	int		screen_y = y_start;
-	char	*tex_pixel;
-	texture = &all->buffer.door;
-	if (!texture || !texture->addr.addr)
+	t_img	*tex = &all->buffer.door;
+	if (!tex || !tex->addr.addr || wall_height <= 0.0)
 		return;
 	double wall_x;
 	if (side == 0)
@@ -53,111 +16,102 @@ void	draw_textured_door(t_mlx *all, int j, int y_start, int y_end,
 		wall_x = all->map->player_x
 			+ ((mapY - all->map->player_y + (1 - (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
 	wall_x -= (int)wall_x;
-	tex_x = (int)(wall_x * (double)texture_width);
+	int tex_x = (int)(wall_x * (double)TEX_W);
 	if (tex_x < 0) tex_x = 0;
-	if (tex_x >= texture_width) tex_x = texture_width - 1;
+	if (tex_x >= TEX_W) tex_x = TEX_W - 1;
 	if ((side == 0 && rayDirX < 0) || (side == 1 && rayDirY > 0))
-		tex_x = texture_width - tex_x - 1;
-	while (screen_y < y_end && screen_y < 460)
+		tex_x = TEX_W - tex_x - 1;
+	int y0 = y_start;
+	int y1 = y_end;
+	if (y0 < 0) y0 = 0;
+	if (y1 > WIN_HEIGHT) y1 = WIN_HEIGHT;
+	if (y0 >= y1) return;
+	int bytes_per_px = tex->addr.bpp >> 3;
+	int tex_line     = tex->addr.size_len;
+	int step_fp      = (int)((((long long)TEX_H) << 16) / (int)wall_height);
+	int texpos_fp    = (int)(((long long)(y0 - y_start) * step_fp));
+	int *dst = all->map->pixels;                        
+	int x    = j;                                      
+	char *tex_base = tex->addr.addr;                   
+	for (int y = y0; y < y1; ++y)
 	{
-		double tex_pos = (screen_y - y_start) * (double)texture_height / wall_height;
-		tex_y = (int)tex_pos;
-
-		if (tex_y < 0) tex_y = 0;
-		if (tex_y >= texture_height) tex_y = texture_height - 1;
-		int pixel_offset = tex_y * texture->addr.size_len + tex_x * (texture->addr.bpp / 8);
-		if (pixel_offset < 0 || pixel_offset >= texture->addr.size_len * texture_height)
-		{
-			screen_y++;
-			continue;
-		}
-
-		tex_pixel = texture->addr.addr + pixel_offset;
-		color = *(unsigned int *)tex_pixel;
-		int screen_offset = screen_y * screen_width + j;
-		if (screen_offset >= 0 && screen_offset < screen_width * 460)
-			all->map->pixels[screen_offset] = color;
-
-		screen_y++;
+		int tex_y = (texpos_fp >> 16);               
+		texpos_fp += step_fp;
+		char *src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
+		int color = *(int *)src;
+		dst[y * WIN_WIDTH + x] = color;
 	}
 }
 
-
-
-void draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
-                        double wall_height, int side,
-                        double rayDirX, double rayDirY, int mapX, int mapY)
+void	draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
+							double wall_height, int side,
+							double rayDirX, double rayDirY, int mapX, int mapY)
 {
-    t_img *texture = NULL;
-    int tex_x, tex_y, color;
-    int screen_width = 1070;
-    int texture_width = 64;
-    int texture_height = 64;
-    int screen_y = y_start;
-    char *tex_pixel;
-    if (side == 0)
-        texture = (rayDirX > 0) ? &all->buffer.west : &all->buffer.east;
-    else
-        texture = (rayDirY > 0) ? &all->buffer.north : &all->buffer.south;
-    if (!texture || !texture->addr.addr)
-        return;
-    double wall_x;
-    if (side == 0)
-        wall_x = all->map->player_y + ((mapX - all->map->player_x + (1 - (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
-    else
-        wall_x = all->map->player_x + ((mapY - all->map->player_y + (1 - (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
-    wall_x -= floor(wall_x);
-    tex_x = (int)(wall_x * texture_width);
-    if (tex_x < 0) tex_x = 0;
-    if (tex_x >= texture_width) tex_x = texture_width - 1;
-    if ((side == 0 && rayDirX < 0) || (side == 1 && rayDirY > 0))
-        tex_x = texture_width - tex_x - 1;
-    while (screen_y < y_end && screen_y < 460)
-    {
-        double tex_pos = (screen_y - y_start) * (double)texture_height / wall_height;
-        tex_y = (int)tex_pos;
-        if (tex_y < 0) tex_y = 0;
-        if (tex_y >= texture_height) tex_y = texture_height - 1;
+	t_img *tex = NULL;
+	if (side == 0)
+		tex = (rayDirX > 0) ? &all->buffer.west : &all->buffer.east;
+	else
+		tex = (rayDirY > 0) ? &all->buffer.north : &all->buffer.south;
 
-        int pixel_offset = tex_y * texture->addr.size_len + tex_x * (texture->addr.bpp / 8);
-        if (pixel_offset < 0 || pixel_offset >= texture->addr.size_len * texture_height)
-        {
-            screen_y++;
-            continue;
-        }
-
-        tex_pixel = texture->addr.addr + pixel_offset;
-        color = *(unsigned int *)tex_pixel;
-
-        int screen_offset = screen_y * screen_width + j;
-        if (screen_offset >= 0 && screen_offset < screen_width * 460)
-            all->map->pixels[screen_offset] = color;
-
-        screen_y++;
-    }
+	if (!tex || !tex->addr.addr || wall_height <= 0.0)
+		return;
+	double wall_x;
+	if (side == 0)
+		wall_x = all->map->player_y
+			+ ((mapX - all->map->player_x + (1 - (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
+	else
+		wall_x = all->map->player_x
+			+ ((mapY - all->map->player_y + (1 - (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
+	wall_x -= (int)wall_x;
+	int tex_x = (int)(wall_x * (double)TEX_W);
+	if (tex_x < 0) tex_x = 0;
+	if (tex_x >= TEX_W) tex_x = TEX_W - 1;
+	if ((side == 0 && rayDirX < 0) || (side == 1 && rayDirY > 0))
+		tex_x = TEX_W - tex_x - 1;
+	int y0 = y_start;
+	int y1 = y_end;
+	if (y0 < 0) y0 = 0;
+	if (y1 > WIN_HEIGHT) y1 = WIN_HEIGHT;
+	if (y0 >= y1) return;
+	int bytes_per_px = tex->addr.bpp >> 3;
+	int tex_line     = tex->addr.size_len; 
+	int step_fp      = (int)((((long long)TEX_H) << 16) / (int)wall_height);
+	int texpos_fp    = (int)(((long long)(y0 - y_start) * step_fp));
+	int *dst = all->map->pixels;                     
+	int x    = j;                                    
+	char *tex_base = tex->addr.addr;                
+	for (int y = y0; y < y1; ++y)
+	{
+		int tex_y = (texpos_fp >> 16);            
+		texpos_fp += step_fp;
+		char *src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
+		int color = *(int *)src;
+		dst[y * WIN_WIDTH + x] = color;
+	}
 }
+
 void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 						int side, double rayDirX, double rayDirY,
 						int mapX, int mapY)
 {
-	int		screen_height;
-	int		screen_width;
+	int		WIN_HEIGHTeight;
+	int		WIN_WIDTHidth;
 	double	wallsize;
 	double	start;
 	double	end;
 	int		y;
 	int		pixel_index;
 
-	screen_height = 460;
-	screen_width = 1070;
-	wallsize = screen_height / (perpWall / 32);
-	start = (screen_height - wallsize) / 2;
+	WIN_HEIGHTeight = 460;
+	WIN_WIDTHidth = 1070;
+	wallsize = WIN_HEIGHTeight / (perpWall / 32);
+	start = (WIN_HEIGHTeight - wallsize) / 2;
 	end = start + wallsize;
 	y = 0;
-	while (y < (int)start && y < screen_height)
+	while (y < (int)start && y < WIN_HEIGHTeight)
 	{
 		//sky drawing
-		pixel_index = y * screen_width + j;
+		pixel_index = y * WIN_WIDTHidth + j;
 		all->map->pixels[pixel_index] = all->map->ceilling_collor;
 		y++;
 	}
@@ -171,11 +125,11 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 
 // 	if (hit == 1)
 // {
-// 	while (y < (int)end && y < screen_height)
+// 	while (y < (int)end && y < WIN_HEIGHTeight)
 // 	{
 // 		if (y >= 0)
 // 		{
-// 			pixel_index = y * screen_width + j;
+// 			pixel_index = y * WIN_WIDTHidth + j;
 // 			all->map->pixels[pixel_index] = 0x80702E; // ← remove this
 // 		}
 // 		y++;
@@ -184,23 +138,23 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 	// else
 	// {
 	// 	//doors drawing 
-	// 	while (y < (int)end && y < screen_height)
+	// 	while (y < (int)end && y < WIN_HEIGHTeight)
 	// 	{
 	// 		if (y >= 0)
 	// 		{
-	// 			pixel_index = y * screen_width + j;
+	// 			pixel_index = y * WIN_WIDTHidth + j;
 	// 			all->map->pixels[pixel_index] = 0x99999;
 	// 		}
 	// 		y++;
 	// 	}
 	// }
 	y = (int)end ;
-    while (y < screen_height)
+    while (y < WIN_HEIGHTeight)
 	{
 		//ground drawing
 		if (y >= 0)
 		{
-			pixel_index = y * screen_width + j;
+			pixel_index = y * WIN_WIDTHidth + j;
 			all->map->pixels[pixel_index] =  all->map->flor_collor;
 		}
 		y++;
