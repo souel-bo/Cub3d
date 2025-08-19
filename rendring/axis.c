@@ -30,6 +30,72 @@
 //		height++;
 //	return (height);
 //}
+void	draw_textured_door(t_mlx *all, int j, int y_start, int y_end,
+							double wall_height, int side,
+							double rayDirX, double rayDirY, int mapX, int mapY)
+{
+	t_img	*texture;
+	int		tex_x, tex_y;
+	int		color;
+	int		screen_width = 1070;
+	int		texture_width = 64;
+	int		texture_height = 64;
+	int		screen_y = y_start;
+	char	*tex_pixel;
+
+	// 1. Use door texture
+	texture = &all->buffer.door;
+	if (!texture || !texture->addr.addr) // 🚨 make sure it's loaded
+		return;
+
+	// 2. Calculate exact hit point for correct X coordinate
+	double wall_x;
+	if (side == 0)
+		wall_x = all->map->player_y
+			+ ((mapX - all->map->player_x + (1 - (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
+	else
+		wall_x = all->map->player_x
+			+ ((mapY - all->map->player_y + (1 - (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
+	wall_x -= (int)wall_x;
+
+	// 3. X coordinate on texture
+	tex_x = (int)(wall_x * (double)texture_width);
+	if (tex_x < 0) tex_x = 0;
+	if (tex_x >= texture_width) tex_x = texture_width - 1;
+	if ((side == 0 && rayDirX < 0) || (side == 1 && rayDirY > 0))
+		tex_x = texture_width - tex_x - 1;
+
+	// 4. Draw vertical stripe
+	while (screen_y < y_end && screen_y < 460)
+	{
+		double tex_pos = (screen_y - y_start) * (double)texture_height / wall_height;
+		tex_y = (int)tex_pos;
+
+		if (tex_y < 0) tex_y = 0;
+		if (tex_y >= texture_height) tex_y = texture_height - 1;
+
+		// 5. Compute pixel offset safely
+		int pixel_offset = tex_y * texture->addr.size_len + tex_x * (texture->addr.bpp / 8);
+		if (pixel_offset < 0 || pixel_offset >= texture->addr.size_len * texture_height)
+		{
+			screen_y++;
+			continue;
+		}
+
+		tex_pixel = texture->addr.addr + pixel_offset;
+		color = *(unsigned int *)tex_pixel;
+
+		// 6. Write pixel into screen buffer safely
+		int screen_offset = screen_y * screen_width + j;
+		if (screen_offset >= 0 && screen_offset < screen_width * 460)
+			all->map->pixels[screen_offset] = color;
+
+		screen_y++;
+	}
+}
+
+
+
 void draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
                         double wall_height, int side,
                         double rayDirX, double rayDirY, int mapX, int mapY)
@@ -108,34 +174,38 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 		y++;
 	}
 	y = (int)start;
-	// if (hit == 1)
-	// draw_textured_wall(all, j, (int)start, (int)end, wallsize, side,
-	// 	rayDirX, rayDirY, mapX, mapY);
 	if (hit == 1)
-{
-	while (y < (int)end && y < screen_height)
-	{
-		if (y >= 0)
-		{
-			pixel_index = y * screen_width + j;
-			all->map->pixels[pixel_index] = 0x80702E; // ← remove this
-		}
-		y++;
-	}
-}
+		draw_textured_wall(all, j, (int)start, (int)end, wallsize,
+			side, rayDirX, rayDirY, mapX, mapY);
 	else
-	{
-		//doors drawing 
-		while (y < (int)end && y < screen_height)
-		{
-			if (y >= 0)
-			{
-				pixel_index = y * screen_width + j;
-				all->map->pixels[pixel_index] = 0x99999;
-			}
-			y++;
-		}
-	}
+		draw_textured_door(all, j, (int)start, (int)end, wallsize,
+			side, rayDirX, rayDirY, mapX, mapY);
+
+// 	if (hit == 1)
+// {
+// 	while (y < (int)end && y < screen_height)
+// 	{
+// 		if (y >= 0)
+// 		{
+// 			pixel_index = y * screen_width + j;
+// 			all->map->pixels[pixel_index] = 0x80702E; // ← remove this
+// 		}
+// 		y++;
+// 	}
+// }
+	// else
+	// {
+	// 	//doors drawing 
+	// 	while (y < (int)end && y < screen_height)
+	// 	{
+	// 		if (y >= 0)
+	// 		{
+	// 			pixel_index = y * screen_width + j;
+	// 			all->map->pixels[pixel_index] = 0x99999;
+	// 		}
+	// 		y++;
+	// 	}
+	// }
 	y = (int)end ;
     while (y < screen_height)
 	{

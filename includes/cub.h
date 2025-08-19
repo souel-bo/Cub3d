@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/05 13:47:21 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:31:48 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_textures
 	char				*west_path;
 	char				*east_path;
 	char				*south_path;
-
+	char 				*door;
 }						t_textures;
 
 typedef struct s_map
@@ -121,6 +121,7 @@ typedef struct s_images
 	t_img	south;
 	t_img	east;
 	t_img	west;
+	t_img door;
 }						t_images;
 
 typedef struct s_movements
