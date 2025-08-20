@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/18 16:48:22 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/20 17:41:21 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	load_textures(t_mlx *all)
 			all->map->textures->door, &width, &height);
 	if (!all->buffer.door.img)
 	{
-		perror("Failed to load north texture");
+		perror("Failed to load door texture");
 		exit(1);
 	}
 	all->buffer.door.addr.addr = mlx_get_data_addr(all->buffer.door.img,

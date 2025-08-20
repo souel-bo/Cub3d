@@ -1,6 +1,5 @@
-F 46,165,62
-C 158,249,255
-
+F 0,0,0
+C 101,67,33
 
 NO ./maps/texture1
 SO ./maps/texture2

@@ -2,97 +2,134 @@
 #include "float.h"
 
 void	draw_textured_door(t_mlx *all, int j, int y_start, int y_end,
-							double wall_height, int side,
-							double rayDirX, double rayDirY, int mapX, int mapY)
+		double wall_height, int side, double rayDirX, double rayDirY, int mapX,
+		int mapY)
 {
-	t_img	*tex = &all->buffer.door;
+	t_img	*tex;
+	double	wall_x;
+	int		tex_x;
+	int		y0;
+	int		y1;
+	int		bytes_per_px;
+	int		tex_line;
+	int		step_fp;
+	int		texpos_fp;
+	int		*dst;
+	int		x;
+	char	*tex_base;
+	int		tex_y;
+	char	*src;
+	int		color;
+
+	tex = &all->buffer.door;
 	if (!tex || !tex->addr.addr || wall_height <= 0.0)
-		return;
-	double wall_x;
+		return ;
 	if (side == 0)
-		wall_x = all->map->player_y
-			+ ((mapX - all->map->player_x + (1 - (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
+		wall_x = all->map->player_y + ((mapX - all->map->player_x + (1
+						- (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
 	else
-		wall_x = all->map->player_x
-			+ ((mapY - all->map->player_y + (1 - (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
+		wall_x = all->map->player_x + ((mapY - all->map->player_y + (1
+						- (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
 	wall_x -= (int)wall_x;
-	int tex_x = (int)(wall_x * (double)TEX_W);
-	if (tex_x < 0) tex_x = 0;
-	if (tex_x >= TEX_W) tex_x = TEX_W - 1;
+	tex_x = (int)(wall_x * (double)TEX_W);
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= TEX_W)
+		tex_x = TEX_W - 1;
 	if ((side == 0 && rayDirX < 0) || (side == 1 && rayDirY > 0))
 		tex_x = TEX_W - tex_x - 1;
-	int y0 = y_start;
-	int y1 = y_end;
-	if (y0 < 0) y0 = 0;
-	if (y1 > WIN_HEIGHT) y1 = WIN_HEIGHT;
-	if (y0 >= y1) return;
-	int bytes_per_px = tex->addr.bpp >> 3;
-	int tex_line     = tex->addr.size_len;
-	int step_fp      = (int)((((long long)TEX_H) << 16) / (int)wall_height);
-	int texpos_fp    = (int)(((long long)(y0 - y_start) * step_fp));
-	int *dst = all->map->pixels;                        
-	int x    = j;                                      
-	char *tex_base = tex->addr.addr;                   
+	y0 = y_start;
+	y1 = y_end;
+	if (y0 < 0)
+		y0 = 0;
+	if (y1 > WIN_HEIGHT)
+		y1 = WIN_HEIGHT;
+	if (y0 >= y1)
+		return ;
+	bytes_per_px = tex->addr.bpp >> 3;
+	tex_line = tex->addr.size_len;
+	step_fp = (int)((((long long)TEX_H) << 16) / (int)wall_height);
+	texpos_fp = (int)(((long long)(y0 - y_start) * step_fp));
+	dst = all->map->pixels;
+	x = j;
+	tex_base = tex->addr.addr;
 	for (int y = y0; y < y1; ++y)
 	{
-		int tex_y = (texpos_fp >> 16);               
+		tex_y = (texpos_fp >> 16);
 		texpos_fp += step_fp;
-		char *src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
-		int color = *(int *)src;
+		src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
+		color = *(int *)src;
 		dst[y * WIN_WIDTH + x] = color;
 	}
 }
 
 void	draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
-							double wall_height, int side,
-							double rayDirX, double rayDirY, int mapX, int mapY)
+		double wall_height, int side, double rayDirX, double rayDirY, int mapX,
+		int mapY)
 {
-	t_img *tex = NULL;
+	t_img	*tex;
+	double	wall_x;
+	int		tex_x;
+	int		y0;
+	int		y1;
+	int		bytes_per_px;
+	int		tex_line;
+	int		step_fp;
+	int		texpos_fp;
+	int		*dst;
+	int		x;
+	char	*tex_base;
+	int		tex_y;
+	char	*src;
+	int		color;
+
 	if (side == 0)
 		tex = (rayDirX > 0) ? &all->buffer.west : &all->buffer.east;
 	else
-		tex = (rayDirY > 0) ? &all->buffer.north : &all->buffer.south;
-
+		tex = (rayDirY > 0) ? &all->buffer.south : &all->buffer.north;
 	if (!tex || !tex->addr.addr || wall_height <= 0.0)
-		return;
-	double wall_x;
+		return ;
 	if (side == 0)
-		wall_x = all->map->player_y
-			+ ((mapX - all->map->player_x + (1 - (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
+		wall_x = all->map->player_y + ((mapX - all->map->player_x + (1
+						- (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
 	else
-		wall_x = all->map->player_x
-			+ ((mapY - all->map->player_y + (1 - (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
+		wall_x = all->map->player_x + ((mapY - all->map->player_y + (1
+						- (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
 	wall_x -= (int)wall_x;
-	int tex_x = (int)(wall_x * (double)TEX_W);
-	if (tex_x < 0) tex_x = 0;
-	if (tex_x >= TEX_W) tex_x = TEX_W - 1;
+	tex_x = (int)(wall_x * (double)TEX_W);
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= TEX_W)
+		tex_x = TEX_W - 1;
 	if ((side == 0 && rayDirX < 0) || (side == 1 && rayDirY > 0))
 		tex_x = TEX_W - tex_x - 1;
-	int y0 = y_start;
-	int y1 = y_end;
-	if (y0 < 0) y0 = 0;
-	if (y1 > WIN_HEIGHT) y1 = WIN_HEIGHT;
-	if (y0 >= y1) return;
-	int bytes_per_px = tex->addr.bpp >> 3;
-	int tex_line     = tex->addr.size_len; 
-	int step_fp      = (int)((((long long)TEX_H) << 16) / (int)wall_height);
-	int texpos_fp    = (int)(((long long)(y0 - y_start) * step_fp));
-	int *dst = all->map->pixels;                     
-	int x    = j;                                    
-	char *tex_base = tex->addr.addr;                
+	y0 = y_start;
+	y1 = y_end;
+	if (y0 < 0)
+		y0 = 0;
+	if (y1 > WIN_HEIGHT)
+		y1 = WIN_HEIGHT;
+	if (y0 >= y1)
+		return ;
+	bytes_per_px = tex->addr.bpp >> 3;
+	tex_line = tex->addr.size_len;
+	step_fp = (int)((((long long)TEX_H) << 16) / (int)wall_height);
+	texpos_fp = (int)(((long long)(y0 - y_start) * step_fp));
+	dst = all->map->pixels;
+	x = j;
+	tex_base = tex->addr.addr;
 	for (int y = y0; y < y1; ++y)
 	{
-		int tex_y = (texpos_fp >> 16);            
+		tex_y = (texpos_fp >> 16);
 		texpos_fp += step_fp;
-		char *src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
-		int color = *(int *)src;
+		src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
+		color = *(int *)src;
 		dst[y * WIN_WIDTH + x] = color;
 	}
 }
 
-void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
-						int side, double rayDirX, double rayDirY,
-						int mapX, int mapY)
+void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit, int side,
+		double rayDirX, double rayDirY, int mapX, int mapY)
 {
 	int		WIN_HEIGHTeight;
 	int		WIN_WIDTHidth;
@@ -110,34 +147,33 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 	y = 0;
 	while (y < (int)start && y < WIN_HEIGHTeight)
 	{
-		//sky drawing
+		// sky drawing
 		pixel_index = y * WIN_WIDTHidth + j;
 		all->map->pixels[pixel_index] = all->map->ceilling_collor;
 		y++;
 	}
 	y = (int)start;
 	if (hit == 1)
-		draw_textured_wall(all, j, (int)start, (int)end, wallsize,
-			side, rayDirX, rayDirY, mapX, mapY);
+		draw_textured_wall(all, j, (int)start, (int)end, wallsize, side,
+			rayDirX, rayDirY, mapX, mapY);
 	else
-		draw_textured_door(all, j, (int)start, (int)end, wallsize,
-			side, rayDirX, rayDirY, mapX, mapY);
-
-// 	if (hit == 1)
-// {
-// 	while (y < (int)end && y < WIN_HEIGHTeight)
-// 	{
-// 		if (y >= 0)
-// 		{
-// 			pixel_index = y * WIN_WIDTHidth + j;
-// 			all->map->pixels[pixel_index] = 0x80702E; // ← remove this
-// 		}
-// 		y++;
-// 	}
-// }
+		draw_textured_door(all, j, (int)start, (int)end, wallsize, side,
+			rayDirX, rayDirY, mapX, mapY);
+	// 	if (hit == 1)
+	// {
+	// 	while (y < (int)end && y < WIN_HEIGHTeight)
+	// 	{
+	// 		if (y >= 0)
+	// 		{
+	// 			pixel_index = y * WIN_WIDTHidth + j;
+	// 			all->map->pixels[pixel_index] = 0x80702E; // ← remove this
+	// 		}
+	// 		y++;
+	// 	}
+	// }
 	// else
 	// {
-	// 	//doors drawing 
+	// 	//doors drawing
 	// 	while (y < (int)end && y < WIN_HEIGHTeight)
 	// 	{
 	// 		if (y >= 0)
@@ -148,14 +184,14 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit,
 	// 		y++;
 	// 	}
 	// }
-	y = (int)end ;
-    while (y < WIN_HEIGHTeight)
+	y = (int)end;
+	while (y < WIN_HEIGHTeight)
 	{
-		//ground drawing
+		// ground drawing
 		if (y >= 0)
 		{
 			pixel_index = y * WIN_WIDTHidth + j;
-			all->map->pixels[pixel_index] =  all->map->flor_collor;
+			all->map->pixels[pixel_index] = all->map->flor_collor;
 		}
 		y++;
 	}
@@ -227,8 +263,8 @@ void	ray_line(t_mlx *all, float angle, int j)
 			mapY += stepY;
 			side = 1;
 		}
-		if (mapX < 0 || mapY < 0 || mapY >= ft_count_argc(all->map->map) ||
-			mapX >= (int)strlen(all->map->map[mapY]))
+		if (mapX < 0 || mapY < 0 || mapY >= ft_count_argc(all->map->map)
+			|| mapX >= (int)strlen(all->map->map[mapY]))
 		{
 			hit = 1;
 			break ;
@@ -242,8 +278,8 @@ void	ray_line(t_mlx *all, float angle, int j)
 		perpWall = (sideDistX - deltaDistX);
 	else
 		perpWall = (sideDistY - deltaDistY);
-    // fix eye problem fixed by this line . but who it works i dont know hhhhh
-    perpWall *= cos(angle - all->map->angle);
+	// fix eye problem fixed by this line . but who it works i dont know hhhhh
+	perpWall *= cos(angle - all->map->angle);
 	perpWall *= TILE_SIZE;
 	x = all->map->player_x * 32;
 	y = all->map->player_y * 32;
@@ -278,5 +314,5 @@ void	ray_casting(t_mlx *all)
 {
 	draw_single_ray(all);
 	mlx_put_image_to_window(all->connection, all->window,
-			all->buffer.screen->img, 0, 0);
+		all->buffer.screen->img, 0, 0);
 }
