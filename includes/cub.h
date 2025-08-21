@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/20 16:31:14 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/21 16:43:12 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define DOWN 115
 # define UP 119
 # define LEFT 97
+# define SPACE 32
 # define ESCAPE 65307
 # define ROTATION_SPEED 0.05
 # define LEFT_KEY 65363

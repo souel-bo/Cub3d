@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/05 13:43:00 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/21 16:49:51 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,31 @@ void	draw_walls(t_mlx *all)
 {
 	mlx_put_image_to_window(all->connection, all->window, all->buffer.screen->img ,0, 0);
 }
+int	handle_space_key(t_mlx *all)
+{
+	double targetX = all->map->player_x + cos(all->map->angle);
+	double targetY = all->map->player_y - sin(all->map->angle);
+	int    mapX = (int)targetX;
+	int    mapY = (int)targetY;
+
+	if (mapX >= 0 && mapX < WIN_WIDTH &&
+		mapY >= 0 && mapY < WIN_HEIGHT)
+	{
+		if (all->map->map[mapY][mapX] == 'D')
+			all->map->map[mapY][mapX] = 'O';
+		else if (all->map->map[mapY][mapX] == 'O')
+			all->map->map[mapY][mapX] = 'D';
+	}
+	return (0);
+}
 
 int	key_hook(int key, t_mlx *all)
 {
-	float	next_x;
-	float	next_y;
-	float	speed;
-	float	px;
-	float	py;
-	// printf("Keycode: %d\n", key);
-	next_x = all->map->player_x;
-	next_y = all->map->player_y;
-	speed = 0.10;
-	px = all->map->player_x;
-	py = all->map->player_y;
+	float	next_x = all->map->player_x;
+	float	next_y = all->map->player_y;
+	float	speed = 0.10;
+	float	px = all->map->player_x;
+	float	py = all->map->player_y;
 	if (all->map->angle < 0)
 		all->map->angle += 2 * M_PI;
 	else if (all->map->angle > 2 * M_PI)
@@ -54,17 +65,23 @@ int	key_hook(int key, t_mlx *all)
 		next_x = px - cos(all->map->angle) * speed;
 		next_y = py + sin(all->map->angle) * speed;
 	}
-	else if (key == RIGHT_KEY) 
+	else if (key == RIGHT_KEY)
 		all->map->angle -= ROTATION_SPEED;
-	else if (key == LEFT_KEY) 
+	else if (key == LEFT_KEY)
 		all->map->angle += ROTATION_SPEED;
+	else if (key == SPACE)
+		handle_space_key(all);
 	else if (key == ESCAPE)
-		exit(0); //free at exit with escape
-	if (all->map->map[(int)next_y][(int)px] != '1')
+		exit(0);
+	if (all->map->map[(int)next_y][(int)px] != '1' &&
+		all->map->map[(int)next_y][(int)px] != 'D')
 		all->map->player_y = next_y;
-	if (all->map->map[(int)py][(int)next_x] != '1')
+	if (all->map->map[(int)py][(int)next_x] != '1' &&
+		all->map->map[(int)py][(int)next_x] != 'D')
 		all->map->player_x = next_x;
 	mlx_clear_window(all->connection, all->window);
 	ray_casting(all);
 	return (0);
 }
+
+
