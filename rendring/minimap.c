@@ -6,113 +6,116 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 10:58:38 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/23 11:57:12 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/23 18:16:56 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-static void	draw_square(t_mlx *all, int x, int y, int size, int color)
+static void draw_square(t_mlx *all, int x, int y, int size, int color)
 {
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			int px = x + j;
-			int py = y + i;
-			if (px >= 0 && px < WIN_WIDTH && py >= 0 && py < WIN_HEIGHT)
-				all->map->pixels[py * WIN_WIDTH + px] = color;
-		}
-	}
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            int px = x + j;
+            int py = y + i;
+            if (px >= 0 && px < WIN_WIDTH && py >= 0 && py < WIN_HEIGHT)
+                all->map->pixels[py * WIN_WIDTH + px] = color;
+        }
+    }
 }
+
 void draw_minimap(t_mlx *all)
 {
-    int minimap_x = 10;
-    int minimap_y = 10;
     if (!all || !all->map || !all->map->map || !all->map->pixels)
         return;
+    int minimap_x = 10;
+    int minimap_y = 10;
     float player_x = all->map->player_x;
     float player_y = all->map->player_y;
+    int map_rows = 0;
+    while (all->map->map[map_rows])
+        map_rows++;
     for (int y = 0; y < MINIMAP_SIZE; y++)
-    {
         for (int x = 0; x < MINIMAP_SIZE; x++)
-        {
-            int px = minimap_x + x;
-            int py = minimap_y + y;
-            if (px >= 0 && px < WIN_WIDTH && py >= 0 && py < WIN_HEIGHT)
-                all->map->pixels[py * WIN_WIDTH + px] = 0x000000;
-        }
-    }
-    for (int i = 0; i < MINIMAP_SIZE; i++)
+            if (minimap_x + x < WIN_WIDTH && minimap_y + y < WIN_HEIGHT)
+                all->map->pixels[(minimap_y + y) * WIN_WIDTH + (minimap_x + x)] = 0x000000;
+    float start_row_f = player_y - MINIMAP_RADIUS;
+    float end_row_f   = player_y + MINIMAP_RADIUS;
+    float start_col_f = player_x - MINIMAP_RADIUS;
+    float end_col_f   = player_x + MINIMAP_RADIUS;
+
+    int start_row = (int)floor(start_row_f);
+    int end_row   = (int)ceil(end_row_f);
+    int start_col = (int)floor(start_col_f);
+    int end_col   = (int)ceil(end_col_f);
+
+    for (int row = start_row; row <= end_row; row++)
     {
-        if (minimap_x + i >= 0 && minimap_x + i < WIN_WIDTH)
+        if (row < 0 || row >= map_rows) continue;
+        int map_len = (int)strlen(all->map->map[row]);
+
+        for (int col = start_col; col <= end_col; col++)
         {
-            if (minimap_y >= 0 && minimap_y < WIN_HEIGHT)
-                all->map->pixels[minimap_y * WIN_WIDTH + (minimap_x + i)] = 0xFFFFFF;
-            if (minimap_y + MINIMAP_SIZE - 1 >= 0 && minimap_y + MINIMAP_SIZE - 1 < WIN_HEIGHT)
-                all->map->pixels[(minimap_y + MINIMAP_SIZE - 1) * WIN_WIDTH + (minimap_x + i)] = 0xFFFFFF;
-        }
-        if (minimap_y + i >= 0 && minimap_y + i < WIN_HEIGHT)
-        {
-            if (minimap_x >= 0 && minimap_x < WIN_WIDTH)
-                all->map->pixels[(minimap_y + i) * WIN_WIDTH + minimap_x] = 0xFFFFFF;
-            if (minimap_x + MINIMAP_SIZE - 1 >= 0 && minimap_x + MINIMAP_SIZE - 1 < WIN_WIDTH)
-                all->map->pixels[(minimap_y + i) * WIN_WIDTH + (minimap_x + MINIMAP_SIZE - 1)] = 0xFFFFFF;
-        }
-    }
-    for (int dy = -MINIMAP_RADIUS - 1; dy <= MINIMAP_RADIUS + 1; dy++)
-    {
-        for (int dx = -MINIMAP_RADIUS - 1; dx <= MINIMAP_RADIUS + 1; dx++)
-        {
-            int map_x = (int)(player_x) + dx;
-            int map_y = (int)(player_y) + dy;
-            float player_offset_x = player_x - (int)player_x;
-            float player_offset_y = player_y - (int)player_y;
-            int screen_x = minimap_x + (dx + MINIMAP_RADIUS) * TILE_MINI_MAP - (int)(player_offset_x * TILE_MINI_MAP);
-            int screen_y = minimap_y + (dy + MINIMAP_RADIUS) * TILE_MINI_MAP - (int)(player_offset_y * TILE_MINI_MAP);
-            char tile = ' ';
-            if (map_y >= 0 && all->map->map[map_y] && 
-                map_x >= 0 && map_x < (int)strlen(all->map->map[map_y]))
-            {
-                tile = all->map->map[map_y][map_x];
-            }
+            if (col < 0 || col >= map_len) continue;
+            char tile = all->map->map[row][col];
             int color;
-            if (tile == '1') 
-                color = 0xFFFFFF; 
-            else if (tile == 'D') 
-                color = 0x00FF00;
-            else if (tile == '0' || tile == 'N' || tile == 'S' || tile == 'E' || tile == 'W') // walkable
-                color = 0x404040;
-            else
-                continue;
-            for (int i = 0; i < TILE_MINI_MAP; i++)
+            if (tile == '1') color = 0xFFFFFF;
+            else if (tile == 'D') color = 0x00FF00;
+            else if (tile == '0' || tile == ' ') color = 0x404040;
+            else continue;
+            float relative_x = col - player_x;
+            float relative_y = row - player_y;
+            float screen_x_f = minimap_x + (relative_x + MINIMAP_RADIUS) * TILE_MINI_MAP;
+            float screen_y_f = minimap_y + (relative_y + MINIMAP_RADIUS) * TILE_MINI_MAP;
+            
+            int screen_x = (int)screen_x_f;
+            int screen_y = (int)screen_y_f;
+            for (int i = 0; i <= TILE_MINI_MAP; i++)
             {
-                for (int j = 0; j < TILE_MINI_MAP; j++)
+                for (int j = 0; j <= TILE_MINI_MAP; j++)
                 {
                     int px = screen_x + j;
                     int py = screen_y + i;
-                    if (px > minimap_x && px < minimap_x + MINIMAP_SIZE - 1 && 
-                        py > minimap_y && py < minimap_y + MINIMAP_SIZE - 1 &&
-                        px >= 0 && px < WIN_WIDTH && py >= 0 && py < WIN_HEIGHT)
+
+                    if (px >= minimap_x && px < minimap_x + MINIMAP_SIZE &&
+                        py >= minimap_y && py < minimap_y + MINIMAP_SIZE &&
+                        px < WIN_WIDTH && py < WIN_HEIGHT)
                         all->map->pixels[py * WIN_WIDTH + px] = color;
                 }
             }
         }
     }
-    int center_x = minimap_x + MINIMAP_SIZE / 2;
-    int center_y = minimap_y + MINIMAP_SIZE / 2;
-    int player_size = TILE_MINI_MAP / 3;
-    if (player_size < 4) player_size = 4;
-    draw_square(all, center_x - player_size/2, center_y - player_size/2, 
-               player_size, 0xFF0000);
+    float player_screen_x_f = minimap_x + MINIMAP_RADIUS * TILE_MINI_MAP;
+    float player_screen_y_f = minimap_y + MINIMAP_RADIUS * TILE_MINI_MAP;
+    
+    int player_screen_x = (int)player_screen_x_f;
+    int player_screen_y = (int)player_screen_y_f;
+    int player_size = TILE_MINI_MAP / 2;
+    if (player_size < 3) player_size = 3;
+    draw_square(all, player_screen_x - player_size / 2, player_screen_y - player_size / 2, player_size, 0xFF0000);
     float angle = all->map->angle;
-    int line_length = TILE_MINI_MAP;
+    int line_length = TILE_MINI_MAP * 2;
     for (int i = 0; i < line_length; i++)
     {
-        int px = center_x + (int)(cos(angle) * i);
-        int py = center_y - (int)(sin(angle) * i);
-        if (px >= minimap_x + 1 && px < minimap_x + MINIMAP_SIZE - 1 && 
-            py >= minimap_y + 1 && py < minimap_y + MINIMAP_SIZE - 1)
+        int px = player_screen_x + (int)(cos(angle) * i);
+        int py = player_screen_y - (int)(sin(angle) * i);
+        
+        if (px >= minimap_x && px < minimap_x + MINIMAP_SIZE &&
+            py >= minimap_y && py < minimap_y + MINIMAP_SIZE &&
+            px < WIN_WIDTH && py < WIN_HEIGHT)
             all->map->pixels[py * WIN_WIDTH + px] = 0xFFFF00;
+    }
+    for (int i = 0; i < MINIMAP_SIZE; i++)
+    {
+        if (minimap_y < WIN_HEIGHT && minimap_x + i < WIN_WIDTH)
+            all->map->pixels[minimap_y * WIN_WIDTH + (minimap_x + i)] = 0x808080;
+        if (minimap_y + MINIMAP_SIZE - 1 < WIN_HEIGHT && minimap_x + i < WIN_WIDTH)
+            all->map->pixels[(minimap_y + MINIMAP_SIZE - 1) * WIN_WIDTH + (minimap_x + i)] = 0x808080;
+        if (minimap_y + i < WIN_HEIGHT && minimap_x < WIN_WIDTH)
+            all->map->pixels[(minimap_y + i) * WIN_WIDTH + minimap_x] = 0x808080;
+        if (minimap_y + i < WIN_HEIGHT && minimap_x + MINIMAP_SIZE - 1 < WIN_WIDTH)
+            all->map->pixels[(minimap_y + i) * WIN_WIDTH + (minimap_x + MINIMAP_SIZE - 1)] = 0x808080;
     }
 }
