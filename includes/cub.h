@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/21 16:43:12 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/23 11:57:25 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define GREEN 0x006400
 # define RED 0xFF0000
 #define YELLOW 0xFFFF00
-
 # define RIGHT 100
 # define DOWN 115
 # define UP 119
@@ -47,6 +46,10 @@
 #define MOUSE_CENTER_X (WIN_WIDTH / 2)
 #define TEX_W    64
 #define TEX_H    64
+#define MINIMAP_SIZE 150
+#define MINIMAP_RADIUS 3
+#define MINIMAP_TILES (MINIMAP_RADIUS * 2 + 1)
+#define TILE_MINI_MAP (MINIMAP_SIZE / MINIMAP_TILES)
 
 typedef struct s_flor_collors
 {
@@ -159,5 +162,5 @@ int						ft_check_filename(char *str);
 void					free_all_items(t_map *units);
 void					free_arr(char **arr);
 void 					mix_colors(t_mlx *all);
-
+void	draw_minimap(t_mlx *all);
 #endif

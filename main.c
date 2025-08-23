@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/20 17:41:21 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/23 11:33:13 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	handle_mouse_movements(int x, int y, void *param)
 		/ 2);
 	mlx_clear_window(all->connection, all->window);
 	ray_casting(all);
+	draw_minimap(all);
 	return (0);
 }
 
@@ -121,6 +122,7 @@ int	main(int argc, char **argv)
 		// printf("%s\n", all.map->textures->south_path);
 		load_textures(&all);
 		ray_casting(&all);
+		draw_minimap(&all);
 		mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
 		mlx_mouse_hide(all.connection, all.window);
 		mlx_hook(all.window, 6, 1L << 6, handle_mouse_movements, &all);

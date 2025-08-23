@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/21 16:49:51 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/23 11:00:10 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	key_hook(int key, t_mlx *all)
 		all->map->player_x = next_x;
 	mlx_clear_window(all->connection, all->window);
 	ray_casting(all);
+	draw_minimap(all);
 	return (0);
 }
 
