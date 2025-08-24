@@ -3,7 +3,8 @@
         "cmath": "c",
         "map": "cpp",
         "format": "cpp",
-        "float.h": "c"
+        "float.h": "c",
+        "random": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

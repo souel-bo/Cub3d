@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/24 15:57:59 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:30:29 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,41 @@ int	handle_mouse_movements(int x, int y, void *param)
 	ray_casting(all);
 	draw_minimap(all);
 	return (0);
+}
+
+int close_window_X(t_mlx *all)
+{
+	int height = 0;
+	while (all->map->map[height])
+    	height++;
+	int i = 0;
+	while (i < height)
+	{
+		free(all->map->map[i]);
+		i++;
+	}
+	mlx_destroy_image(all->connection, all->buffer.door.img);
+	mlx_destroy_image(all->connection, all->buffer.north.img);
+	mlx_destroy_image(all->connection, all->buffer.screen->img);
+	mlx_destroy_image(all->connection, all->buffer.south.img);
+	mlx_destroy_image(all->connection, all->buffer.east.img);
+	mlx_destroy_image(all->connection, all->buffer.west.img);
+	mlx_destroy_window(all->connection, all->window);
+	mlx_destroy_display(all->connection);
+	free(all->map->ceilling_collors);
+	free(all->map->floor_collors);
+	free(all->map->textures->north_path);
+	free(all->map->textures->south_path);
+	free(all->map->textures->east_path);
+	free(all->map->textures->west_path);
+	free(all->map->textures->door);
+	free(all->map->textures);
+	free(all->connection);
+	// free(all->window);
+	free(all->buffer.screen);
+	free(all->map->map);
+	exit(0);
+	return 0; 
 }
 
 void	load_textures(t_mlx *all)
@@ -123,6 +158,7 @@ int	main(int argc, char **argv)
 		draw_minimap(&all);
 		mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
 		mlx_hook(all.window, 6, 1L << 6, handle_mouse_movements, &all);
+		mlx_hook(all.window, 17, 0, close_window_X, &all);
 		mlx_loop(all.connection);
 	}
 	// free_all_items(&units);
