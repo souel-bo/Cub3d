@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 16:09:33 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/23 17:57:43 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:14:04 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,40 @@ int	handle_space_key(t_mlx *all)
 			all->map->map[mapY][mapX] = 'D';
 	}
 	return (0);
+}
+
+void free_exit(t_mlx *all)
+{
+	int height = 0;
+	while (all->map->map[height])
+    	height++;
+	int i = 0;
+	while (i < height)
+	{
+		free(all->map->map[i]);
+		i++;
+	}
+	mlx_destroy_image(all->connection, all->buffer.door.img);
+	mlx_destroy_image(all->connection, all->buffer.north.img);
+	mlx_destroy_image(all->connection, all->buffer.screen->img);
+	mlx_destroy_image(all->connection, all->buffer.south.img);
+	mlx_destroy_image(all->connection, all->buffer.east.img);
+	mlx_destroy_image(all->connection, all->buffer.west.img);
+	mlx_destroy_window(all->connection, all->window);
+	mlx_destroy_display(all->connection);
+	free(all->map->ceilling_collors);
+	free(all->map->floor_collors);
+	free(all->map->textures->north_path);
+	free(all->map->textures->south_path);
+	free(all->map->textures->east_path);
+	free(all->map->textures->west_path);
+	free(all->map->textures->door);
+	free(all->map->textures);
+	free(all->connection);
+	// free(all->window);
+	free(all->buffer.screen);
+	free(all->map->map);
+	exit(0);
 }
 
 int	key_hook(int key, t_mlx *all)
@@ -72,7 +106,7 @@ int	key_hook(int key, t_mlx *all)
 	else if (key == SPACE)
 		handle_space_key(all);
 	else if (key == ESCAPE)
-		exit(0);
+		free_exit(all);
 	if (all->map->map[(int)next_y][(int)px] != '1' &&
 		all->map->map[(int)next_y][(int)px] != 'D')
 		all->map->player_y = next_y;

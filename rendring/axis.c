@@ -159,35 +159,9 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit, int side,
 	else
 		draw_textured_door(all, j, (int)start, (int)end, wallsize, side,
 			rayDirX, rayDirY, mapX, mapY);
-	// 	if (hit == 1)
-	// {
-	// 	while (y < (int)end && y < WIN_HEIGHTeight)
-	// 	{
-	// 		if (y >= 0)
-	// 		{
-	// 			pixel_index = y * WIN_WIDTHidth + j;
-	// 			all->map->pixels[pixel_index] = 0x80702E; // ← remove this
-	// 		}
-	// 		y++;
-	// 	}
-	// }
-	// else
-	// {
-	// 	//doors drawing
-	// 	while (y < (int)end && y < WIN_HEIGHTeight)
-	// 	{
-	// 		if (y >= 0)
-	// 		{
-	// 			pixel_index = y * WIN_WIDTHidth + j;
-	// 			all->map->pixels[pixel_index] = 0x99999;
-	// 		}
-	// 		y++;
-	// 	}
-	// }
 	y = (int)end;
 	while (y < WIN_HEIGHTeight)
 	{
-		// ground drawing
 		if (y >= 0)
 		{
 			pixel_index = y * WIN_WIDTHidth + j;

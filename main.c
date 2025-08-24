@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/23 11:33:13 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/24 15:57:59 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	handle_mouse_movements(int x, int y, void *param)
 {
 	t_mlx	*all;
 	int		delta;
-
+	(void)y;
 	all = (t_mlx *)param;
 	delta = x - MOUSE_CENTER_X;
 	if (delta == 0)
@@ -51,8 +51,6 @@ void	load_textures(t_mlx *all)
 	all->buffer.door.addr.addr = mlx_get_data_addr(all->buffer.door.img,
 			&all->buffer.door.addr.bpp, &all->buffer.door.addr.size_len,
 			&all->buffer.door.addr.endian);
-	all->buffer.south.img = mlx_xpm_file_to_image(all->connection,
-			all->map->textures->south_path, &width, &height);
 	all->buffer.north.img = mlx_xpm_file_to_image(all->connection,
 			all->map->textures->north_path, &width, &height);
 	if (!all->buffer.north.img)
@@ -124,7 +122,6 @@ int	main(int argc, char **argv)
 		ray_casting(&all);
 		draw_minimap(&all);
 		mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
-		mlx_mouse_hide(all.connection, all.window);
 		mlx_hook(all.window, 6, 1L << 6, handle_mouse_movements, &all);
 		mlx_loop(all.connection);
 	}

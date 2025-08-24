@@ -1,5 +1,5 @@
-CC = cc -fsanitize=address
-# FLAGS = -Wall -Wextra -Werror
+CC = cc #-fsanitize=address
+ FLAGS = -Wall -Wextra -Werror
 
 SOURCE = 	main.c parsing/read_map.c parsing/start_check_map.c \
 			parsing/checking_map.c parsing/check_textures.c parsing/check_colors.c \
