@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:44:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/28 16:12:36 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/28 18:18:19 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,18 +203,12 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit, int side,
 
 void	ray_line(t_mlx *all, float angle, int j)
 {
+	t_norm ray;
 	int		i;
 	double	px;
 	double	py;
-	double	rayDirX;
-	double	rayDirY;
-	int		mapX;
-	int		mapY;
 	double	deltaDistX;
 	double	deltaDistY;
-	int		hit;
-	int		side;
-	double	perpWall;
 	double	x;
 	double	y;
 	int		draw_x;
@@ -223,73 +217,73 @@ void	ray_line(t_mlx *all, float angle, int j)
 	i = 0;
 	px = all->map->player_x;
 	py = all->map->player_y;
-	rayDirX = cos(angle);
-	rayDirY = -sin(angle);
-	mapX = (int)px;
-	mapY = (int)py;
-	deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-	deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
+	ray.raydirx = cos(angle);
+	ray.raydiry = -sin(angle);
+	ray.mapx = (int)px;
+	ray.mapy = (int)py;
+	deltaDistX = (ray.raydirx == 0) ? 1e30 : fabs(1 / ray.raydirx);
+	deltaDistY = (ray.raydiry == 0) ? 1e30 : fabs(1 / ray.raydiry);
 	int stepX, stepY;
 	double sideDistX, sideDistY;
-	if (rayDirX < 0)
+	if (ray.raydirx < 0)
 	{
 		stepX = -1;
-		sideDistX = (px - mapX) * deltaDistX;
+		sideDistX = (px - ray.mapx) * deltaDistX;
 	}
 	else
 	{
 		stepX = 1;
-		sideDistX = (mapX + 1.0 - px) * deltaDistX;
+		sideDistX = (ray.mapx + 1.0 - px) * deltaDistX;
 	}
-	if (rayDirY < 0)
+	if (ray.raydiry < 0)
 	{
 		stepY = -1;
-		sideDistY = (py - mapY) * deltaDistY;
+		sideDistY = (py - ray.mapy) * deltaDistY;
 	}
 	else
 	{
 		stepY = 1;
-		sideDistY = (mapY + 1.0 - py) * deltaDistY;
+		sideDistY = (ray.mapy + 1.0 - py) * deltaDistY;
 	}
-	hit = 0;
-	side = 0;
-	while (!hit)
+	ray.hit = 0;
+	ray.side = 0;
+	while (!ray.hit)
 	{
 		if (sideDistX < sideDistY)
 		{
 			sideDistX += deltaDistX;
-			mapX += stepX;
-			side = 0;
+			ray.mapx += stepX;
+			ray.side = 0;
 		}
 		else
 		{
 			sideDistY += deltaDistY;
-			mapY += stepY;
-			side = 1;
+			ray.mapy += stepY;
+			ray.side = 1;
 		}
-		if (mapX < 0 || mapY < 0 || mapY >= ft_count_argc(all->map->map)
-			|| mapX >= (int)strlen(all->map->map[mapY]))
+		if (ray.mapx < 0 || ray.mapy < 0 || ray.mapy >= ft_count_argc(all->map->map)
+			|| ray.mapx >= (int)strlen(all->map->map[ray.mapy]))
 		{
-			hit = 1;
+			ray.hit = 1;
 			break ;
 		}
-		if (all->map->map[mapY][mapX] == '1')
-			hit = 1;
-		if (all->map->map[mapY][mapX] == 'D')
-			hit = 2;
+		if (all->map->map[ray.mapy][ray.mapx] == '1')
+			ray.hit = 1;
+		if (all->map->map[ray.mapy][ray.mapx] == 'D')
+			ray.hit = 2;
 	}
-	if (side == 0)
-		perpWall = (sideDistX - deltaDistX);
+	if (ray.side == 0)
+		ray.perpwall = (sideDistX - deltaDistX);
 	else
-		perpWall = (sideDistY - deltaDistY);
-	// fix eye problem fixed by this line . but who it works i dont know hhhhh
-	perpWall *= cos(angle - all->map->angle);
-	perpWall *= TILE_SIZE;
+		ray.perpwall = (sideDistY - deltaDistY);
+	ray.perpwall *= cos(angle - all->map->angle);
+	ray.perpwall *= TILE_SIZE;
 	x = all->map->player_x * 32;
 	y = all->map->player_y * 32;
 	draw_x = 0;
 	draw_y = 0;
-	draw_viewd_ray(all, perpWall, j, hit, side, rayDirX, rayDirY, mapX, mapY);
+	ray.j = j;
+	draw_viewd_ray(all, ray.perpwall, ray.j, ray.hit, ray.side, ray.raydirx, ray.raydiry, ray.mapx, ray.mapy);
 }
 
 void	casting_rays(t_mlx *all)

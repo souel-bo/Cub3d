@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:29:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/28 15:32:54 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/28 18:03:33 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,19 @@ typedef struct s_movements
 {
 	int					*movements;
 }						t_movements;
+
+typedef struct s_norm
+{
+	double	perpwall;
+	int		j;
+	int		hit;
+	int		side;
+	double	raydirx;
+	double	raydiry;
+	int		mapx;
+	int		mapy;
+} t_norm;
+
 
 typedef struct s_mlx
 {
