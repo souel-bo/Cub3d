@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   axis.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/28 15:44:54 by souel-bo          #+#    #+#             */
+/*   Updated: 2025/08/28 16:12:36 by souel-bo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/rendering.h"
 #include "float.h"
 
@@ -62,7 +74,6 @@ void	draw_textured_door(t_mlx *all, int j, int y_start, int y_end,
 		dst[y * WIN_WIDTH + x] = color;
 	}
 }
-
 void	draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
 		double wall_height, int side, double rayDirX, double rayDirY, int mapX,
 		int mapY)
@@ -84,25 +95,40 @@ void	draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
 	int		color;
 
 	if (side == 0)
-		tex = (rayDirX > 0) ? &all->buffer.west : &all->buffer.east;
+	{
+		if (rayDirX > 0)
+			tex = &all->buffer.west;
+		else
+			tex = &all->buffer.east;
+	}
 	else
-		tex = (rayDirY > 0) ? &all->buffer.south : &all->buffer.north;
+	{
+		if (rayDirY > 0)
+			tex = &all->buffer.south;
+		else
+			tex = &all->buffer.north;
+	}
+
 	if (!tex || !tex->addr.addr || wall_height <= 0.0)
 		return ;
+
 	if (side == 0)
 		wall_x = all->map->player_y + ((mapX - all->map->player_x + (1
 						- (rayDirX > 0 ? 1 : -1)) / 2.0) / rayDirX) * rayDirY;
 	else
 		wall_x = all->map->player_x + ((mapY - all->map->player_y + (1
 						- (rayDirY > 0 ? 1 : -1)) / 2.0) / rayDirY) * rayDirX;
+
 	wall_x -= (int)wall_x;
 	tex_x = (int)(wall_x * (double)TEX_W);
 	if (tex_x < 0)
 		tex_x = 0;
 	if (tex_x >= TEX_W)
 		tex_x = TEX_W - 1;
+
 	if ((side == 0 && rayDirX < 0) || (side == 1 && rayDirY > 0))
 		tex_x = TEX_W - tex_x - 1;
+
 	y0 = y_start;
 	y1 = y_end;
 	if (y0 < 0)
@@ -111,6 +137,7 @@ void	draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
 		y1 = WIN_HEIGHT;
 	if (y0 >= y1)
 		return ;
+
 	bytes_per_px = tex->addr.bpp >> 3;
 	tex_line = tex->addr.size_len;
 	step_fp = (int)((((long long)TEX_H) << 16) / (int)wall_height);
@@ -118,15 +145,19 @@ void	draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
 	dst = all->map->pixels;
 	x = j;
 	tex_base = tex->addr.addr;
-	for (int y = y0; y < y1; ++y)
+
+	int y = y0;
+	while (y < y1)
 	{
 		tex_y = (texpos_fp >> 16);
 		texpos_fp += step_fp;
 		src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
 		color = *(int *)src;
 		dst[y * WIN_WIDTH + x] = color;
+		y++;
 	}
 }
+
 
 void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit, int side,
 		double rayDirX, double rayDirY, int mapX, int mapY)
@@ -147,7 +178,6 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit, int side,
 	y = 0;
 	while (y < (int)start && y < WIN_HEIGHTeight)
 	{
-		// sky drawing
 		pixel_index = y * WIN_WIDTHidth + j;
 		all->map->pixels[pixel_index] = all->map->ceilling_collor;
 		y++;

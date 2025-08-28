@@ -6,17 +6,17 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/24 16:30:29 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/28 15:27:40 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub.h"
-#include "includes/libft.h"
 
 int	handle_mouse_movements(int x, int y, void *param)
 {
 	t_mlx	*all;
 	int		delta;
+
 	(void)y;
 	all = (t_mlx *)param;
 	delta = x - MOUSE_CENTER_X;
@@ -35,104 +35,30 @@ int	handle_mouse_movements(int x, int y, void *param)
 	return (0);
 }
 
-int close_window_X(t_mlx *all)
+int	close_window_x(t_mlx *all)
 {
-	int height = 0;
-	while (all->map->map[height])
-    	height++;
-	int i = 0;
-	while (i < height)
-	{
-		free(all->map->map[i]);
-		i++;
-	}
-	mlx_destroy_image(all->connection, all->buffer.door.img);
-	mlx_destroy_image(all->connection, all->buffer.north.img);
-	mlx_destroy_image(all->connection, all->buffer.screen->img);
-	mlx_destroy_image(all->connection, all->buffer.south.img);
-	mlx_destroy_image(all->connection, all->buffer.east.img);
-	mlx_destroy_image(all->connection, all->buffer.west.img);
-	mlx_destroy_window(all->connection, all->window);
-	mlx_destroy_display(all->connection);
-	free(all->map->ceilling_collors);
-	free(all->map->floor_collors);
-	free(all->map->textures->north_path);
-	free(all->map->textures->south_path);
-	free(all->map->textures->east_path);
-	free(all->map->textures->west_path);
-	free(all->map->textures->door);
-	free(all->map->textures);
-	free(all->connection);
-	// free(all->window);
-	free(all->buffer.screen);
-	free(all->map->map);
+	free_exit(all);
 	exit(0);
-	return 0; 
+	return (0);
 }
 
-void	load_textures(t_mlx *all)
+void	start(t_mlx *all)
 {
-	int	width;
-	int	height;
-
-	all->map->textures->door = strdup("maps/door.xpm");
-	all->buffer.door.img = mlx_xpm_file_to_image(all->connection,
-			all->map->textures->door, &width, &height);
-	if (!all->buffer.door.img)
-	{
-		perror("Failed to load door texture");
-		exit(1);
-	}
-	all->buffer.door.addr.addr = mlx_get_data_addr(all->buffer.door.img,
-			&all->buffer.door.addr.bpp, &all->buffer.door.addr.size_len,
-			&all->buffer.door.addr.endian);
-	all->buffer.north.img = mlx_xpm_file_to_image(all->connection,
-			all->map->textures->north_path, &width, &height);
-	if (!all->buffer.north.img)
-	{
-		perror("Failed to load north texture");
-		exit(1);
-	}
-	all->buffer.north.addr.addr = mlx_get_data_addr(all->buffer.north.img,
-			&all->buffer.north.addr.bpp, &all->buffer.north.addr.size_len,
-			&all->buffer.north.addr.endian);
-	all->buffer.south.img = mlx_xpm_file_to_image(all->connection,
-			all->map->textures->south_path, &width, &height);
-	if (!all->buffer.south.img)
-	{
-		perror("Failed to load south texture");
-		exit(1);
-	}
-	all->buffer.south.addr.addr = mlx_get_data_addr(all->buffer.south.img,
-			&all->buffer.south.addr.bpp, &all->buffer.south.addr.size_len,
-			&all->buffer.south.addr.endian);
-	all->buffer.east.img = mlx_xpm_file_to_image(all->connection,
-			all->map->textures->east_path, &width, &height);
-	if (!all->buffer.east.img)
-	{
-		perror("Failed to load east texture");
-		exit(1);
-	}
-	all->buffer.east.addr.addr = mlx_get_data_addr(all->buffer.east.img,
-			&all->buffer.east.addr.bpp, &all->buffer.east.addr.size_len,
-			&all->buffer.east.addr.endian);
-	all->buffer.west.img = mlx_xpm_file_to_image(all->connection,
-			all->map->textures->west_path, &width, &height);
-	if (!all->buffer.west.img)
-	{
-		perror("Failed to load west texture");
-		exit(1);
-	}
-	all->buffer.west.addr.addr = mlx_get_data_addr(all->buffer.west.img,
-			&all->buffer.west.addr.bpp, &all->buffer.west.addr.size_len,
-			&all->buffer.west.addr.endian);
+	load_textures(all);
+	ray_casting(all);
+	draw_minimap(all);
+	mlx_hook(all->window, 2, 1L << 0, key_hook, all);
+	mlx_hook(all->window, 6, 1L << 6, handle_mouse_movements, all);
+	mlx_hook(all->window, 17, 0, close_window_x, all);
+	mlx_loop(all->connection);
 }
 
 int	main(int argc, char **argv)
 {
-	t_map units;
-	t_mlx all;
-	int i;
+	t_map	units;
+	t_mlx	all;
+	int		i;
+
 	i = 0;
 	if (argc != 2 || ft_check_filename(argv[1]) || start_parsing(&units, argv))
 		return (printf("map not valid\n"), 0);
@@ -152,14 +78,6 @@ int	main(int argc, char **argv)
 				&all.buffer.screen->addr.bpp, &all.buffer.screen->addr.size_len,
 				&all.buffer.screen->addr.endian);
 		all.map->pixels = (int *)all.buffer.screen->addr.addr;
-		// printf("%s\n", all.map->textures->south_path);
-		load_textures(&all);
-		ray_casting(&all);
-		draw_minimap(&all);
-		mlx_hook(all.window, 2, 1L << 0, key_hook, &all);
-		mlx_hook(all.window, 6, 1L << 6, handle_mouse_movements, &all);
-		mlx_hook(all.window, 17, 0, close_window_X, &all);
-		mlx_loop(all.connection);
+		start(&all);
 	}
-	// free_all_items(&units);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   position.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:54:46 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/07/21 08:58:56 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/28 15:24:55 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,3 +49,17 @@ void	get_player_position(t_map *units)
 	}
 }
 
+void	load_door_texture(t_mlx *all, int *width, int *height)
+{
+	all->map->textures->door = strdup("maps/door.xpm");
+	all->buffer.door.img = mlx_xpm_file_to_image(all->connection,
+			all->map->textures->door, width, height);
+	if (!all->buffer.door.img)
+	{
+		perror("Failed to load door texture");
+		exit(1);
+	}
+	all->buffer.door.addr.addr = mlx_get_data_addr(all->buffer.door.img,
+			&all->buffer.door.addr.bpp, &all->buffer.door.addr.size_len,
+			&all->buffer.door.addr.endian);
+}

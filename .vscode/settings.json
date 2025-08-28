@@ -1,10 +1,5 @@
 {
     "files.associations": {
-        "cmath": "c",
-        "map": "cpp",
-        "format": "cpp",
-        "float.h": "c",
-        "random": "c"
-    },
-    "C_Cpp.errorSquiggles": "disabled"
+        "rendering.h": "c"
+    }
 }

@@ -5,7 +5,7 @@ SOURCE = 	main.c parsing/read_map.c parsing/start_check_map.c \
 			parsing/checking_map.c parsing/check_textures.c parsing/check_colors.c \
 			parsing/check_filename.c parsing/free_items.c \
 			rendring/position.c rendring/rendering_2D.c \
-			rendring/axis.c parsing/mix_colors.c rendring/minimap.c
+			rendring/axis.c parsing/mix_colors.c rendring/minimap.c parsing/load_textures.c
 
 GET_SOURCE = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 

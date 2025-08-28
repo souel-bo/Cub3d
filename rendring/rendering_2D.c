@@ -14,17 +14,21 @@
 
 void	draw_walls(t_mlx *all)
 {
-	mlx_put_image_to_window(all->connection, all->window, all->buffer.screen->img ,0, 0);
+	mlx_put_image_to_window(all->connection, all->window,
+		all->buffer.screen->img, 0, 0);
 }
 int	handle_space_key(t_mlx *all)
 {
-	double targetX = all->map->player_x + cos(all->map->angle);
-	double targetY = all->map->player_y - sin(all->map->angle);
-	int    mapX = (int)targetX;
-	int    mapY = (int)targetY;
+	double	targetX;
+	double	targetY;
+	int		mapX;
+	int		mapY;
 
-	if (mapX >= 0 && mapX < WIN_WIDTH &&
-		mapY >= 0 && mapY < WIN_HEIGHT)
+	targetX = all->map->player_x + cos(all->map->angle);
+	targetY = all->map->player_y - sin(all->map->angle);
+	mapX = (int)targetX;
+	mapY = (int)targetY;
+	if (mapX >= 0 && mapX < WIN_WIDTH && mapY >= 0 && mapY < WIN_HEIGHT)
 	{
 		if (all->map->map[mapY][mapX] == 'D')
 			all->map->map[mapY][mapX] = 'O';
@@ -34,12 +38,15 @@ int	handle_space_key(t_mlx *all)
 	return (0);
 }
 
-void free_exit(t_mlx *all)
+void	free_exit(t_mlx *all)
 {
-	int height = 0;
+	int	height;
+	int	i;
+
+	height = 0;
 	while (all->map->map[height])
-    	height++;
-	int i = 0;
+		height++;
+	i = 0;
 	while (i < height)
 	{
 		free(all->map->map[i]);
@@ -70,11 +77,17 @@ void free_exit(t_mlx *all)
 
 int	key_hook(int key, t_mlx *all)
 {
-	float	next_x = all->map->player_x;
-	float	next_y = all->map->player_y;
-	float	speed = 0.10;
-	float	px = all->map->player_x;
-	float	py = all->map->player_y;
+	float	next_x;
+	float	next_y;
+	float	speed;
+	float	px;
+	float	py;
+
+	next_x = all->map->player_x;
+	next_y = all->map->player_y;
+	speed = 0.10;
+	px = all->map->player_x;
+	py = all->map->player_y;
 	if (all->map->angle < 0)
 		all->map->angle += 2 * M_PI;
 	else if (all->map->angle > 2 * M_PI)
@@ -107,16 +120,14 @@ int	key_hook(int key, t_mlx *all)
 		handle_space_key(all);
 	else if (key == ESCAPE)
 		free_exit(all);
-	if (all->map->map[(int)next_y][(int)px] != '1' &&
-		all->map->map[(int)next_y][(int)px] != 'D')
+	if (all->map->map[(int)next_y][(int)px] != '1'
+		&& all->map->map[(int)next_y][(int)px] != 'D')
 		all->map->player_y = next_y;
-	if (all->map->map[(int)py][(int)next_x] != '1' &&
-		all->map->map[(int)py][(int)next_x] != 'D')
+	if (all->map->map[(int)py][(int)next_x] != '1'
+		&& all->map->map[(int)py][(int)next_x] != 'D')
 		all->map->player_x = next_x;
 	mlx_clear_window(all->connection, all->window);
 	ray_casting(all);
 	draw_minimap(all);
 	return (0);
 }
-
-
