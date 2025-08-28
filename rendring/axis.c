@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:44:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/28 18:18:19 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/28 18:35:18 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,7 @@ void	draw_textured_wall(t_mlx *all, int j, int y_start, int y_end,
 }
 
 
-void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit, int side,
-		double rayDirX, double rayDirY, int mapX, int mapY)
+void	draw_viewd_ray(t_mlx *all, t_norm *ray)
 {
 	int		WIN_HEIGHTeight;
 	int		WIN_WIDTHidth;
@@ -172,29 +171,29 @@ void	draw_viewd_ray(t_mlx *all, double perpWall, int j, int hit, int side,
 
 	WIN_HEIGHTeight = 460;
 	WIN_WIDTHidth = 1070;
-	wallsize = WIN_HEIGHTeight / (perpWall / 32);
+	wallsize = WIN_HEIGHTeight / (ray->perpwall / 32);
 	start = (WIN_HEIGHTeight - wallsize) / 2;
 	end = start + wallsize;
 	y = 0;
 	while (y < (int)start && y < WIN_HEIGHTeight)
 	{
-		pixel_index = y * WIN_WIDTHidth + j;
+		pixel_index = y * WIN_WIDTHidth + ray->j;
 		all->map->pixels[pixel_index] = all->map->ceilling_collor;
 		y++;
 	}
 	y = (int)start;
-	if (hit == 1)
-		draw_textured_wall(all, j, (int)start, (int)end, wallsize, side,
-			rayDirX, rayDirY, mapX, mapY);
+	if (ray->hit == 1)
+		draw_textured_wall(all, ray->j, (int)start, (int)end, wallsize, ray->side,
+			ray->raydirx, ray->raydiry, ray->mapx, ray->mapy);
 	else
-		draw_textured_door(all, j, (int)start, (int)end, wallsize, side,
-			rayDirX, rayDirY, mapX, mapY);
+		draw_textured_door(all, ray->j, (int)start, (int)end, wallsize, ray->side,
+			ray->raydirx, ray->raydiry, ray->mapx, ray->mapy);
 	y = (int)end;
 	while (y < WIN_HEIGHTeight)
 	{
 		if (y >= 0)
 		{
-			pixel_index = y * WIN_WIDTHidth + j;
+			pixel_index = y * WIN_WIDTHidth + ray->j;
 			all->map->pixels[pixel_index] = all->map->flor_collor;
 		}
 		y++;
@@ -283,7 +282,7 @@ void	ray_line(t_mlx *all, float angle, int j)
 	draw_x = 0;
 	draw_y = 0;
 	ray.j = j;
-	draw_viewd_ray(all, ray.perpwall, ray.j, ray.hit, ray.side, ray.raydirx, ray.raydiry, ray.mapx, ray.mapy);
+	draw_viewd_ray(all, &ray);
 }
 
 void	casting_rays(t_mlx *all)

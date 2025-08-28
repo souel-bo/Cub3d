@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:29:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/28 18:03:33 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/28 18:36:53 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ typedef struct s_norm
 	double	raydiry;
 	int		mapx;
 	int		mapy;
+	double wall_size;
+	double start;
+	double end;
 } t_norm;
 
 
