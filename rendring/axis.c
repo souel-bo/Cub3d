@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:44:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/29 20:32:08 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/29 22:28:43 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,80 +16,52 @@
 void	draw_textured_door(t_mlx *all, t_norm *norm)
 {
 	t_img	*tex;
-	double	wall_x;
-	int		tex_x;
-	int		y0;
-	int		y1;
-	int		bytes_per_px;
-	int		tex_line;
-	int		step_fp;
-	int		texpos_fp;
-	int		*dst;
-	int		x;
-	char	*tex_base;
-	int		tex_y;
-	char	*src;
-	int		color;
 
 	tex = &all->buffer.door;
 	if (!tex || !tex->addr.addr || norm->wall_size <= 0.0)
 		return ;
 	if (norm->side == 0)
-		wall_x = all->map->player_y + ((norm->mapx - all->map->player_x + (1
+		norm->ray_2.wall_x = all->map->player_y + ((norm->mapx - all->map->player_x + (1
 						- (norm->raydirx > 0 ? 1 : -1)) / 2.0) / norm->raydirx) * norm->raydiry;
 	else
-		wall_x = all->map->player_x + ((norm->mapy - all->map->player_y + (1
+		norm->ray_2.wall_x = all->map->player_x + ((norm->mapy - all->map->player_y + (1
 						- (norm->raydiry > 0 ? 1 : -1)) / 2.0) / norm->raydiry) * norm->raydirx;
-	wall_x -= (int)wall_x;
-	tex_x = (int)(wall_x * (double)TEX_W);
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= TEX_W)
-		tex_x = TEX_W - 1;
+	norm->ray_2.wall_x -= (int)norm->ray_2.wall_x;
+	norm->ray_2.tex_x = (int)(norm->ray_2.wall_x * (double)TEX_W);
+	if (norm->ray_2.tex_x < 0)
+		norm->ray_2.tex_x = 0;
+	if (norm->ray_2.tex_x >= TEX_W)
+		norm->ray_2.tex_x = TEX_W - 1;
 	if ((norm->side == 0 && norm->raydirx < 0) || (norm->side == 1 && norm->raydiry > 0))
-		tex_x = TEX_W - tex_x - 1;
-	y0 = (int)norm->start;
-	y1 = (int)norm->end;
-	if (y0 < 0)
-		y0 = 0;
-	if (y1 > WIN_HEIGHT)
-		y1 = WIN_HEIGHT;
-	if (y0 >= y1)
+		norm->ray_2.tex_x = TEX_W - norm->ray_2.tex_x - 1;
+	norm->ray_2.y0 = (int)norm->start;
+	norm->ray_2.y1 = (int)norm->end;
+	if (norm->ray_2.y0 < 0)
+		norm->ray_2.y0 = 0;
+	if (norm->ray_2.y1 > WIN_HEIGHT)
+		norm->ray_2.y1 = WIN_HEIGHT;
+	if (norm->ray_2.y0 >= norm->ray_2.y1)
 		return ;
-	bytes_per_px = tex->addr.bpp >> 3;
-	tex_line = tex->addr.size_len;
-	step_fp = (int)((((long long)TEX_H) << 16) / (int)norm->wall_size);
-	texpos_fp = (int)(((long long)(y0 - (int)norm->start) * step_fp));
-	dst = all->map->pixels;
-	x = norm->j;
-	tex_base = tex->addr.addr;
-	for (int y = y0; y < y1; ++y)
+	norm->ray_2.bytes_per_px = tex->addr.bpp >> 3;
+	norm->ray_2.tex_line = tex->addr.size_len;
+	norm->ray_2.step_fp = (int)((((long long)TEX_H) << 16) / (int)norm->wall_size);
+	norm->ray_2.texpos_fp = (int)(((long long)(norm->ray_2.y0 - (int)norm->start) * norm->ray_2.step_fp));
+	norm->ray_2.dst = all->map->pixels;
+	norm->ray_2.x = norm->j;
+	norm->ray_2.tex_base = tex->addr.addr;
+	for (int y = norm->ray_2.y0; y < norm->ray_2.y1; ++y)
 	{
-		tex_y = (texpos_fp >> 16);
-		texpos_fp += step_fp;
-		src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
-		color = *(int *)src;
-		dst[y * WIN_WIDTH + x] = color;
+		norm->ray_2.tex_y = (norm->ray_2.texpos_fp >> 16);
+		norm->ray_2.texpos_fp += norm->ray_2.step_fp;
+		norm->ray_2.src = norm->ray_2.tex_base + norm->ray_2.tex_y * norm->ray_2.tex_line + norm->ray_2.tex_x * norm->ray_2.bytes_per_px;
+		norm->ray_2.color = *(int *)norm->ray_2.src;
+		norm->ray_2.dst[y * WIN_WIDTH + norm->ray_2.x] = norm->ray_2.color;
 	}
 }
 
 void	draw_textured_wall(t_mlx *all, t_norm *ray)
 {
 	t_img	*tex;
-	double	wall_x;
-	int		tex_x;
-	int		y0;
-	int		y1;
-	int		bytes_per_px;
-	int		tex_line;
-	int		step_fp;
-	int		texpos_fp;
-	int		*dst;
-	int		x;
-	char	*tex_base;
-	int		tex_y;
-	char	*src;
-	int		color;
 	int		y;
 
 	if (ray->side == 0)
@@ -109,45 +81,47 @@ void	draw_textured_wall(t_mlx *all, t_norm *ray)
 	if (!tex || !tex->addr.addr || ray->wall_size <= 0.0)
 		return ;
 	if (ray->side == 0)
-		wall_x = all->map->player_y + ((ray->mapx - all->map->player_x + (1
+		ray->ray_2.wall_x = all->map->player_y + ((ray->mapx - all->map->player_x + (1
 						- (ray->raydirx > 0 ? 1 : -1)) / 2.0) / ray->raydirx) * ray->raydiry;
 	else
-		wall_x = all->map->player_x + ((ray->mapy - all->map->player_y + (1
+		ray->ray_2.wall_x = all->map->player_x + ((ray->mapy - all->map->player_y + (1
 						- (ray->raydiry > 0 ? 1 : -1)) / 2.0) / ray->raydiry) * ray->raydirx;
-	wall_x -= (int)wall_x;
-	tex_x = (int)(wall_x * (double)TEX_W);
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= TEX_W)
-		tex_x = TEX_W - 1;
+	ray->ray_2.wall_x -= (int)ray->ray_2.wall_x;
+	ray->ray_2.tex_x = (int)(ray->ray_2.wall_x * (double)TEX_W);
+	if (ray->ray_2.tex_x < 0)
+		ray->ray_2.tex_x = 0;
+	if (ray->ray_2.tex_x >= TEX_W)
+		ray->ray_2.tex_x = TEX_W - 1;
 	if ((ray->side == 0 && ray->raydirx < 0) || (ray->side == 1 && ray->raydiry > 0))
-		tex_x = TEX_W - tex_x - 1;
-	y0 = ray->start;
-	y1 = ray->end;
-	if (y0 < 0)
-		y0 = 0;
-	if (y1 > WIN_HEIGHT)
-		y1 = WIN_HEIGHT;
-	if (y0 >= y1)
+		ray->ray_2.tex_x = TEX_W - ray->ray_2.tex_x - 1;
+	ray->ray_2.y0 = ray->start;
+	ray->ray_2.y1 = ray->end;
+	if (ray->ray_2.y0 < 0)
+		ray->ray_2.y0 = 0;
+	if (ray->ray_2.y1 > WIN_HEIGHT)
+		ray->ray_2.y1 = WIN_HEIGHT;
+	if (ray->ray_2.y0 >= ray->ray_2.y1)
 		return ;
-	bytes_per_px = tex->addr.bpp >> 3;
-	tex_line = tex->addr.size_len;
-	step_fp = (int)((((long long)TEX_H) << 16) / (int)ray->wall_size);
-	texpos_fp = (int)(((long long)(y0 - ray->start) * step_fp));
-	dst = all->map->pixels;
-	x = ray->j;
-	tex_base = tex->addr.addr;
-	y = y0;
-	while (y < y1)
+	ray->ray_2.bytes_per_px = tex->addr.bpp >> 3;
+	ray->ray_2.tex_line = tex->addr.size_len;
+	ray->ray_2.step_fp = (int)((((long long)TEX_H) << 16) / (int)ray->wall_size);
+	ray->ray_2.texpos_fp = (int)(((long long)(ray->ray_2.y0 - ray->start) * ray->ray_2.step_fp));
+	ray->ray_2.dst = all->map->pixels;
+	ray->ray_2.x = ray->j;
+	ray->ray_2.tex_base = tex->addr.addr;
+	y = ray->ray_2.y0;
+	while (y < ray->ray_2.y1)
 	{
-		tex_y = (texpos_fp >> 16);
-		texpos_fp += step_fp;
-		src = tex_base + tex_y * tex_line + tex_x * bytes_per_px;
-		color = *(int *)src;
-		dst[y * WIN_WIDTH + x] = color;
+		ray->ray_2.tex_y = (ray->ray_2.texpos_fp >> 16);
+		ray->ray_2.texpos_fp += ray->ray_2.step_fp;
+		ray->ray_2.src = ray->ray_2.tex_base + ray->ray_2.tex_y * ray->ray_2.tex_line
+			+ ray->ray_2.tex_x * ray->ray_2.bytes_per_px;
+		ray->ray_2.color = *(int *)ray->ray_2.src;
+		ray->ray_2.dst[y * WIN_WIDTH + ray->ray_2.x] = ray->ray_2.color;
 		y++;
 	}
 }
+
 
 void	draw_viewd_ray(t_mlx *all, t_norm *ray)
 {

@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:29:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/28 18:36:53 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/29 22:05:46 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,24 @@ typedef struct s_movements
 	int					*movements;
 }						t_movements;
 
+typedef struct s_norm_v2
+{
+	double	wall_x;
+	int		tex_x;
+	int		y0;
+	int		y1;
+	int		bytes_per_px;
+	int		tex_line;
+	int		step_fp;
+	int		texpos_fp;
+	int		*dst;
+	int		x;
+	char	*tex_base;
+	int		tex_y;
+	char	*src;
+	int		color;
+} t_norm_v2;
+
 typedef struct s_norm
 {
 	double	perpwall;
@@ -112,6 +130,7 @@ typedef struct s_norm
 	double wall_size;
 	double start;
 	double end;
+	t_norm_v2 ray_2;
 } t_norm;
 
 
