@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 19:06:47 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:25:01 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,8 @@ int		*find_character(char **tmp_map);
 char	**read_file(int fd);
 int		is_valid_texture(char *str, t_textures *textures, t_map *units);
 char	*remove_newline(char *str);
+void	draw_textured_wall(t_mlx *all, t_norm *ray);
+void	compute_wall_x(t_mlx *all, t_norm *ray);
+t_img	*choose_texture(t_mlx *all, t_norm *ray);
 
 #endif

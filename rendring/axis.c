@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:44:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 16:55:42 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:39:52 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,69 +56,6 @@ void	draw_textured_door(t_mlx *all, t_norm *norm)
 		norm->ray_2.src = norm->ray_2.tex_base + norm->ray_2.tex_y * norm->ray_2.tex_line + norm->ray_2.tex_x * norm->ray_2.bytes_per_px;
 		norm->ray_2.color = *(int *)norm->ray_2.src;
 		norm->ray_2.dst[y * WIN_WIDTH + norm->ray_2.x] = norm->ray_2.color;
-	}
-}
-
-void	draw_textured_wall(t_mlx *all, t_norm *ray)
-{
-	t_img	*tex;
-	int		y;
-
-	if (ray->side == 0)
-	{
-		if (ray->raydirx > 0)
-			tex = &all->buffer.west;
-		else
-			tex = &all->buffer.east;
-	}
-	else
-	{
-		if (ray->raydiry > 0)
-			tex = &all->buffer.south;
-		else
-			tex = &all->buffer.north;
-	}
-	if (!tex || !tex->addr.addr || ray->wall_size <= 0.0)
-		return ;
-	if (ray->side == 0)
-		ray->ray_2.wall_x = all->map->player_y + ((ray->mapx - all->map->player_x + (1
-						- (ray->raydirx > 0 ? 1 : -1)) / 2.0) / ray->raydirx) * ray->raydiry;
-	else
-		ray->ray_2.wall_x = all->map->player_x + ((ray->mapy - all->map->player_y + (1
-						- (ray->raydiry > 0 ? 1 : -1)) / 2.0) / ray->raydiry) * ray->raydirx;
-	ray->ray_2.wall_x -= (int)ray->ray_2.wall_x;
-	ray->ray_2.tex_x = (int)(ray->ray_2.wall_x * (double)TEX_W);
-	if (ray->ray_2.tex_x < 0)
-		ray->ray_2.tex_x = 0;
-	if (ray->ray_2.tex_x >= TEX_W)
-		ray->ray_2.tex_x = TEX_W - 1;
-	if ((ray->side == 0 && ray->raydirx < 0) || (ray->side == 1 && ray->raydiry > 0))
-		ray->ray_2.tex_x = TEX_W - ray->ray_2.tex_x - 1;
-	ray->ray_2.y0 = ray->start;
-	ray->ray_2.y1 = ray->end;
-	if (ray->ray_2.y0 < 0)
-		ray->ray_2.y0 = 0;
-	if (ray->ray_2.y1 > WIN_HEIGHT)
-		ray->ray_2.y1 = WIN_HEIGHT;
-	if (ray->ray_2.y0 >= ray->ray_2.y1)
-		return ;
-	ray->ray_2.bytes_per_px = tex->addr.bpp >> 3;
-	ray->ray_2.tex_line = tex->addr.size_len;
-	ray->ray_2.step_fp = (int)((((long long)TEX_H) << 16) / (int)ray->wall_size);
-	ray->ray_2.texpos_fp = (int)(((long long)(ray->ray_2.y0 - ray->start) * ray->ray_2.step_fp));
-	ray->ray_2.dst = all->map->pixels;
-	ray->ray_2.x = ray->j;
-	ray->ray_2.tex_base = tex->addr.addr;
-	y = ray->ray_2.y0;
-	while (y < ray->ray_2.y1)
-	{
-		ray->ray_2.tex_y = (ray->ray_2.texpos_fp >> 16);
-		ray->ray_2.texpos_fp += ray->ray_2.step_fp;
-		ray->ray_2.src = ray->ray_2.tex_base + ray->ray_2.tex_y * ray->ray_2.tex_line
-			+ ray->ray_2.tex_x * ray->ray_2.bytes_per_px;
-		ray->ray_2.color = *(int *)ray->ray_2.src;
-		ray->ray_2.dst[y * WIN_WIDTH + ray->ray_2.x] = ray->ray_2.color;
-		y++;
 	}
 }
 
