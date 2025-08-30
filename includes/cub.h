@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/28 15:42:02 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:04:31 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,10 @@ void	draw_minimap(t_mlx *all);
 void	free_exit(t_mlx *all);
 void	load_textures(t_mlx *all);
 void	load_door_texture(t_mlx *all, int *width, int *height);
+int	flood_fill(char **map, int x, int y);
+int	*find_character(char **tmp_map);
+char	**read_file(int fd);
+int	is_valid_texture(char *str, t_textures *textures, t_map *units);
+char	*remove_newline(char *str);
 
 #endif
