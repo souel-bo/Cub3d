@@ -1,4 +1,4 @@
-CC = cc #-fsanitize=address
+CC = cc
  FLAGS = -Wall -Wextra -Werror
 
 SOURCE = 	main.c parsing/read_map.c parsing/start_check_map.c \
@@ -6,7 +6,7 @@ SOURCE = 	main.c parsing/read_map.c parsing/start_check_map.c \
 			parsing/check_filename.c parsing/free_items.c \
 			rendring/position.c rendring/rendering_2D.c \
 			rendring/axis.c parsing/mix_colors.c rendring/minimap.c parsing/load_textures.c \
-			tex_src/walls.c tex_src/walls_2.c
+			tex_src/walls.c tex_src/walls_2.c tex_src/doors.c
 
 GET_SOURCE = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 

@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 17:35:30 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:36:20 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	load_door_texture(t_mlx *all, int *width, int *height);
 void	draw_textured_wall(t_mlx *all, t_norm *ray);
 void	compute_wall_x(t_mlx *all, t_norm *ray);
 t_img	*choose_texture(t_mlx *all, t_norm *ray);
+void	draw_textured_door(t_mlx *all, t_norm *norm);
 
 #endif
