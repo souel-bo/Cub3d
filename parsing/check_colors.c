@@ -6,12 +6,11 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:01:27 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 19:02:17 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:06:28 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
-
 
 int	check_col_valid(t_map *units)
 {

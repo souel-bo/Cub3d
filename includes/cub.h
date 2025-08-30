@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 19:04:31 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 19:06:47 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define CUB_H
 
 # include "../get_next_line/get_next_line.h"
-# include <mlx.h>
 # include "libft.h"
 # include "rendering.h"
 # include "type.h"
 # include <fcntl.h>
 # include <math.h>
+# include <mlx.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -73,10 +73,10 @@ void	draw_minimap(t_mlx *all);
 void	free_exit(t_mlx *all);
 void	load_textures(t_mlx *all);
 void	load_door_texture(t_mlx *all, int *width, int *height);
-int	flood_fill(char **map, int x, int y);
-int	*find_character(char **tmp_map);
+int		flood_fill(char **map, int x, int y);
+int		*find_character(char **tmp_map);
 char	**read_file(int fd);
-int	is_valid_texture(char *str, t_textures *textures, t_map *units);
+int		is_valid_texture(char *str, t_textures *textures, t_map *units);
 char	*remove_newline(char *str);
 
 #endif
