@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 19:36:20 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/30 22:56:08 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define CUB_H
 
 # include "../get_next_line/get_next_line.h"
-# include <mlx.h>
 # include "libft.h"
 # include "rendering.h"
 # include "type.h"
 # include <fcntl.h>
 # include <math.h>
+# include <mlx.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -77,5 +77,12 @@ void	draw_textured_wall(t_mlx *all, t_norm *ray);
 void	compute_wall_x(t_mlx *all, t_norm *ray);
 t_img	*choose_texture(t_mlx *all, t_norm *ray);
 void	draw_textured_door(t_mlx *all, t_norm *norm);
-
+void	setup_minimap_bounds(t_mlx *all);
+void	clear_minimap_bg(t_mlx *all);
+void	draw_square(t_mlx *all);
+void	draw_minimap_tile(t_mlx *all);
+int		get_tile_color(char tile);
+void	setup_tile_screen_pos(t_mlx *all);
+void	process_minimap_tile(t_mlx *all);
+void	draw_minimap_cells(t_mlx *all);
 #endif

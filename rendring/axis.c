@@ -6,13 +6,12 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:44:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 19:36:03 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/30 21:21:07 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rendering.h"
 #include "float.h"
-
 
 void	draw_viewd_ray(t_mlx *all, t_norm *ray)
 {

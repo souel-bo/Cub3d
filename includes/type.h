@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:29:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/29 22:05:46 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/30 21:41:37 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,38 +101,78 @@ typedef struct s_movements
 
 typedef struct s_norm_v2
 {
-	double	wall_x;
-	int		tex_x;
-	int		y0;
-	int		y1;
-	int		bytes_per_px;
-	int		tex_line;
-	int		step_fp;
-	int		texpos_fp;
-	int		*dst;
-	int		x;
-	char	*tex_base;
-	int		tex_y;
-	char	*src;
-	int		color;
-} t_norm_v2;
+	double				wall_x;
+	int					tex_x;
+	int					y0;
+	int					y1;
+	int					bytes_per_px;
+	int					tex_line;
+	int					step_fp;
+	int					texpos_fp;
+	int					*dst;
+	int					x;
+	char				*tex_base;
+	int					tex_y;
+	char				*src;
+	int					color;
+}						t_norm_v2;
 
 typedef struct s_norm
 {
-	double	perpwall;
-	int		j;
-	int		hit;
-	int		side;
-	double	raydirx;
-	double	raydiry;
-	int		mapx;
-	int		mapy;
-	double wall_size;
-	double start;
-	double end;
-	t_norm_v2 ray_2;
-} t_norm;
+	double				perpwall;
+	int					j;
+	int					hit;
+	int					side;
+	double				raydirx;
+	double				raydiry;
+	int					mapx;
+	int					mapy;
+	double				wall_size;
+	double				start;
+	double				end;
+	t_norm_v2			ray_2;
+}						t_norm;
 
+typedef struct s_minimap_vars
+{
+	int					minimap_x;
+	int					minimap_y;
+	float				player_x;
+	float				player_y;
+	int					map_rows;
+	char				tile;
+	float				angle;
+	int					line_length;
+	int					y;
+	int					x;
+	float				start_row_f;
+	float				end_row_f;
+	float				start_col_f;
+	float				end_col_f;
+	int					start_row;
+	int					end_row;
+	int					start_col;
+	int					end_col;
+	int					row;
+	int					col;
+	int					map_len;
+	int					i;
+	int					j;
+	int					px;
+	int					py;
+	int					color;
+	float				relative_x;
+	float				relative_y;
+	float				screen_x_f;
+	float				screen_y_f;
+	int					screen_x;
+	int					screen_y;
+	float				player_screen_x_f;
+	float				player_screen_y_f;
+	int					player_screen_x;
+	int					player_screen_y;
+	int					player_size;
+}						t_minimap_vars;
 
 typedef struct s_mlx
 {
@@ -141,6 +181,7 @@ typedef struct s_mlx
 	t_map				*map;
 	t_images			buffer;
 	t_movements			movements;
+	t_minimap_vars		minimap;
 }						t_mlx;
 
 #endif
