@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:01:46 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:05:17 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:08:51 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	is_valid_texture(char *str, t_textures *textures, t_map *units)
 		return (free_arr(arr), printf("bb\n"), 1);
 	arr[1] = remove_newline(arr[1]);
 	fd = open(arr[1], O_RDONLY);
-	//i need to remove newline from strings
 	if (fd < 0)
 		return (free_arr(arr), printf("nn\n"), 1);
 	if (!strcmp(arr[0], "NO"))

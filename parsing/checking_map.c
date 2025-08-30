@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:21 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:05:38 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:09:32 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	check_single_characters(char **map)
 {
 	int	*pos;
 
-	int(i), (j);
+	int (i), (j);
 	i = 0;
 	pos = calloc(sizeof(int), 2);
 	while (map[i])

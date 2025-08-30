@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:06:20 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:12:05 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ char	**read_file(int fd)
 			break ;
 		}
 		else
-		{
-			array[i] = line;
-			i++;
-		}
+			array[i++] = line;
 		line = get_next_line(fd);
 	}
 	array[i] = NULL;
@@ -57,6 +54,7 @@ int	ft_is_space(char **arr)
 	}
 	return (0);
 }
+
 void	free_collec(t_parse_file *collec)
 {
 	if (collec->step_one)
