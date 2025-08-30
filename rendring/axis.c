@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   axis.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:44:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/29 22:28:43 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:55:42 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,10 +167,6 @@ void	ray_line(t_mlx *all, float angle, int j)
 	double	py;
 	double	deltaDistX;
 	double	deltaDistY;
-	double	x;
-	double	y;
-	int		draw_x;
-	int		draw_y;
 
 	i = 0;
 	px = all->map->player_x;
@@ -237,10 +233,6 @@ void	ray_line(t_mlx *all, float angle, int j)
 		ray.perpwall = (sideDistY - deltaDistY);
 	ray.perpwall *= cos(angle - all->map->angle);
 	ray.perpwall *= TILE_SIZE;
-	x = all->map->player_x * 32;
-	y = all->map->player_y * 32;
-	draw_x = 0;
-	draw_y = 0;
 	ray.j = j;
 	draw_viewd_ray(all, &ray);
 }
