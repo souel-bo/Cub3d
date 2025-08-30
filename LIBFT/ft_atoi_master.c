@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:02:36 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:02:37 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:13:47 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,3 @@ int	ft_atoi_mstr(const char *str)
 	}
 	return (r);
 }
-
-
-//int main()
-//{
-//    char *str = "hello";
-//    int num = 0;
-//    if ((num = ft_atoi_mstr(str)) != -1)
-//    {
-//        printf("%d\n", num);
-//    }
-//    else
-//        printf("errpr\n");
-//}

@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:02:48 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:04:14 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:14:19 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	arr[i] = '\0';
 	return (arr);
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	printf("%s\n", ft_substr("hello", 3, 4));
-// }
-
