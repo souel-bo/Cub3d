@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:09 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/01 20:50:15 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:06:28 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	make_map_cube(t_map *units)
 	long_line = biggest_line(units->map);
 	tmp_map = duplacate_map(units, long_line);
 	if (check_characters(tmp_map))
-		return (free_arr(tmp_map),1);
+		return (free_arr(tmp_map), 1);
 	if (setup_for_flood_fill(tmp_map))
 		return (free_arr(tmp_map), 1);
 	return (free_arr(tmp_map), 0);

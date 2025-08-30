@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:21 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/11 23:09:08 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:05:38 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	check_single_characters(char **map)
 {
 	int	*pos;
 
-	int (i), (j);
+	int(i), (j);
 	i = 0;
 	pos = calloc(sizeof(int), 2);
 	while (map[i])
@@ -98,7 +98,7 @@ int	check_single_characters(char **map)
 				pos[0] = i;
 				pos[1] = j;
 				if (check_single_characters_two(map, pos))
-					return (free (pos),1);
+					return (free(pos), 1);
 			}
 			j++;
 		}
@@ -138,16 +138,11 @@ int	setup_for_flood_fill(char **tmp_map)
 
 	pos = find_character(tmp_map);
 	if (flood_fill(tmp_map, pos[1], pos[0]))
-		return (free(pos) ,printf("erorrrrr\n"), 1);
+		return (free(pos), printf("erorrrrr\n"), 1);
 	if (check_walls(tmp_map))
-		return (free(pos) ,printf("problem in walls\n"), 1);
+		return (free(pos), printf("problem in walls\n"), 1);
 	if (check_single_characters(tmp_map))
-		return (free(pos) ,printf("haaa map mt9oba\n"), 1);
+		return (free(pos), printf("haaa map mt9oba\n"), 1);
 	i = 0;
-	//while (tmp_map[i])
-	//{
-	//	printf("%s", tmp_map[i]);
-	//	i++;
-	//}
-	return (free(pos) ,0);
+	return (free(pos), 0);
 }

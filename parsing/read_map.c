@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/22 03:17:38 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:06:20 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int	ft_is_space(char **arr)
 	}
 	return (0);
 }
-void free_collec(t_parse_file *collec)
+void	free_collec(t_parse_file *collec)
 {
 	if (collec->step_one)
 		free_arr(collec->step_one);
-	if (collec->step_two)	
+	if (collec->step_two)
 		free_arr(collec->step_two);
 	if (collec->step_three)
 		free_arr(collec->step_three);
@@ -75,7 +75,7 @@ int	start_parsing(t_map *units, char **argv)
 	int				fd;
 	int				i;
 	t_parse_file	*collec;
-	char **swp;
+	char			**swp;
 
 	(void)units;
 	fd = open(argv[1], O_RDONLY);
@@ -89,8 +89,9 @@ int	start_parsing(t_map *units, char **argv)
 	collec->step_two = read_file(fd);
 	collec->step_three = read_file(fd);
 	collec->step_four = read_file(fd);
-	if (!*collec->step_one || !*collec->step_two|| !*collec->step_three)
-		return(printf("map not complited\n") , free_collec(collec) , close(fd) ,1);
+	if (!*collec->step_one || !*collec->step_two || !*collec->step_three)
+		return (printf("map not complited\n"), free_collec(collec), close(fd),
+			1);
 	close(fd);
 	if (collec->step_one[0][0] == 'F' || collec->step_one[0][0] == 'C')
 	{
@@ -100,14 +101,15 @@ int	start_parsing(t_map *units, char **argv)
 	}
 	if (*collec->step_four || ft_is_space(collec->step_four)
 		|| ft_is_space(collec->step_two))
-		return (free_collec(collec) , printf("param 4\n"), 1);
+		return (free_collec(collec), printf("param 4\n"), 1);
 	if (check_textures(collec->step_one, units))
-		return (free_collec(collec) ,printf("textures\n"), 1);
+		return (free_collec(collec), printf("textures\n"), 1);
 	if (ft_colors(collec->step_two, units))
-		return (free_collec(collec) ,printf("colors\n"), 1);
+		return (free_collec(collec), printf("colors\n"), 1);
 	units->map = collec->step_three;
 	collec->step_three = NULL;
 	if (make_map_cube(units))
-		return (free_collec(collec) ,free_all_items(units),printf("map\n"), -1);
-	return (free_collec(collec) ,0);
+		return (free_collec(collec), free_all_items(units), printf("map\n"),
+			-1);
+	return (free_collec(collec), 0);
 }
