@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:09 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:06:28 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:50:44 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 int	biggest_line(char **map)
 {
-	int	i;
-	int	len;
-	int	tmp;
-
+	int (i), (len), (tmp);
 	i = 0;
 	len = 0;
 	tmp = 0;
 	while (map[i])
 	{
-		if ((tmp = ft_strlen(map[i])) > len)
+		tmp = ft_strlen(map[i]);
+		if (tmp > len)
 			len = tmp;
 		i++;
 	}

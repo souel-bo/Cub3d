@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:01:27 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:04:58 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:22:20 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,41 @@ int	ft_isdigit(char *str)
 	return (0);
 }
 
+static int	parse_floor_color(char **colors, t_map *units)
+{
+	t_flor_collors	*f_color;
+
+	f_color = malloc(sizeof(t_flor_collors));
+	if (!f_color)
+		return (1);
+	f_color->red = ft_atoi_mstr(colors[0]);
+	f_color->green = ft_atoi_mstr(colors[1]);
+	f_color->blue = ft_atoi_mstr(colors[2]);
+	units->count_floor++;
+	units->floor_collors = f_color;
+	return (0);
+}
+
+static int	parse_ceiling_color(char **colors, t_map *units)
+{
+	t_ceilling_collors	*c_color;
+
+	c_color = malloc(sizeof(t_ceilling_collors));
+	if (!c_color)
+		return (1);
+	c_color->red = ft_atoi_mstr(colors[0]);
+	c_color->green = ft_atoi_mstr(colors[1]);
+	c_color->blue = ft_atoi_mstr(colors[2]);
+	units->count_ceil++;
+	units->ceilling_collors = c_color;
+	return (0);
+}
+
 int	check_colors(char *str, t_map *units)
 {
-	t_flor_collors		*f_color;
-	t_ceilling_collors	*c_color;
-	char				**arr;
-	char				**colors;
+	char	**arr;
+	char	**colors;
+	int		result;
 
 	arr = ft_split(str, ' ');
 	if (ft_count_argc(arr) != 2 || ft_isdigit(arr[1]))
@@ -34,25 +63,12 @@ int	check_colors(char *str, t_map *units)
 	colors = ft_split(arr[1], ',');
 	if (ft_count_argc(colors) != 3)
 		return (free_arr(arr), free_arr(colors), 1);
+	result = 1;
 	if (!strcmp(arr[0], "F"))
-	{
-		f_color = malloc(sizeof(t_flor_collors));
-		f_color->red = ft_atoi_mstr(colors[0]);
-		f_color->green = ft_atoi_mstr(colors[1]);
-		f_color->blue = ft_atoi_mstr(colors[2]);
-		units->count_floor++;
-		units->floor_collors = f_color;
-	}
+		result = parse_floor_color(colors, units);
 	else if (!strcmp(arr[0], "C"))
-	{
-		c_color = malloc(sizeof(t_ceilling_collors));
-		c_color->red = ft_atoi_mstr(colors[0]);
-		c_color->green = ft_atoi_mstr(colors[1]);
-		c_color->blue = ft_atoi_mstr(colors[2]);
-		units->count_ceil++;
-		units->ceilling_collors = c_color;
-	}
-	return (free_arr(arr), free_arr(colors), 0);
+		result = parse_ceiling_color(colors, units);
+	return (free_arr(arr), free_arr(colors), result);
 }
 
 int	check_col_valid(t_map *units)
@@ -61,8 +77,9 @@ int	check_col_valid(t_map *units)
 		return (1);
 	if (units->count_floor != 1 || units->count_ceil != 1)
 		return (1);
-	if (units->ceilling_collors->blue == -1 || units->ceilling_collors->red ==
-		-1 || units->ceilling_collors->green == -1)
+	if (units->ceilling_collors->blue == -1
+		|| units->ceilling_collors->red == -1
+		|| units->ceilling_collors->green == -1)
 		return (1);
 	if (units->floor_collors->blue == -1 || units->floor_collors->red == -1
 		|| units->floor_collors->green == -1)
