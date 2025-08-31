@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/31 21:34:11 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/01 00:34:27 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,5 @@ void	draw_minimap_cells(t_mlx *all);
 void	free_exit(t_mlx *all);
 int		handle_space_key(t_mlx *all);
 void	draw_walls(t_mlx *all);
+int		check_valid_characters(char **tmp_map);
 #endif
