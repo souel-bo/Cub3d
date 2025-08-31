@@ -8,7 +8,7 @@ SOURCE = 	main.c parsing/read_map.c parsing/start_check_map.c \
 			rendring/axis.c parsing/mix_colors.c minimap/minimap.c parsing/load_textures.c \
 			tex_src/walls.c tex_src/walls_2.c tex_src/doors.c minimap/minimap_2.c minimap/minimap_3.c \
 			free_exit.c parsing/check_colors_2.c  parsing/checking_map_2.c \
-			parsing/check_textures_2.c  parsing/read_map_2.c rendring/axis_2.c
+			parsing/check_textures_2.c  parsing/read_map_2.c rendring/axis_2.c parsing/start_check_map_2.c
 
 GET_SOURCE = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
