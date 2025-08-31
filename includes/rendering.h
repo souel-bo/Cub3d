@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:36:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 15:28:34 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/31 22:22:14 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ void	draw_player(t_mlx *all);
 void	draw_multiple_rays(t_mlx *all);
 void	draw_single_ray(t_mlx *all);
 void	ray_casting(t_mlx *all);
+void	ray_line(t_mlx *all, float angle, int j);
+void	draw_viewd_ray(t_mlx *all, t_norm *ray);
 
 #endif

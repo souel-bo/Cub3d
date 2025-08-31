@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:29:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/31 21:35:24 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/31 23:02:39 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,15 @@ typedef struct s_norm
 	double				wall_size;
 	double				start;
 	double				end;
+	double				px;
+	double				py;
 	t_norm_v2			ray_2;
+	double				deltadistx;
+	double				deltadisty;
+	int					stepx;
+	int					stepy;
+	double				sidedisty;
+	double				sidedistx;
 }						t_norm;
 
 typedef struct s_minimap_vars
