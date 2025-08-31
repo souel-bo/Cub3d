@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 22:56:08 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/31 15:16:28 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,7 @@ int		get_tile_color(char tile);
 void	setup_tile_screen_pos(t_mlx *all);
 void	process_minimap_tile(t_mlx *all);
 void	draw_minimap_cells(t_mlx *all);
+void	free_exit(t_mlx *all);
+int		handle_space_key(t_mlx *all);
+void	draw_walls(t_mlx *all);
 #endif

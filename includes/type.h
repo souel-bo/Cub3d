@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:29:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 21:41:37 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/31 15:21:09 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,9 @@ typedef struct s_mlx
 	t_images			buffer;
 	t_movements			movements;
 	t_minimap_vars		minimap;
+	float				px;
+	float				py;
+	float				speed;
 }						t_mlx;
 
 #endif
