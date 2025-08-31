@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 19:25:01 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/31 21:34:11 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "type.h"
 # include <fcntl.h>
 # include <math.h>
+# include <mlx.h>
 # include <mlx.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -81,5 +82,16 @@ char	*remove_newline(char *str);
 void	draw_textured_wall(t_mlx *all, t_norm *ray);
 void	compute_wall_x(t_mlx *all, t_norm *ray);
 t_img	*choose_texture(t_mlx *all, t_norm *ray);
-
+void	draw_textured_door(t_mlx *all, t_norm *norm);
+void	setup_minimap_bounds(t_mlx *all);
+void	clear_minimap_bg(t_mlx *all);
+void	draw_square(t_mlx *all);
+void	draw_minimap_tile(t_mlx *all);
+int		get_tile_color(char tile);
+void	setup_tile_screen_pos(t_mlx *all);
+void	process_minimap_tile(t_mlx *all);
+void	draw_minimap_cells(t_mlx *all);
+void	free_exit(t_mlx *all);
+int		handle_space_key(t_mlx *all);
+void	draw_walls(t_mlx *all);
 #endif

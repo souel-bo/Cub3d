@@ -6,59 +6,12 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:44:54 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 19:39:52 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/31 21:33:17 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rendering.h"
 #include "float.h"
-
-void	draw_textured_door(t_mlx *all, t_norm *norm)
-{
-	t_img	*tex;
-
-	tex = &all->buffer.door;
-	if (!tex || !tex->addr.addr || norm->wall_size <= 0.0)
-		return ;
-	if (norm->side == 0)
-		norm->ray_2.wall_x = all->map->player_y + ((norm->mapx - all->map->player_x + (1
-						- (norm->raydirx > 0 ? 1 : -1)) / 2.0) / norm->raydirx) * norm->raydiry;
-	else
-		norm->ray_2.wall_x = all->map->player_x + ((norm->mapy - all->map->player_y + (1
-						- (norm->raydiry > 0 ? 1 : -1)) / 2.0) / norm->raydiry) * norm->raydirx;
-	norm->ray_2.wall_x -= (int)norm->ray_2.wall_x;
-	norm->ray_2.tex_x = (int)(norm->ray_2.wall_x * (double)TEX_W);
-	if (norm->ray_2.tex_x < 0)
-		norm->ray_2.tex_x = 0;
-	if (norm->ray_2.tex_x >= TEX_W)
-		norm->ray_2.tex_x = TEX_W - 1;
-	if ((norm->side == 0 && norm->raydirx < 0) || (norm->side == 1 && norm->raydiry > 0))
-		norm->ray_2.tex_x = TEX_W - norm->ray_2.tex_x - 1;
-	norm->ray_2.y0 = (int)norm->start;
-	norm->ray_2.y1 = (int)norm->end;
-	if (norm->ray_2.y0 < 0)
-		norm->ray_2.y0 = 0;
-	if (norm->ray_2.y1 > WIN_HEIGHT)
-		norm->ray_2.y1 = WIN_HEIGHT;
-	if (norm->ray_2.y0 >= norm->ray_2.y1)
-		return ;
-	norm->ray_2.bytes_per_px = tex->addr.bpp >> 3;
-	norm->ray_2.tex_line = tex->addr.size_len;
-	norm->ray_2.step_fp = (int)((((long long)TEX_H) << 16) / (int)norm->wall_size);
-	norm->ray_2.texpos_fp = (int)(((long long)(norm->ray_2.y0 - (int)norm->start) * norm->ray_2.step_fp));
-	norm->ray_2.dst = all->map->pixels;
-	norm->ray_2.x = norm->j;
-	norm->ray_2.tex_base = tex->addr.addr;
-	for (int y = norm->ray_2.y0; y < norm->ray_2.y1; ++y)
-	{
-		norm->ray_2.tex_y = (norm->ray_2.texpos_fp >> 16);
-		norm->ray_2.texpos_fp += norm->ray_2.step_fp;
-		norm->ray_2.src = norm->ray_2.tex_base + norm->ray_2.tex_y * norm->ray_2.tex_line + norm->ray_2.tex_x * norm->ray_2.bytes_per_px;
-		norm->ray_2.color = *(int *)norm->ray_2.src;
-		norm->ray_2.dst[y * WIN_WIDTH + norm->ray_2.x] = norm->ray_2.color;
-	}
-}
-
 
 void	draw_viewd_ray(t_mlx *all, t_norm *ray)
 {

@@ -6,7 +6,7 @@
 /*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:54:46 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/28 15:24:55 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/08/31 15:19:31 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,31 @@ void	load_door_texture(t_mlx *all, int *width, int *height)
 	all->buffer.door.addr.addr = mlx_get_data_addr(all->buffer.door.img,
 			&all->buffer.door.addr.bpp, &all->buffer.door.addr.size_len,
 			&all->buffer.door.addr.endian);
+}
+
+void	draw_walls(t_mlx *all)
+{
+	mlx_put_image_to_window(all->connection, all->window,
+		all->buffer.screen->img, 0, 0);
+}
+
+int	handle_space_key(t_mlx *all)
+{
+	double	targetx;
+	double	targety;
+	int		mapx;
+	int		mapy;
+
+	targetx = all->map->player_x + cos(all->map->angle);
+	targety = all->map->player_y - sin(all->map->angle);
+	mapx = (int)targetx;
+	mapy = (int)targety;
+	if (mapx >= 0 && mapx < WIN_WIDTH && mapy >= 0 && mapy < WIN_HEIGHT)
+	{
+		if (all->map->map[mapy][mapx] == 'D')
+			all->map->map[mapy][mapx] = 'O';
+		else if (all->map->map[mapy][mapx] == 'O')
+			all->map->map[mapy][mapx] = 'D';
+	}
+	return (0);
 }

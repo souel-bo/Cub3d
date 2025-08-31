@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:29:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 18:15:10 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/08/31 21:35:24 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,47 @@ typedef struct s_norm
 	t_norm_v2			ray_2;
 }						t_norm;
 
+typedef struct s_minimap_vars
+{
+	int					minimap_x;
+	int					minimap_y;
+	float				player_x;
+	float				player_y;
+	int					map_rows;
+	char				tile;
+	float				angle;
+	int					line_length;
+	int					y;
+	int					x;
+	float				start_row_f;
+	float				end_row_f;
+	float				start_col_f;
+	float				end_col_f;
+	int					start_row;
+	int					end_row;
+	int					start_col;
+	int					end_col;
+	int					row;
+	int					col;
+	int					map_len;
+	int					i;
+	int					j;
+	int					px;
+	int					py;
+	int					color;
+	float				relative_x;
+	float				relative_y;
+	float				screen_x_f;
+	float				screen_y_f;
+	int					screen_x;
+	int					screen_y;
+	float				player_screen_x_f;
+	float				player_screen_y_f;
+	int					player_screen_x;
+	int					player_screen_y;
+	int					player_size;
+}						t_minimap_vars;
+
 typedef struct s_mlx
 {
 	void				*connection;
@@ -140,6 +181,10 @@ typedef struct s_mlx
 	t_map				*map;
 	t_images			buffer;
 	t_movements			movements;
+	t_minimap_vars		minimap;
+	float				px;
+	float				py;
+	float				speed;
 }						t_mlx;
 
 #endif
