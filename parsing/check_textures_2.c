@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:58:49 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:59:53 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/02 01:01:48 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ int	is_valid_texture(char *str, t_textures *textures, t_map *units)
 
 	arr = ft_split(str, ' ');
 	if (validate_texture_format(arr))
-		return (free_arr(arr), 1);
+		return (1);
 	arr[1] = remove_newline(arr[1]);
 	if (validate_texture_file(arr[1]))
-		return (free_arr(arr), 1);
+		return (1);
 	assign_texture_path(arr[0], arr[1], textures, units);
-	return (free_arr(arr), 0);
+	return (0);
 }

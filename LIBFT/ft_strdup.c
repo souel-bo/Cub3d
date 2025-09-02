@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 00:50:51 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/06/27 00:51:25 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/09/01 23:40:03 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup(char *s)
 	i = 0;
 	if (!s)
 		return (NULL);
-	str = malloc(ft_strlen(s) + 1);
+	str = ft_malloc(ft_strlen(s) + 1);
 	if (!str)
 		return (NULL);
 	while (s[i])

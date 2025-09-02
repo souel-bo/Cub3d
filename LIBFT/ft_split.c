@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:15:32 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 18:14:10 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/02 00:58:49 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,13 @@ static char	*ft_splitcopy(char const *s, int start, int finish)
 
 	i = 0;
 	size = finish - start;
-	word = (char *)malloc(sizeof(char) * (size + 1));
+	word = (char *)ft_malloc(sizeof(char) * (size + 1));
 	if (!word)
 		return (NULL);
 	while (start < finish)
 		word[i++] = s[start++];
 	word[i] = '\0';
 	return (word);
-}
-
-static void	ft_free(char **split, size_t words)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < words)
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
 }
 
 static char	**split_help(char **splited, char const *s, char c)
@@ -80,7 +67,6 @@ static char	**split_help(char **splited, char const *s, char c)
 			splited[j] = ft_splitcopy(s, index, i);
 			if (!splited[j])
 			{
-				ft_free(splited, j);
 				return (NULL);
 			}
 			j++;
@@ -98,14 +84,14 @@ char	**ft_split(char const *s, char c)
 
 	if (!s || s[0] == '\0')
 	{
-		splited = (char **)malloc(sizeof(char *));
+		splited = (char **)ft_malloc(sizeof(char *));
 		if (!splited)
 			return (NULL);
 		splited[0] = NULL;
 		return (splited);
 	}
 	word_count = count_word(s, c);
-	splited = (char **)malloc((word_count + 1) * sizeof(char *));
+	splited = (char **)ft_malloc((word_count + 1) * sizeof(char *));
 	if (!splited)
 		return (NULL);
 	splited = split_help(splited, s, c);

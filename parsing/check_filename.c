@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:01:35 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:01:36 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/01 23:17:56 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_check_filename(char *str)
 
 	name = get_name(str);
 	if (name[0] == '.')
-		return (free(name), 1);
+		return (1);
 	else
 	{
 		i = 0;
@@ -53,7 +53,7 @@ int	ft_check_filename(char *str)
 		}
 		if (!(name[i + 1] == 'c' && name[i + 2] == 'u' && name[i + 3] == 'b'
 				&& name[i + 4] == '\0'))
-			return (free(name), 1);
+			return (1);
 	}
-	return (free(name), 0);
+	return (0);
 }

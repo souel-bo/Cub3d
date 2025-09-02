@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:01:46 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:59:47 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/01 23:40:03 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@ char	*remove_newline(char *str)
 
 	i = 0;
 	len = ft_strlen(str);
-	new_line = malloc(sizeof(char) * (len + 1));
+	new_line = ft_malloc(sizeof(char) * (len + 1));
 	while (i < len - 1)
 	{
 		new_line[i] = str[i];
 		i++;
 	}
 	new_line[i] = '\0';
-	free(str);
 	return (new_line);
 }
 
@@ -47,7 +46,7 @@ int	check_textures(char **textures, t_map *units)
 	int			i;
 	t_textures	*v_textures;
 
-	v_textures = malloc(sizeof(t_textures));
+	v_textures = ft_malloc(sizeof(t_textures));
 	units->e_count = 0;
 	units->s_count = 0;
 	units->w_count = 0;

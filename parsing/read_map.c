@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:26:57 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:57:54 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/02 00:59:52 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,6 @@ int	ft_is_space(char **arr)
 		i++;
 	}
 	return (0);
-}
-
-void	free_collec(t_parse_file *collec)
-{
-	if (collec->step_one)
-		free_arr(collec->step_one);
-	if (collec->step_two)
-		free_arr(collec->step_two);
-	if (collec->step_three)
-		free_arr(collec->step_three);
-	if (collec->step_four)
-		free_arr(collec->step_four);
-	free(collec);
 }
 
 static int	read_and_validate_sections(int fd, t_parse_file *collec)
@@ -67,22 +54,21 @@ int	start_parsing(t_map *units, char **argv)
 	t_parse_file	*collec;
 
 	fd = open(argv[1], O_RDONLY);
-	collec = malloc(sizeof(t_parse_file));
+	collec = ft_malloc(sizeof(t_parse_file));
 	collec->step_one = NULL;
 	collec->step_two = NULL;
 	collec->step_three = NULL;
 	collec->step_four = NULL;
 	if (read_and_validate_sections(fd, collec))
-		return (free_collec(collec), close(fd), 1);
+		return (close(fd), 1);
 	close(fd);
 	if (check_textures(collec->step_one, units))
-		return (free_collec(collec), printf("textures\n"), 1);
+		return (printf("textures\n"), 1);
 	if (ft_colors(collec->step_two, units))
-		return (free_collec(collec), printf("colors\n"), 1);
+		return (printf("colors\n"), 1);
 	units->map = collec->step_three;
 	collec->step_three = NULL;
 	if (make_map_cube(units))
-		return (free_collec(collec), free_all_items(units), printf("map\n"),
-			-1);
-	return (free_collec(collec), 0);
+		return (printf("map\n"), -1);
+	return (0);
 }

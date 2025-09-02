@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:32:11 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/07/11 17:54:59 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/02 01:02:35 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1)
 	{
-		s1 = malloc(1 * sizeof(char));
+		s1 = ft_malloc(1 * sizeof(char));
 		s1[0] = '\0';
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	joined_str = malloc(sizeof(char) * (ft_strlen_2(s1) + ft_strlen_2(s2) + 1));
+	joined_str = ft_malloc(sizeof(char) * (ft_strlen_2(s1) + ft_strlen_2(s2)
+				+ 1));
 	if (!joined_str)
 		return (NULL);
 	i = -1;
@@ -65,7 +66,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j])
 		joined_str[i++] = s2[j++];
 	joined_str[i] = '\0';
-	free(s1);
 	return (joined_str);
 }
 
@@ -79,7 +79,7 @@ char	*ft_find_line(char *left_str)
 		return (NULL);
 	while (left_str[i] && left_str[i] != '\n')
 		i++;
-	str = malloc(sizeof(char) * (i + 2));
+	str = ft_malloc(sizeof(char) * (i + 2));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -108,10 +108,9 @@ char	*ft_new_str(char *left_str)
 		i++;
 	if (!left_str[i])
 	{
-		free(left_str);
 		return (NULL);
 	}
-	str = malloc(sizeof(char) * (ft_strlen_2(left_str) - i + 1));
+	str = ft_malloc(sizeof(char) * (ft_strlen_2(left_str) - i + 1));
 	if (!str)
 		return (NULL);
 	i++;
@@ -119,6 +118,5 @@ char	*ft_new_str(char *left_str)
 	while (left_str[i])
 		str[j++] = left_str[i++];
 	str[j] = '\0';
-	free(left_str);
 	return (str);
 }

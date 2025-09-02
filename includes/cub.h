@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/09/01 00:34:27 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/02 01:16:24 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include "type.h"
 # include <fcntl.h>
 # include <math.h>
-# include <mlx.h>
 # include <mlx.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -67,8 +66,6 @@ int		check_textures(char **textures, t_map *units);
 int		check_colors(char *str, t_map *units);
 int		ft_colors(char **colors, t_map *units);
 int		ft_check_filename(char *str);
-void	free_all_items(t_map *units);
-void	free_arr(char **arr);
 void	mix_colors(t_mlx *all);
 void	draw_minimap(t_mlx *all);
 void	free_exit(t_mlx *all);
@@ -94,5 +91,11 @@ void	draw_minimap_cells(t_mlx *all);
 void	free_exit(t_mlx *all);
 int		handle_space_key(t_mlx *all);
 void	draw_walls(t_mlx *all);
+void	free_only_textures(t_map *map);
 int		check_valid_characters(char **tmp_map);
+
+void	*ft_malloc(long long size);
+void	ft_delete(void *s);
+void	ft_free(void);
+
 #endif

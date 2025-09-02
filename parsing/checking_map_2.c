@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:54:47 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/08/30 18:56:00 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/01 23:40:03 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	*find_character(char **tmp_map)
 
 	i = 0;
 	j = 0;
-	nums = malloc(sizeof(int) * 2);
+	nums = ft_malloc(sizeof(int) * 2);
 	while (tmp_map[i])
 	{
 		j = 0;

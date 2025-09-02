@@ -1,5 +1,5 @@
 CC = cc
- FLAGS = -Wall -Wextra -Werror
+ FLAGS = -Wall -Wextra -Werror -g3
 
 SOURCE = 	main.c parsing/read_map.c parsing/start_check_map.c \
 			parsing/checking_map.c parsing/check_textures.c parsing/check_colors.c \
@@ -15,7 +15,10 @@ GET_SOURCE = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 LIBFT = 	LIBFT/ft_strlen.c LIBFT/ft_strncmp.c LIBFT/ft_strdup.c \
 			LIBFT/ft_split.c LIBFT/ft_atoi.c LIBFT/ft_count_argc.c \
 			LIBFT/ft_atoi_master.c LIBFT/ft_substr.c LIBFT/ft_memset.c \
-			LIBFT/ft_isdigit.c
+			LIBFT/ft_isdigit.c LIBFT/ft_lstadd_back_bonus.c   LIBFT/ft_lstdelone_bonus.c  LIBFT/ft_lstmap_bonus.c \
+			LIBFT/ft_lstadd_front_bonus.c LIBFT/ft_lstiter_bonus.c LIBFT/ft_lstnew_bonus.c \
+			LIBFT/ft_lstclear_bonus.c LIBFT/ft_lstlast_bonus.c LIBFT/ft_lstsize_bonus.c LIBFT/grabage_collector.c \
+			LIBFT/ft_bzero.c LIBFT/ft_calloc.c
 
 EXECUTABLE = cub3d
 
@@ -39,3 +42,7 @@ fclean: clean
 	rm -rf $(EXECUTABLE)
 
 re: fclean all
+
+bonus : all
+
+.PHONY: all re clean fclean bonus

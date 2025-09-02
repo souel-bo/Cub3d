@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/28 15:27:40 by souel-bo         ###   ########.fr       */
+/*   Updated: 2025/09/02 00:54:37 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	if (argc != 2 || ft_check_filename(argv[1]) || start_parsing(&units, argv))
-		return (printf("map not valid\n"), 0);
+		return (printf("map not valid\n"), ft_free(), 0);
 	else
 	{
-		i = 0;
 		units.player_x = 0;
 		units.player_y = 0;
 		get_player_position(&units);
@@ -72,10 +71,11 @@ int	main(int argc, char **argv)
 		all.map = &units;
 		mix_colors(&all);
 		all.window = mlx_new_window(all.connection, 1070, 460, "Cub3D");
-		all.buffer.screen = malloc(sizeof(t_img));
+		all.buffer.screen = ft_malloc(sizeof(t_img));
 		all.buffer.screen->img = mlx_new_image(all.connection, 1070, 460);
 		all.buffer.screen->addr.addr = mlx_get_data_addr(all.buffer.screen->img,
-				&all.buffer.screen->addr.bpp, &all.buffer.screen->addr.size_len,
+				&all.buffer.screen->addr.bpp,
+				&all.buffer.screen->addr.size_len,
 				&all.buffer.screen->addr.endian);
 		all.map->pixels = (int *)all.buffer.screen->addr.addr;
 		start(&all);

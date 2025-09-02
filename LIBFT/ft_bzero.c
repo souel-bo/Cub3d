@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 18:02:48 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/09/01 23:40:03 by yael-yas         ###   ########.fr       */
+/*   Created: 2024/10/21 15:54:45 by yael-yas          #+#    #+#             */
+/*   Updated: 2025/09/02 00:21:29 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+void	ft_bzero(void *s, size_t n)
 {
-	char	*arr;
-	size_t	i;
+	char	*str;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (ft_strlen(s) <= start + len)
-		arr = ft_malloc(sizeof(char) * (ft_strlen(s) - start + 1));
-	else
-		arr = ft_malloc(sizeof(char) * len + 1);
-	if (!arr)
-		return (NULL);
-	while (s[start] && i < len)
+	str = (char *)s;
+	while (n > 0)
 	{
-		arr[i] = s[start];
-		start++;
-		i++;
+		n--;
+		str[n] = 0;
 	}
-	arr[i] = '\0';
-	return (arr);
 }
+
+// #include <string.h>
+// int main()
+// {
+// 	char *str = NULL;
+// 	ft_bzero(str, 5);
+// }

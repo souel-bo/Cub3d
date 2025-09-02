@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 18:02:48 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/09/01 23:40:03 by yael-yas         ###   ########.fr       */
+/*   Created: 2024/10/21 15:55:11 by yael-yas          #+#    #+#             */
+/*   Updated: 2025/09/01 23:34:12 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+t_list	*ft_lstnew(void *content)
 {
-	char	*arr;
-	size_t	i;
+	t_list	*val;
 
-	i = 0;
-	if (!s)
+	val = (t_list *)malloc(sizeof(t_list));
+	if (!val)
 		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (ft_strlen(s) <= start + len)
-		arr = ft_malloc(sizeof(char) * (ft_strlen(s) - start + 1));
-	else
-		arr = ft_malloc(sizeof(char) * len + 1);
-	if (!arr)
-		return (NULL);
-	while (s[start] && i < len)
-	{
-		arr[i] = s[start];
-		start++;
-		i++;
-	}
-	arr[i] = '\0';
-	return (arr);
+	val->next = NULL;
+	val->content = content;
+	return (val);
 }

@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:30:09 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/09/01 00:32:28 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/02 01:01:01 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*add_underline(char *line, int size)
 	char	*new_line;
 
 	i = 0;
-	new_line = malloc(sizeof(char) * (size + 2));
+	new_line = ft_malloc(sizeof(char) * (size + 2));
 	while (line[i] && line[i] != '\n')
 	{
 		new_line[i] = line[i];
@@ -61,7 +61,7 @@ char	**duplacate_map(t_map *units, int size)
 
 	i = 0;
 	count = ft_count_argc(units->map);
-	tmp_map = malloc(sizeof(char *) * (count + 1));
+	tmp_map = ft_malloc(sizeof(char *) * (count + 1));
 	while (units->map[i])
 	{
 		tmp_map[i] = add_underline(units->map[i], size);
@@ -107,10 +107,10 @@ int	make_map_cube(t_map *units)
 	long_line = biggest_line(units->map);
 	tmp_map = duplacate_map(units, long_line);
 	if (check_valid_characters(tmp_map))
-		return (free_arr(tmp_map), 1);
+		return (1);
 	if (check_characters(tmp_map))
-		return (free_arr(tmp_map), 1);
+		return (1);
 	if (setup_for_flood_fill(tmp_map))
-		return (free_arr(tmp_map), 1);
-	return (free_arr(tmp_map), 0);
+		return (1);
+	return (0);
 }
