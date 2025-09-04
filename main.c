@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/09/02 00:54:37 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/04 08:21:40 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	handle_mouse_movements(int x, int y, void *param)
 int	close_window_x(t_mlx *all)
 {
 	free_exit(all);
-	exit(0);
 	return (0);
 }
 
@@ -61,7 +60,7 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	if (argc != 2 || ft_check_filename(argv[1]) || start_parsing(&units, argv))
-		return (printf("map not valid\n"), ft_free(), 0);
+		return (printf("maps file not valid\n"), ft_free(), 0);
 	else
 	{
 		units.player_x = 0;

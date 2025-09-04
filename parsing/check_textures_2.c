@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:58:49 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/09/02 01:01:48 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/04 08:15:24 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static int	validate_texture_format(char **arr)
 {
 	if (ft_count_argc(arr) != 2)
-		return (printf("ff\n"), 1);
+		return (1);
 	if (strcmp(arr[0], "NO") && strcmp(arr[0], "SO") && strcmp(arr[0], "WE")
 		&& strcmp(arr[0], "EA"))
-		return (printf("bb\n"), 1);
+		return (1);
 	return (0);
 }
 
@@ -28,7 +28,7 @@ static int	validate_texture_file(char *filepath)
 
 	fd = open(filepath, O_RDONLY);
 	if (fd < 0)
-		return (printf("nn\n"), 1);
+		return (1);
 	close(fd);
 	return (0);
 }

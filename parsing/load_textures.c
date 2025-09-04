@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:14:11 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/08/30 18:10:05 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/04 08:22:20 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	load_north_texture(t_mlx *all, int *width, int *height)
 	if (!all->buffer.north.img)
 	{
 		perror("Failed to load north texture");
-		exit(1);
+		free_exit(all);
 	}
 	all->buffer.north.addr.addr = mlx_get_data_addr(all->buffer.north.img,
 			&all->buffer.north.addr.bpp, &all->buffer.north.addr.size_len,
@@ -33,7 +33,7 @@ static void	load_south_texture(t_mlx *all, int *width, int *height)
 	if (!all->buffer.south.img)
 	{
 		perror("Failed to load south texture");
-		exit(1);
+		free_exit(all);
 	}
 	all->buffer.south.addr.addr = mlx_get_data_addr(all->buffer.south.img,
 			&all->buffer.south.addr.bpp, &all->buffer.south.addr.size_len,
@@ -47,7 +47,7 @@ static void	load_east_texture(t_mlx *all, int *width, int *height)
 	if (!all->buffer.east.img)
 	{
 		perror("Failed to load east texture");
-		exit(1);
+		free_exit(all);
 	}
 	all->buffer.east.addr.addr = mlx_get_data_addr(all->buffer.east.img,
 			&all->buffer.east.addr.bpp, &all->buffer.east.addr.size_len,
@@ -61,7 +61,7 @@ static void	load_west_texture(t_mlx *all, int *width, int *height)
 	if (!all->buffer.west.img)
 	{
 		perror("Failed to load west texture");
-		exit(1);
+		free_exit(all);
 	}
 	all->buffer.west.addr.addr = mlx_get_data_addr(all->buffer.west.img,
 			&all->buffer.west.addr.bpp, &all->buffer.west.addr.size_len,
