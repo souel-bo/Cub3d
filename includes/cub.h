@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 04:01:12 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/09/02 01:16:24 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/04 11:22:03 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define TEX_H 64
 # define MINIMAP_SIZE 150
 # define MINIMAP_RADIUS 3
-# define MOUSE_CENTER_X 960
+# define MOUSE_CENTER_X 535
 # define MINIMAP_TILES 7
 # define TILE_MINI_MAP 21
 
