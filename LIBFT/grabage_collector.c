@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 18:48:36 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/09/02 01:18:36 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/04 08:03:53 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 static t_garbage_collector	*get_collector(void)
 {
-	static t_garbage_collector	collector;
+	static t_garbage_collector	collector = {NULL};
 
-	collector = {NULL};
 	return (&collector);
 }
 
