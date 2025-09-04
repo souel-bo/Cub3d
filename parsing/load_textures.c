@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:14:11 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/09/04 11:54:21 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/04 14:37:08 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	load_south_texture(t_mlx *all, int *width, int *height)
 static void	load_east_texture(t_mlx *all, int *width, int *height)
 {
 	all->buffer.east.img = mlx_xpm_file_to_image(all->connection,
-			all->map->textures->east_path, width, height);
+			all->map->textures->west_path, width, height);
 	if (!all->buffer.east.img)
 	{
 		perror("Failed to load east texture");
@@ -57,7 +57,7 @@ static void	load_east_texture(t_mlx *all, int *width, int *height)
 static void	load_west_texture(t_mlx *all, int *width, int *height)
 {
 	all->buffer.west.img = mlx_xpm_file_to_image(all->connection,
-			all->map->textures->west_path, width, height);
+			all->map->textures->east_path, width, height);
 	if (!all->buffer.west.img)
 	{
 		perror("Failed to load west texture");
