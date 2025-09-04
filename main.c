@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 05:12:21 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/09/04 11:43:48 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:41:31 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ int	close_window_x(t_mlx *all)
 
 void	start(t_mlx *all)
 {
+	all->buffer.door.img = NULL;
+	all->buffer.north.img = NULL;
+	all->buffer.east.img = NULL;
+	all->buffer.south.img = NULL;
+	all->buffer.west.img = NULL;
 	load_textures(all);
 	ray_casting(all);
 	draw_minimap(all);

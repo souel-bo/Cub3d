@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   position.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: souel-bo <souel-bo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 15:54:46 by souel-bo          #+#    #+#             */
-/*   Updated: 2025/09/04 08:30:53 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:38:00 by souel-bo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ void	load_door_texture(t_mlx *all, int *width, int *height)
 	if (!all->buffer.door.img)
 	{
 		perror("Failed to load door texture");
-		exit(1);
+		mlx_destroy_image(all->connection, all->buffer.screen->img);
+		mlx_destroy_window(all->connection, all->window);
+		mlx_destroy_display(all->connection);
+		free(all->connection);
+		ft_free();
+		exit(0);
 	}
 	all->buffer.door.addr.addr = mlx_get_data_addr(all->buffer.door.img,
 			&all->buffer.door.addr.bpp, &all->buffer.door.addr.size_len,
