@@ -6,7 +6,7 @@
 /*   By: yael-yas <yael-yas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 18:01:46 by yael-yas          #+#    #+#             */
-/*   Updated: 2025/09/01 23:40:03 by yael-yas         ###   ########.fr       */
+/*   Updated: 2025/09/05 09:14:21 by yael-yas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ int	check_textures(char **textures, t_map *units)
 	t_textures	*v_textures;
 
 	v_textures = ft_malloc(sizeof(t_textures));
+	v_textures->door = NULL;
+	v_textures->east_path = NULL;
+	v_textures->west_path = NULL;
+	v_textures->north_path = NULL;
+	v_textures->south_path = NULL;
 	units->e_count = 0;
 	units->s_count = 0;
 	units->w_count = 0;
